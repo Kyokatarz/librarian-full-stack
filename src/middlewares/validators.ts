@@ -57,3 +57,10 @@ export const updateBookInfoValidator = [
     "Status must be either 'available' or 'borrowed' "
   ),
 ]
+
+/*======================+
+ |AUTHOR ROUTE VALIDATOR|
+ +======================*/
+export const addNewAuthorValidator = [
+  check('name', 'Author name must be provided').notEmpty(),
+]
