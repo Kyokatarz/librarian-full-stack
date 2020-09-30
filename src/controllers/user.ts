@@ -8,7 +8,6 @@ import {
   NotFoundError,
 } from '../helpers/apiError'
 import User from '../models/User'
-import { emitWarning } from 'process'
 
 /*******************************
  * @ROUTE POST /v1/user/signUp *
@@ -86,14 +85,14 @@ export const signUserIn = async (
         new BadRequestError('Request Validation Failed: ' + errorString, err)
       )
     } else if (err === 'CredentialError')
-      next(new BadRequestError('Incorrect Username or Password'))
+      next(new BadRequestError('Incorrect Username or Password', err))
   }
 }
 
 /*********************************
  * @ROUTE PATCH /v1/user/:userId *
  * @DESC Update user info        *
- * @ACCESS PUBLIC                *
+ * @ACCESS private               *
  *********************************/
 
 export const updateUserInfo = async (
@@ -121,6 +120,8 @@ export const updateUserInfo = async (
     const newUser = await User.findByIdAndUpdate(userId, newUserInfo, {
       new: true,
     })
+    console.log(newUser)
+    // await newUser?.save()
     res.status(200).json(newUser)
   } catch (err) {
     if (err === 'ValidationError')
@@ -133,5 +134,77 @@ export const updateUserInfo = async (
     if (err.kind === 'ObjectId')
       next(new NotFoundError('No user found with this Id', err))
     else next(new InternalServerError(err))
+  }
+}
+
+/******************************************
+ * @ROUTE PATCH /v1/user/:userId/password *
+ * @DESC Update user pasword              *
+ * @ACCESS Private                        *
+ ******************************************/
+export const updateUserPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userId } = req.params
+  const { oldPassword, newPassword } = req.body
+  const errors = validationResult(req)
+
+  try {
+    if (!errors.isEmpty()) throw 'ValidationError'
+    const user = await User.findById(userId)
+    if (user?.password !== oldPassword) throw 'CredentialError'
+
+    const userWithNewPassword = await User.findByIdAndUpdate(
+      userId,
+      { password: newPassword },
+      { new: true }
+    )
+    res.status(200).json(userWithNewPassword)
+  } catch (err) {
+    if (err.kind === 'ObjectId')
+      next(new NotFoundError('No user found with this Id', err))
+    switch (err) {
+      case 'ValidationError':
+        next(
+          new BadRequestError(
+            'Bad Request: ' + stringifyError(errors.array()),
+            err
+          )
+        )
+      case 'CredentialError':
+        next(new BadRequestError('Incorrect Password', err))
+    }
+  }
+}
+
+/******************************************
+ * @ROUTE POST /v1/user/password          *
+ * @DESC Order a "Forget Password"        *
+ * @ACCESS Public                         *
+ ******************************************/
+export const forgetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errors = validationResult(req)
+
+  try {
+    if (!errors.isEmpty()) throw 'ValidationError'
+    res.status(200).json({
+      msg:
+        'A recover email has been sent to your email address if you have an account associated with it.',
+    })
+  } catch (err) {
+    if (err === 'ValidationError')
+      next(
+        new BadRequestError(
+          'Bad Request: ' + stringifyError(errors.array()),
+          err
+        )
+      )
+    next(new InternalServerError(err))
   }
 }

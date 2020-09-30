@@ -5,14 +5,24 @@ import {
   signInValidator,
   signUpValidator,
   userInfoUpdateValidator,
+  userPasswordChangeValidator,
+  forgetPasswordValidator,
 } from '../middlewares/validators'
-import { createUser, signUserIn, updateUserInfo } from '../controllers/user'
+
+import * as controller from '../controllers/user'
+
 import User from '../models/User'
 
 const router = express.Router()
 
-router.post('/signUp', signUpValidator, createUser)
+router.post('/signUp', signUpValidator, controller.createUser)
 
-router.post('/signIn', signInValidator, signUserIn)
-router.patch('/:userId', userInfoUpdateValidator, updateUserInfo)
+router.post('/signIn', signInValidator, controller.signUserIn)
+router.patch('/:userId', userInfoUpdateValidator, controller.updateUserInfo)
+router.patch(
+  '/:userId/password',
+  userPasswordChangeValidator,
+  controller.updateUserPassword
+)
+router.post('/password', forgetPasswordValidator, controller.forgetPassword)
 export default router
