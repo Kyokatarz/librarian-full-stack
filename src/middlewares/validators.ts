@@ -1,5 +1,8 @@
-import { check } from 'express-validator'
+import { check, oneOf } from 'express-validator'
 
+/************************
+ * USER ROUTE VALIDATOR *
+ ************************/
 export const signUpValidator = [
   check('username', 'Username cannot be empty').not().isEmpty(),
   check('email', 'Please enter a valid email').isEmail(),
@@ -30,4 +33,27 @@ export const userPasswordChangeValidator = [
 export const forgetPasswordValidator = [
   check('email', 'Email must be provided').notEmpty(),
   check('email', 'Please enter a valid email').isEmail(),
+]
+
+/*====================+
+ |BOOK ROUTE VALIDATOR|
+ +====================*/
+export const addNewBookValidator = [
+  check('title', 'Title must be provided').notEmpty(),
+  check('author', 'Author must be provided').notEmpty(),
+  check('status', 'Status must be provided').notEmpty(),
+  oneOf(
+    [check('status').equals('available'), check('status').equals('borrowed')],
+    "Status must be either 'available' or 'borrowed' "
+  ),
+]
+
+export const updateBookInfoValidator = [
+  check('title', 'Title must be provided').notEmpty(),
+  check('author', 'Author must be provided').notEmpty(),
+  check('status', 'Status must be provided').notEmpty(),
+  oneOf(
+    [check('status').equals('available'), check('status').equals('borrowed')],
+    "Status must be either 'available' or 'borrowed' "
+  ),
 ]
