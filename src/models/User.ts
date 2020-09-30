@@ -1,11 +1,11 @@
 import mongoose, { Document } from 'mongoose'
 
 export type UserDocument = Document & {
-  username: string;
-  password: string;
-  email: string;
-  lastName: string;
-  fisrtName: string;
+  username: string
+  password: string
+  email: string
+  lastName: string
+  fisrtName: string
 }
 
 const UserSchema = new mongoose.Schema({
@@ -21,8 +21,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lastName: String,
-  fisrtName: String,
+  lastName: { type: String, default: '' },
+  firstName: { type: String, default: '' },
 })
 
 const User = mongoose.model<UserDocument>('user', UserSchema)
