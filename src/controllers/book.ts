@@ -126,7 +126,7 @@ export const checkinBook = async (
 /*===================+
  |@ROUTE GET v1/book |
  |@DESC Get all books|
- |@ACCESS Public     |
+ |@ACCESS private    |
  +===================*/
 export const adminAddBook = async (
   req: Request,
@@ -161,21 +161,71 @@ export const adminAddBook = async (
   }
 }
 
-/*=========================+
- |@ROUTE PUT v1/book/:isbn |
- |@DESC Update book by ISBN|
- |@ACCESS Public           |
- +=========================*/
+/*===========================+
+ |@ROUTE PUT v1/book/:bookId |
+ |@DESC Update book by id    |
+ |@ACCESS private            |
+ +===========================*/
 export const adminUpdateBook = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const errors = validationResult(req)
+  const { bookId } = req.params
   const { isbn, title, description, publisher, author, status } = req.body
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
+
+    //Build a new info object
     let newInfo: any = {}
     if (isbn) newInfo.isbn = isbn
-  } catch (err) {}
+    if (title) newInfo.title = title
+    if (description) newInfo.description = description
+    if (publisher) newInfo.publisher = publisher
+    if (author) newInfo.author = author
+    if (status) newInfo.status = status
+
+    const newBook = await Book.findByIdAndUpdate(bookId, newInfo, {
+      new: true,
+    })
+    if (!newBook) throw 'BookNotFound'
+    res.status(200).json(newBook)
+  } catch (err) {
+    if (err.kind === 'ObjectId' || err == 'BookNotFound') {
+      next(new NotFoundError('No book found with this Id', err))
+    }
+    if (err === 'ValidationError')
+      next(
+        new BadRequestError(
+          'Bad request: ' + stringifyError(errors.array()),
+          err
+        )
+      )
+    next(new InternalServerError(err))
+  }
+}
+
+/*==============================+
+ |@ROUTE DELETE v1/book/:bookId |
+ |@DESC Delete book by id       |
+ |@ACCESS private               |
+ +==============================*/
+
+export const deleteBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { bookId } = req.params
+
+  try {
+    const book = await Book.findByIdAndDelete(bookId)
+    if (!book) throw 'BookNotFound'
+    res.status(200).json(book)
+  } catch (err) {
+    if (err === 'BookNotFound')
+      next(new NotFoundError('Book with this ID not found '))
+    next(new InternalServerError(err))
+  }
 }

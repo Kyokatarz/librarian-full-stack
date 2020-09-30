@@ -17,5 +17,6 @@ router.patch('/:isbn/checkin', controller.checkinBook)
  |ADMIN|
  +=====*/
 router.post('/', addNewBookValidator, controller.adminAddBook)
-router.put('/', updateBookInfoValidator, controller.adminUpdateBook)
+router.put('/:bookId', updateBookInfoValidator, controller.adminUpdateBook)
+router.delete('/:bookId', controller.deleteBook)
 export default router
