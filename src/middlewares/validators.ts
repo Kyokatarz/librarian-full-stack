@@ -64,3 +64,6 @@ export const updateBookInfoValidator = [
 export const addNewAuthorValidator = [
   check('name', 'Author name must be provided').notEmpty(),
 ]
+export const updateAuthorInfoValidator = [
+  check('name', 'Author name must be provided').notEmpty(),
+]
