@@ -117,6 +117,8 @@ export const updateUserInfo = async (
 
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
+    const user = await User.findById(userId)
+    if (!user) throw 'UserNotFound'
     const newUser = await User.findByIdAndUpdate(userId, newUserInfo, {
       new: true,
     })
@@ -131,7 +133,7 @@ export const updateUserInfo = async (
           err
         )
       )
-    if (err.kind === 'ObjectId')
+    if (err.kind === 'ObjectId' || err === 'UserNotFound')
       next(new NotFoundError('No user found with this Id', err))
     else next(new InternalServerError(err))
   }
@@ -175,6 +177,8 @@ export const updateUserPassword = async (
         )
       case 'CredentialError':
         next(new BadRequestError('Incorrect Password', err))
+      default:
+        next(new InternalServerError(err))
     }
   }
 }
