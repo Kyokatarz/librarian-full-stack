@@ -119,7 +119,7 @@ export const checkinBook = async (
 }
 
 /*=========================================+
- |                 ADMIN ONLY              |
+ |               //!ADMIN ONLY             |
  +=========================================*/
 //TODO: Add admin authorization
 
