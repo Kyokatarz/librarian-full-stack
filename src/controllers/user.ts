@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET } from '../util/secrets'
 
 import { stringifyError } from '../util/stringifyError'
 import {
@@ -45,9 +47,21 @@ export const createUser = async (
       firstName,
     })
 
-    //Save and return user
+    //Save user
     await newUser.save()
-    res.status(200).json(newUser)
+
+    //Return JWT
+    const payload = {
+      user: {
+        id: newUser.id,
+      },
+    }
+    const token = jwt.sign(
+      payload,
+      JWT_SECRET //TODO: Add token expiration  === 1 day
+    )
+
+    res.status(200).json({ token })
   } catch (err) {
     if (err === 'ValidationError') {
       let errorString: string = stringifyError(errors.array())
@@ -85,7 +99,19 @@ export const signUserIn = async (
     //Check password
     const compare = await bcrypt.compare(password, user.password)
     if (!compare) throw 'CredentialError'
-    res.status(200).json(user)
+
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    }
+    const token = jwt.sign(
+      payload,
+      JWT_SECRET //TODO: Add token expiration  === 1 day
+    )
+
+    console.log('Token:', token)
+    res.status(200).json({ token })
   } catch (err) {
     if (err === 'ValidationError') {
       let errorString: string = stringifyError(errors.array())

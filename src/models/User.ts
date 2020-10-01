@@ -23,6 +23,12 @@ const UserSchema = new mongoose.Schema({
   },
   lastName: { type: String, default: '' },
   firstName: { type: String, default: '' },
+  borrowedBooks: [
+    {
+      _id: { type: mongoose.Schema.Types.ObjectId, required: true },
+      date: { type: Date, required: true },
+    },
+  ],
 })
 
 const User = mongoose.model<UserDocument>('user', UserSchema)
