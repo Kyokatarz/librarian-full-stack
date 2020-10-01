@@ -1,14 +1,20 @@
 import { Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
 
-import Book from '../models/Book'
+import Book, { BookDocument } from '../models/Book'
 import {
   BadRequestError,
   InternalServerError,
   NotFoundError,
 } from '../helpers/apiError'
 import { stringifyError } from '../util/stringifyError'
+import User, { BorrowedBook, UserDocument } from '../models/User'
+import { Document } from 'mongoose'
 
+//TODO: Get book with pagnition, filtering by author...
+type PayloadType = {
+  id: string
+}
 /*===================+
  |@ROUTE GET v1/book |
  |@DESC Get all books|
@@ -40,7 +46,7 @@ export const getBookByIsbn = async (
 ) => {
   const { isbn } = req.params
   try {
-    const book = await Book.findOne({ isbn })
+    const book = await Book.find({ isbn })
     if (!book) throw 'BookNotFound'
     res.status(200).json(book)
   } catch (err) {
@@ -50,46 +56,68 @@ export const getBookByIsbn = async (
   }
 }
 
-/*=====================================+
- |@ROUTE PATCH v1/book/:isbn/checkout/ |
- |@DESC Check out a book by its ISBN   |
- |@ACCESS Public                       |
- +=====================================*/
+/*=======================================+
+ |@ROUTE PATCH v1/book/:bookId/checkout/ |
+ |@DESC Check out a book by its ID       |
+ |@ACCESS Private                        |
+ +=======================================*/
 export const checkoutBook = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { isbn } = req.params
+  const { bookId } = req.params
+  console.log('bookId :', bookId)
+  const userReq: PayloadType = req.user as PayloadType //This is from jwt
 
   try {
-    const book = await Book.findOne({ isbn })
+    const book = await Book.findById(bookId)
     if (!book) throw 'BookNotFound'
-
+    if (book?.status === 'borrowed') {
+      res.status(200).json({ msg: 'This book has already been borrowed!' })
+      return
+    }
     const updatedBook = await Book.findOneAndUpdate(
-      { isbn, status: 'available' },
+      { _id: bookId, status: 'available' },
       { status: 'borrowed' },
       { new: true }
     )
-    if (!updatedBook) {
-      res
-        .status(200)
-        .json({ msg: 'Book(s) with this ISBN is currently not available' })
-      return
-    }
-    res.status(200).json(updatedBook)
+
+    const user = await User.findById(userReq.id)
+
+    //Building book => user:
+    const bookList = [...user?.borrowedBooks]
+    const { isbn, title, description, publisher, author, status } = updatedBook!
+
+    bookList?.unshift({
+      isbn,
+      title,
+      description,
+      publisher,
+      author,
+      status,
+      _id: bookId,
+      date: new Date(),
+    })
+
+    const userWithNewBookList = await User.findByIdAndUpdate(
+      userReq.id,
+      { borrowedBooks: bookList },
+      { new: true }
+    )
+    res.status(200).json(userWithNewBookList)
   } catch (err) {
-    if (err === 'BookNotFound')
-      next(new NotFoundError('No book found with this ISBN', err))
+    if (err === 'BookNotFound' || err.kind === 'ObjectId')
+      next(new NotFoundError('No book found with this ID', err))
     next(new InternalServerError(err))
   }
 }
 
-/*=====================================+
- |@ROUTE PATCH v1/book/:isbn/checkin/  |
- |@DESC Check in a book by its ISBN    |
- |@ACCESS Public                       |
- +=====================================*/
+/*=======================================+
+ |@ROUTE PATCH v1/book/:bookId/checkin/  |
+ |@DESC Check in a book by its ID        |
+ |@ACCESS Private                        |
+ +=======================================*/
 export const checkinBook = async (
   req: Request,
   res: Response,
