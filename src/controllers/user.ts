@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
 
 import { stringifyError } from '../util/stringifyError'
 import {
@@ -32,14 +33,19 @@ export const createUser = async (
     const user = await User.findOne({ $or: [{ email }, { username }] })
     if (user) throw 'IdentificationDuplicated'
 
+    //Hashing password
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
+
     const newUser = new User({
       email,
-      password,
+      password: hashedPassword,
       username,
       lastName,
       firstName,
     })
 
+    //Save and return user
     await newUser.save()
     res.status(200).json(newUser)
   } catch (err) {
@@ -76,7 +82,9 @@ export const signUserIn = async (
     }
     const user = await User.findOne({ username })
     if (!user) throw 'CredentialError'
-    if (password !== user.password) throw 'CredentialError'
+    //Check password
+    const compare = await bcrypt.compare(password, user.password)
+    if (!compare) throw 'CredentialError'
     res.status(200).json(user)
   } catch (err) {
     if (err === 'ValidationError') {
