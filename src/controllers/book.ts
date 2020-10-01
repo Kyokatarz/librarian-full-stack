@@ -67,7 +67,7 @@ export const checkoutBook = async (
   next: NextFunction
 ) => {
   const { bookId } = req.params
-  console.log('bookId :', bookId)
+
   const userReq: PayloadType = req.user as PayloadType //This is from jwt
 
   try {
@@ -123,22 +123,31 @@ export const checkinBook = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { isbn } = req.params
-
+  const { bookId } = req.params
+  const userReq: PayloadType = req.user as PayloadType //This is from jwt
   try {
-    const book = await Book.findOne({ isbn })
+    const book = await Book.findById(bookId)
     if (!book) throw 'BookNotFound'
 
     const updatedBook = await Book.findOneAndUpdate(
-      { isbn, status: 'borrowed' },
+      { _id: bookId, status: 'borrowed' },
       { status: 'available' },
       { new: true }
     )
     if (!updatedBook) {
+      //How can you borrow an already borrowed book?
       res.status(200).json({ msg: 'How did you get this book? :suspicious:' })
       return
     }
-    res.status(200).json(updatedBook)
+
+    const user = await User.findById(userReq.id)
+
+    const deleteIndex: number = user?.borrowedBooks
+      .map((obj: any) => obj.id)
+      .indexOf(bookId)
+    user?.borrowedBooks.splice(deleteIndex, 1)
+    await user?.save()
+    res.status(200).json({ user })
   } catch (err) {
     if (err === 'BookNotFound')
       next(new NotFoundError('No book found with this ISBN', err))
