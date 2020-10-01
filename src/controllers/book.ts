@@ -6,15 +6,14 @@ import {
   BadRequestError,
   InternalServerError,
   NotFoundError,
+  UnauthorizedError,
 } from '../helpers/apiError'
 import { stringifyError } from '../util/stringifyError'
 import User, { BorrowedBook, UserDocument } from '../models/User'
 import { Document } from 'mongoose'
-
+import { PayloadType } from '../middlewares/auth'
 //TODO: Get book with pagnition, filtering by author...
-type PayloadType = {
-  id: string
-}
+
 /*===================+
  |@ROUTE GET v1/book |
  |@DESC Get all books|
@@ -158,7 +157,7 @@ export const checkinBook = async (
 //TODO: Add admin authorization
 
 /*===================+
- |@ROUTE GET v1/book |
+ |@ROUTE POST v1/book|
  |@DESC Get all books|
  |@ACCESS private    |
  +===================*/
@@ -167,10 +166,13 @@ export const adminAddBook = async (
   res: Response,
   next: NextFunction
 ) => {
+  const userReq = req.user as PayloadType
   const errors = validationResult(req)
   const { isbn, title, description, publisher, author, status } = req.body
 
   try {
+    const user = await User.findById(userReq.id)
+    if (!user?.isAdmin) throw 'NotAnAdmin'
     if (!errors.isEmpty()) throw 'ValidationError'
     const newBook = new Book({
       isbn,
@@ -191,6 +193,8 @@ export const adminAddBook = async (
           err
         )
       )
+    if (err === 'NotAnAdmin')
+      next(new UnauthorizedError('You have no right to do this! SHAME!'))
     next(new InternalServerError(err))
   }
 }
@@ -205,10 +209,13 @@ export const adminUpdateBook = async (
   res: Response,
   next: NextFunction
 ) => {
+  const userReq = req.user as PayloadType
   const errors = validationResult(req)
   const { bookId } = req.params
   const { isbn, title, description, publisher, author, status } = req.body
   try {
+    const user = await User.findById(userReq.id)
+    if (!user?.isAdmin) throw 'NotAnAdmin'
     if (!errors.isEmpty()) throw 'ValidationError'
 
     //Build a new info object
@@ -236,6 +243,8 @@ export const adminUpdateBook = async (
           err
         )
       )
+    if (err === 'NotAnAdmin')
+      next(new UnauthorizedError('You have no right to do this! SHAME!'))
     next(new InternalServerError(err))
   }
 }
@@ -252,14 +261,18 @@ export const deleteBook = async (
   next: NextFunction
 ) => {
   const { bookId } = req.params
-
+  const userReq = req.user as PayloadType
   try {
+    const user = await User.findById(userReq.id)
+    if (!user?.isAdmin) throw 'NotAnAdmin'
     const book = await Book.findByIdAndDelete(bookId)
     if (!book) throw 'BookNotFound'
     res.status(200).json(book)
   } catch (err) {
     if (err === 'BookNotFound')
       next(new NotFoundError('Book with this ID not found '))
+    if (err === 'NotAnAdmin')
+      next(new UnauthorizedError('You have no right to do this! SHAME!'))
     next(new InternalServerError(err))
   }
 }

@@ -4,10 +4,13 @@ import {
   BadRequestError,
   InternalServerError,
   NotFoundError,
+  UnauthorizedError,
 } from '../helpers/apiError'
 import { stringifyError } from '../util/stringifyError'
 
 import Author from '../models/Author'
+import { PayloadType } from '../middlewares/auth'
+import User from '../models/User'
 
 /*=========================================+
  |              //!ADMIN ONLY              |
@@ -23,7 +26,10 @@ export const adminAddAuthor = async (
   next: NextFunction
 ) => {
   const errors = validationResult(req)
+  const userReq = req.user as PayloadType
   try {
+    const user = await User.findById(userReq.id)
+    if (!user?.isAdmin) throw 'NotAnAdmin'
     if (!errors.isEmpty()) throw 'ValidationError'
     const { name, books } = req.body
     const author = await Author.findOne({ name })
@@ -46,6 +52,9 @@ export const adminAddAuthor = async (
       )
     if (err === 'IdentificationDuplicated')
       next(new BadRequestError('Author already existed', err))
+    if (err === 'NotAnAdmin')
+      next(new UnauthorizedError('You have no right to do this! SHAME!'))
+    next(new InternalServerError(err))
   }
 }
 
@@ -63,9 +72,13 @@ export const adminUpdateAuthor = async (
   const { name, books } = req.body
   const { authorId } = req.params
   const newInfo: any = {}
-
+  const userReq = req.user as PayloadType
   try {
+    const user = await User.findById(userReq.id)
+    if (!user?.isAdmin) throw 'NotAnAdmin'
+
     if (!errors.isEmpty()) throw 'ValidationError'
+
     if (name) newInfo.name = name
     if (books) newInfo.books = books
     const author = await Author.findByIdAndUpdate(authorId, newInfo, {
@@ -84,6 +97,8 @@ export const adminUpdateAuthor = async (
       )
     if (err === 'AuthorNotFound' || err.kind === 'ObjectId')
       next(new NotFoundError('No author found with this Id', err))
+    if (err === 'NotAnAdmin')
+      next(new UnauthorizedError('You have no right to do this! SHAME!'))
     throw next(new InternalServerError(err))
   }
 }
@@ -99,14 +114,21 @@ export const adminDeleteAuthor = async (
   res: Response,
   next: NextFunction
 ) => {
+  const userReq = req.user as PayloadType
   const { authorId } = req.params
   try {
+    const user = await User.findById(userReq.id)
+    if (!user?.isAdmin) throw 'NotAnAdmin'
+
     const author = await Author.findByIdAndDelete(authorId)
     if (!author) throw 'AuthorNotFound'
+
     res.status(200).json(author)
   } catch (err) {
     if (err === 'AuthorNotFound' || err.kind === 'ObjectId')
       next(new NotFoundError('No author found with this Id', err))
+    if (err === 'NotAnAdmin')
+      next(new UnauthorizedError('You have no right to do this! SHAME!'))
     next(new InternalServerError(err))
   }
 }

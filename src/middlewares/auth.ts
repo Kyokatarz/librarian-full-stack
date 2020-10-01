@@ -10,9 +10,7 @@ export type TokenType = {
 }
 
 export type PayloadType = {
-  user: {
-    id: string
-  }
+  id: string
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
