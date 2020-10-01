@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { JWT_SECRET } from '../util/secrets'
 
+import { JWT_SECRET } from '../util/secrets'
 import { stringifyError } from '../util/stringifyError'
 import {
   BadRequestError,
