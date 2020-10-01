@@ -86,10 +86,9 @@ export const checkoutBook = async (
     const user = await User.findById(userReq.id)
 
     //Building book => user:
-    const bookList = [...user?.borrowedBooks]
     const { isbn, title, description, publisher, author, status } = updatedBook!
 
-    bookList?.unshift({
+    user?.borrowedBooks?.unshift({
       isbn,
       title,
       description,
@@ -100,12 +99,8 @@ export const checkoutBook = async (
       date: new Date(),
     })
 
-    const userWithNewBookList = await User.findByIdAndUpdate(
-      userReq.id,
-      { borrowedBooks: bookList },
-      { new: true }
-    )
-    res.status(200).json(userWithNewBookList)
+    await user?.save()
+    res.status(200).json(user)
   } catch (err) {
     if (err === 'BookNotFound' || err.kind === 'ObjectId')
       next(new NotFoundError('No book found with this ID', err))
@@ -135,7 +130,7 @@ export const checkinBook = async (
       { new: true }
     )
     if (!updatedBook) {
-      //How can you borrow an already borrowed book?
+      //How can you return an already returned book?
       res.status(200).json({ msg: 'How did you get this book? :suspicious:' })
       return
     }
@@ -145,12 +140,14 @@ export const checkinBook = async (
     const deleteIndex: number = user?.borrowedBooks
       .map((obj: any) => obj.id)
       .indexOf(bookId)
+
     user?.borrowedBooks.splice(deleteIndex, 1)
+
     await user?.save()
     res.status(200).json({ user })
   } catch (err) {
-    if (err === 'BookNotFound')
-      next(new NotFoundError('No book found with this ISBN', err))
+    if (err === 'BookNotFound' || err.kind === 'ObjectId')
+      next(new NotFoundError('No book found with this ID', err))
     next(new InternalServerError(err))
   }
 }
