@@ -154,8 +154,6 @@ export const checkinBook = async (
 /*=========================================+
  |               //!ADMIN ONLY             |
  +=========================================*/
-//TODO: Add admin authorization
-
 /*===================+
  |@ROUTE POST v1/book|
  |@DESC Get all books|
