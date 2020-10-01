@@ -2,6 +2,7 @@ import express from 'express'
 
 import Book from '../models/Book'
 import * as controller from '../controllers/book'
+import auth from '../middlewares/auth'
 import {
   addNewBookValidator,
   updateBookInfoValidator,
@@ -10,8 +11,12 @@ const router = express.Router()
 
 router.get('/', controller.getAllBooks)
 router.get('/:isbn', controller.getBookByIsbn)
-router.patch('/:isbn/checkout', controller.checkoutBook)
-router.patch('/:isbn/checkin', controller.checkinBook)
+
+/*=========+
+ |PROTECTED|
+ +=========*/
+router.patch('/:bookId/checkout', auth, controller.checkoutBook)
+router.patch('/:bookId/checkin', auth, controller.checkinBook)
 
 /*=====+
  |ADMIN|
