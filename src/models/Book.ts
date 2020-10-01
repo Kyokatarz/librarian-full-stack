@@ -1,4 +1,15 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
+
+export type BookDocument = Document & {
+  isbn: string
+  title: string
+  description: string
+  publisher: string
+  author: {
+    id: mongoose.Schema.Types.ObjectId
+  }
+  status: 'available' | 'borrowed'
+}
 
 const BookSchema = new mongoose.Schema({
   isbn: {
@@ -30,6 +41,6 @@ const BookSchema = new mongoose.Schema({
   },
 })
 
-const Book = mongoose.model('book', BookSchema)
+const Book = mongoose.model<BookDocument>('book', BookSchema)
 
 export default Book
