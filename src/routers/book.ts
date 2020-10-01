@@ -4,8 +4,8 @@ import Book from '../models/Book'
 import * as controller from '../controllers/book'
 import auth from '../middlewares/auth'
 import {
-  addNewBookValidator,
-  updateBookInfoValidator,
+  addBookValidatorWithAuth,
+  updateBookValidatorWithAuth,
 } from '../middlewares/validators'
 const router = express.Router()
 
@@ -21,7 +21,7 @@ router.patch('/:bookId/checkin', auth, controller.checkinBook)
 /*=====+
  |ADMIN|
  +=====*/
-router.post('/', addNewBookValidator, controller.adminAddBook)
-router.put('/:bookId', updateBookInfoValidator, controller.adminUpdateBook)
-router.delete('/:bookId', controller.deleteBook)
+router.post('/', addBookValidatorWithAuth, controller.adminAddBook)
+router.put('/:bookId', updateBookValidatorWithAuth, controller.adminUpdateBook)
+router.delete('/:bookId', auth, controller.deleteBook)
 export default router

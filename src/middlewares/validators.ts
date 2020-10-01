@@ -1,4 +1,5 @@
 import { check, oneOf } from 'express-validator'
+import auth from '../middlewares/auth'
 
 /************************
  * USER ROUTE VALIDATOR *
@@ -38,7 +39,8 @@ export const forgetPasswordValidator = [
 /*====================+
  |BOOK ROUTE VALIDATOR|
  +====================*/
-export const addNewBookValidator = [
+export const addBookValidatorWithAuth = [
+  auth,
   check('title', 'Title must be provided').notEmpty(),
   check('author', 'Author must be provided').notEmpty(),
   check('status', 'Status must be provided').notEmpty(),
@@ -48,7 +50,8 @@ export const addNewBookValidator = [
   ),
 ]
 
-export const updateBookInfoValidator = [
+export const updateBookValidatorWithAuth = [
+  auth,
   check('title', 'Title must be provided').notEmpty(),
   check('author', 'Author must be provided').notEmpty(),
   check('status', 'Status must be provided').notEmpty(),
@@ -61,9 +64,11 @@ export const updateBookInfoValidator = [
 /*======================+
  |AUTHOR ROUTE VALIDATOR|
  +======================*/
-export const addNewAuthorValidator = [
+export const addAuthorValidatorWithAuth = [
+  auth,
   check('name', 'Author name must be provided').notEmpty(),
 ]
-export const updateAuthorInfoValidator = [
+export const updateAuthorValidatorWithAuth = [
+  auth,
   check('name', 'Author name must be provided').notEmpty(),
 ]
