@@ -29,6 +29,7 @@ export const userPasswordChangeValidator = [
     min: 6,
   }),
   check('oldPassword', 'Password must be provided').notEmpty(),
+  check('newPassword', 'Password must be provided').notEmpty(),
 ]
 
 export const forgetPasswordValidator = [
