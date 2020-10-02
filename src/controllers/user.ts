@@ -4,13 +4,16 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 import { JWT_SECRET } from '../util/secrets'
-import { stringifyError } from '../util/stringifyError'
+import stringifyError from '../util/stringifyError'
 import {
   BadRequestError,
   InternalServerError,
   NotFoundError,
 } from '../helpers/apiError'
+import * as service from '../services/user'
+
 import User from '../models/User'
+import errorHandler from 'errorhandler'
 
 /*******************************
  * @ROUTE POST /v1/user/signUp *
@@ -31,24 +34,14 @@ export const createUser = async (
       throw 'ValidationError'
     }
 
-    //Check if email existed
-    const user = await User.findOne({ $or: [{ email }, { username }] })
-    if (user) throw 'IdentificationDuplicated'
-
-    //Hashing password
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-
-    const newUser = new User({
+    //Save user
+    const newUser = await service.create({
       email,
-      password: hashedPassword,
       username,
+      password,
       lastName,
       firstName,
     })
-
-    //Save user
-    await newUser.save()
 
     //Return JWT
     const payload = {
@@ -63,16 +56,7 @@ export const createUser = async (
 
     res.status(200).json({ token })
   } catch (err) {
-    if (err === 'ValidationError') {
-      let errorString: string = stringifyError(errors.array())
-      next(
-        new BadRequestError('Request Validation Failed: ' + errorString, err)
-      )
-    } else if (err === 'IdentificationDuplicated') {
-      next(new BadRequestError('Email or Username existed', err))
-    } else {
-      next(new InternalServerError(err))
-    }
+    next(service.errorHandler(err, errors))
   }
 }
 
@@ -113,13 +97,7 @@ export const signUserIn = async (
     console.log('Token:', token)
     res.status(200).json({ token })
   } catch (err) {
-    if (err === 'ValidationError') {
-      let errorString: string = stringifyError(errors.array())
-      next(
-        new BadRequestError('Request Validation Failed: ' + errorString, err)
-      )
-    } else if (err === 'CredentialError')
-      next(new BadRequestError('Incorrect Username or Password', err))
+    next(service.errorHandler(err, errors))
   }
 }
 
@@ -137,39 +115,17 @@ export const updateUserInfo = async (
   const { userId } = req.params
   const { lastName, firstName, email } = req.body
   const errors = validationResult(req)
-
-  //Build a new user info object
-  let newUserInfo: {
-    lastName?: string
-    firstName?: string
-    email?: string
-  } = {}
-
-  if (lastName) newUserInfo.lastName = lastName
-  if (firstName) newUserInfo.firstName = firstName
-  if (email) newUserInfo.email = email
-
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
-    const user = await User.findById(userId)
-    if (!user) throw 'UserNotFound'
-    const newUser = await User.findByIdAndUpdate(userId, newUserInfo, {
-      new: true,
+
+    const newUser = await service.updateUser(userId, {
+      lastName,
+      firstName,
+      email,
     })
-    console.log(newUser)
-    // await newUser?.save()
     res.status(200).json(newUser)
   } catch (err) {
-    if (err === 'ValidationError')
-      next(
-        new BadRequestError(
-          'Bad Request: ' + stringifyError(errors.array()),
-          err
-        )
-      )
-    if (err.kind === 'ObjectId' || err === 'UserNotFound')
-      next(new NotFoundError('No user found with this Id', err))
-    else next(new InternalServerError(err))
+    next(service.errorHandler(err, errors))
   }
 }
 
@@ -189,31 +145,13 @@ export const updateUserPassword = async (
 
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
-    const user = await User.findById(userId)
-    if (user?.password !== oldPassword) throw 'CredentialError'
-
-    const userWithNewPassword = await User.findByIdAndUpdate(
-      userId,
-      { password: newPassword },
-      { new: true }
-    )
-    res.status(200).json(userWithNewPassword)
+    const newUser = await service.updatePassword(userId, {
+      oldPassword,
+      newPassword,
+    })
+    res.status(200).json(newUser)
   } catch (err) {
-    if (err.kind === 'ObjectId')
-      next(new NotFoundError('No user found with this Id', err))
-    switch (err) {
-      case 'ValidationError':
-        next(
-          new BadRequestError(
-            'Bad Request: ' + stringifyError(errors.array()),
-            err
-          )
-        )
-      case 'CredentialError':
-        next(new BadRequestError('Incorrect Password', err))
-      default:
-        next(new InternalServerError(err))
-    }
+    next(service.errorHandler(err, errors))
   }
 }
 
@@ -236,13 +174,6 @@ export const forgetPassword = async (
         'A recover email has been sent to your email address if you have an account associated with it.',
     })
   } catch (err) {
-    if (err === 'ValidationError')
-      next(
-        new BadRequestError(
-          'Bad Request: ' + stringifyError(errors.array()),
-          err
-        )
-      )
-    next(new InternalServerError(err))
+    next(service.errorHandler(err, errors))
   }
 }
