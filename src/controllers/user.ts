@@ -25,7 +25,7 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, username, password, lastName, firstName } = req.body
+  const { email, username, password, lastName, firstName, isAdmin } = req.body
   const errors = validationResult(req)
 
   try {
@@ -41,6 +41,7 @@ export const createUser = async (
       password,
       lastName,
       firstName,
+      isAdmin,
     })
 
     //Return JWT

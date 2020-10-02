@@ -16,7 +16,7 @@ import stringifyError from '../util/stringifyError'
 export const create = async (
   userObj: Partial<UserDocument>
 ): Promise<UserDocument> => {
-  const { email, username, password, lastName, firstName } = userObj
+  const { email, username, password, lastName, firstName, isAdmin } = userObj
 
   //Check if email existed
   const checkDuplicated = await User.findOne({ $or: [{ email }, { username }] })
@@ -32,6 +32,7 @@ export const create = async (
     username,
     lastName,
     firstName,
+    isAdmin,
   })
 
   return user.save()
