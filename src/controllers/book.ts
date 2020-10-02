@@ -45,7 +45,7 @@ export const getBookByIsbn = async (
 ) => {
   const { isbn } = req.params
   try {
-    const book = await Book.find({ isbn })
+    const book = await Book.findOne({ isbn })
     if (!book) throw 'BookNotFound'
     res.status(200).json(book)
   } catch (err) {
@@ -143,7 +143,7 @@ export const checkinBook = async (
     user?.borrowedBooks.splice(deleteIndex, 1)
 
     await user?.save()
-    res.status(200).json({ user })
+    res.status(200).json(user)
   } catch (err) {
     if (err === 'BookNotFound' || err.kind === 'ObjectId')
       next(new NotFoundError('No book found with this ID', err))
@@ -154,11 +154,11 @@ export const checkinBook = async (
 /*=========================================+
  |               //!ADMIN ONLY             |
  +=========================================*/
-/*===================+
- |@ROUTE POST v1/book|
- |@DESC Get all books|
- |@ACCESS private    |
- +===================*/
+/*====================+
+ |@ROUTE POST v1/book |
+ |@DESC Add a new book|
+ |@ACCESS private     |
+ +====================*/
 export const adminAddBook = async (
   req: Request,
   res: Response,
