@@ -6,7 +6,7 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from '../helpers/apiError'
-import { stringifyError } from '../util/stringifyError'
+import stringifyError from '../util/stringifyError'
 
 import Author from '../models/Author'
 import { PayloadType } from '../middlewares/auth'

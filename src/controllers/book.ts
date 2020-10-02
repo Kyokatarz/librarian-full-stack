@@ -8,7 +8,7 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from '../helpers/apiError'
-import { stringifyError } from '../util/stringifyError'
+import stringifyError from '../util/stringifyError'
 import User, { BorrowedBook, UserDocument } from '../models/User'
 import { Document } from 'mongoose'
 import { PayloadType } from '../middlewares/auth'

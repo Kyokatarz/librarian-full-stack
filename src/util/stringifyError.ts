@@ -7,7 +7,7 @@ export type ErrorObject = {
   location?: string
 }
 
-export const stringifyError = (error: ErrorObject[]): string => {
+export default (error: ValidationError[]): string => {
   const messages = error.map((obj: any) => obj.msg)
   const stringifiedMessage = messages.join(', ')
   console.log(stringifiedMessage)
