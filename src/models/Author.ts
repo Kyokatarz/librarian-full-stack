@@ -1,5 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 
+import { BookDocument } from './Book'
+
+export type AuthorDocument = Document & {
+  name: string
+  books: Partial<BookDocument>[]
+}
 const AuthorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   books: [
@@ -12,6 +18,6 @@ const AuthorSchema = new mongoose.Schema({
   ],
 })
 
-const Author = mongoose.model('author', AuthorSchema)
+const Author = mongoose.model<AuthorDocument>('author', AuthorSchema)
 
 export default Author
