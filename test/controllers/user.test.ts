@@ -81,7 +81,7 @@ describe('user controller', () => {
     const res1 = await request(app)
       .patch(`/api/v1/user/${decodedPayload.user.id}`)
       .send({ lastName: 'Duck' })
-    console.log(res1.body)
+
     expect(res1.status).toBe(200)
     expect(res1.body.firstName).toBe('Donald')
     expect(res1.body.lastName).toBe('Duck')
