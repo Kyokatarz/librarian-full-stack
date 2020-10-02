@@ -10,7 +10,7 @@ export type UserDocument = Document & {
   password: string
   email: string
   lastName: string
-  fisrtName: string
+  firstName: string
   borrowedBooks: any
   isAdmin: Boolean
 }
