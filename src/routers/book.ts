@@ -22,6 +22,6 @@ router.patch('/:bookId/checkin', auth, controller.checkinBook)
  |ADMIN|
  +=====*/
 router.post('/', addBookValidatorWithAuth, controller.adminAddBook)
-router.put('/:bookId', updateBookValidatorWithAuth, controller.adminUpdateBook)
+router.put('/:bookId', auth, controller.adminUpdateBook)
 router.delete('/:bookId', auth, controller.deleteBook)
 export default router
