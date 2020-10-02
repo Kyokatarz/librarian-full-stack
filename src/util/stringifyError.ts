@@ -10,6 +10,5 @@ export type ErrorObject = {
 export default (error: ValidationError[]): string => {
   const messages = error.map((obj: any) => obj.msg)
   const stringifiedMessage = messages.join(', ')
-  console.log(stringifiedMessage)
   return stringifiedMessage
 }
