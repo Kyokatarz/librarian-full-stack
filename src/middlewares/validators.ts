@@ -43,7 +43,6 @@ export const forgetPasswordValidator = [
 export const addBookValidatorWithAuth = [
   auth,
   check('title', 'Title must be provided').notEmpty(),
-  check('author', 'Author must be provided').notEmpty(),
   check('status', 'Status must be provided').notEmpty(),
   oneOf(
     [check('status').equals('available'), check('status').equals('borrowed')],
