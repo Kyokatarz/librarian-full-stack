@@ -18,7 +18,7 @@ export const signInValidator = [
 ]
 
 export const userInfoUpdateValidator = [
-  check('email', 'Please enter a valid email').isEmail(),
+  check('email', 'Please enter a valid email').isEmail().optional(),
 ]
 
 export const userPasswordChangeValidator = [
