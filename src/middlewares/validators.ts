@@ -1,5 +1,6 @@
-import { check, oneOf } from 'express-validator'
-import auth from '../middlewares/auth'
+import { check, oneOf } from 'express-validator';
+
+import auth from '../middlewares/auth';
 
 /************************
  * USER ROUTE VALIDATOR *

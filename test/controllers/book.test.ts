@@ -1,12 +1,12 @@
-import request from 'supertest'
 import jwt from 'jsonwebtoken'
+import request from 'supertest'
 
-import * as dbHelper from '../db-helper'
-import { JWT_SECRET } from '../../src/util/secrets'
 import app from '../../src/app'
 import { TokenType } from '../../src/middlewares/auth'
-import { UserDocument } from '../../src/models/User'
 import { BookDocument } from '../../src/models/Book'
+import { UserDocument } from '../../src/models/User'
+import { JWT_SECRET } from '../../src/util/secrets'
+import * as dbHelper from '../db-helper'
 
 async function createUser(override?: Partial<UserDocument>) {
   let newUser: Partial<UserDocument> = {
@@ -49,11 +49,6 @@ async function createBook(
     .post('/api/v1/book/')
     .set({ 'x-auth-token': userToken, Accept: 'application/json' })
     .send(newBook)
-}
-
-function decodeToken(token: string) {
-  const decodedPayload = jwt.verify(token, JWT_SECRET) as TokenType
-  return decodedPayload
 }
 
 describe('book controller', () => {

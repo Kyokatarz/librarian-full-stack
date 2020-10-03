@@ -1,16 +1,13 @@
 import express from 'express'
 
+import * as controller from '../controllers/user'
 import {
+  forgetPasswordValidator,
   signInValidator,
   signUpValidator,
   userInfoUpdateValidator,
   userPasswordChangeValidator,
-  forgetPasswordValidator,
 } from '../middlewares/validators'
-
-import * as controller from '../controllers/user'
-
-import User from '../models/User'
 
 const router = express.Router()
 

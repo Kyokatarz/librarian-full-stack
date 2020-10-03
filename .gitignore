@@ -42,4 +42,4 @@ yarn.lock
 
 *.swo
 *.swp
-*.env.example
+

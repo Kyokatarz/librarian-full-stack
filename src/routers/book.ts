@@ -1,12 +1,9 @@
 import express from 'express'
 
-import Book from '../models/Book'
 import * as controller from '../controllers/book'
 import auth from '../middlewares/auth'
-import {
-  addBookValidatorWithAuth,
-  updateBookValidatorWithAuth,
-} from '../middlewares/validators'
+import { addBookValidatorWithAuth } from '../middlewares/validators'
+
 const router = express.Router()
 
 router.get('/', controller.getAllBooks)

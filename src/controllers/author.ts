@@ -1,18 +1,15 @@
-import { Request, Response, NextFunction } from 'express'
-import { validationResult } from 'express-validator'
-import {
-  BadRequestError,
-  InternalServerError,
-  NotFoundError,
-  UnauthorizedError,
-} from '../helpers/apiError'
-import stringifyError from '../util/stringifyError'
+import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 
-import Author from '../models/Author'
-import { PayloadType } from '../middlewares/auth'
-import User from '../models/User'
-import * as service from '../services/author'
-import { errorHandler } from '../services/user'
+import {
+    BadRequestError, InternalServerError, NotFoundError, UnauthorizedError
+} from '../helpers/apiError';
+import { PayloadType } from '../middlewares/auth';
+import Author from '../models/Author';
+import User from '../models/User';
+import * as service from '../services/author';
+import { errorHandler } from '../services/user';
+import stringifyError from '../util/stringifyError';
 
 /*=========================================+
  |              //!ADMIN ONLY              |

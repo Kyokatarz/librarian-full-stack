@@ -1,7 +1,8 @@
-import jwt from 'jsonwebtoken'
-import { JWT_SECRET } from '../util/secrets'
-import { Request, Response, NextFunction } from 'express'
-import { UnauthorizedError, InternalServerError } from '../helpers/apiError'
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+
+import { InternalServerError, UnauthorizedError } from '../helpers/apiError';
+import { JWT_SECRET } from '../util/secrets';
 
 export type TokenType = {
   user: {

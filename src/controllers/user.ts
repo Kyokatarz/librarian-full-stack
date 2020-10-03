@@ -1,19 +1,11 @@
-import { Request, Response, NextFunction } from 'express'
-import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
+import { NextFunction, Request, Response } from 'express'
+import { validationResult } from 'express-validator'
 import jwt from 'jsonwebtoken'
 
-import { JWT_SECRET } from '../util/secrets'
-import stringifyError from '../util/stringifyError'
-import {
-  BadRequestError,
-  InternalServerError,
-  NotFoundError,
-} from '../helpers/apiError'
-import * as service from '../services/user'
-
 import User from '../models/User'
-import errorHandler from 'errorhandler'
+import * as service from '../services/user'
+import { JWT_SECRET } from '../util/secrets'
 
 /*******************************
  * @ROUTE POST /v1/user/signUp *

@@ -1,12 +1,11 @@
-import { create } from 'lodash'
-import request from 'supertest'
 import jwt from 'jsonwebtoken'
+import request from 'supertest'
 
-import * as dbHelper from '../db-helper'
-import { JWT_SECRET } from '../../src/util/secrets'
 import app from '../../src/app'
-import { UserDocument } from '../../src/models/User'
 import { TokenType } from '../../src/middlewares/auth'
+import { UserDocument } from '../../src/models/User'
+import { JWT_SECRET } from '../../src/util/secrets'
+import * as dbHelper from '../db-helper'
 
 const randomUserId = 'swagSavage4-20Six09'
 

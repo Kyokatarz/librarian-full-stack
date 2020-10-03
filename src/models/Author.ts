@@ -1,6 +1,6 @@
-import mongoose, { Document } from 'mongoose'
+import mongoose, { Document } from 'mongoose';
 
-import { BookDocument } from './Book'
+import { BookDocument } from './Book';
 
 export type AuthorDocument = Document & {
   name: string

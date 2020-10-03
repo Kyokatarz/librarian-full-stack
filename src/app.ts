@@ -1,23 +1,15 @@
-import express from 'express'
-import compression from 'compression'
-import session from 'express-session'
-import bodyParser from 'body-parser'
-import lusca from 'lusca'
-import mongo from 'connect-mongo'
-import flash from 'express-flash'
-import path from 'path'
-import mongoose from 'mongoose'
-import passport from 'passport'
 import bluebird from 'bluebird'
-
-import { MONGODB_URI, SESSION_SECRET } from './util/secrets'
-
-import userRouter from './routers/user'
-import bookRouter from './routers/book'
-import authorRouter from './routers/author'
+import bodyParser from 'body-parser'
+import compression from 'compression'
+import express from 'express'
+import lusca from 'lusca'
+import mongoose from 'mongoose'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
-import apiContentType from './middlewares/apiContentType'
+import authorRouter from './routers/author'
+import bookRouter from './routers/book'
+import userRouter from './routers/user'
+import { MONGODB_URI } from './util/secrets'
 
 const app = express()
 const mongoUrl = MONGODB_URI

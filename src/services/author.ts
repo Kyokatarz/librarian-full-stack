@@ -1,14 +1,13 @@
 import { Result, ValidationError } from 'express-validator'
 
 import {
-  NotFoundError,
   BadRequestError,
   InternalServerError,
+  NotFoundError,
   UnauthorizedError,
 } from '../helpers/apiError'
 import Author, { AuthorDocument } from '../models/Author'
-import Book, { BookDocument } from '../models/Book'
-import User, { UserDocument } from '../models/User'
+import User from '../models/User'
 import stringifyError from '../util/stringifyError'
 
 export const addAuthor = async (

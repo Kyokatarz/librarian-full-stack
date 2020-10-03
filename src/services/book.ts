@@ -1,10 +1,9 @@
 import { Result, ValidationError } from 'express-validator'
-import mongoose from 'mongoose'
 
 import {
-  NotFoundError,
   BadRequestError,
   InternalServerError,
+  NotFoundError,
   UnauthorizedError,
 } from '../helpers/apiError'
 import Book, { BookDocument } from '../models/Book'
@@ -77,7 +76,7 @@ export const checkinBook = async (
   if (book.status === 'available') return null
   book.status = 'available'
   await book.save()
-  console.log(book)
+
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
 
@@ -171,7 +170,6 @@ export const errorHandler = (
     case 'NotAnAdmin':
       return new UnauthorizedError('You have no right to do this! SHAME!')
     case 'BookNotFound':
-      console.log('Here')
       return new NotFoundError('No book found', err)
     case 'UserNotFound':
       return new NotFoundError('No user found', err)

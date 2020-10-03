@@ -1,12 +1,9 @@
 import request from 'supertest'
-import jwt from 'jsonwebtoken'
 
-import * as dbHelper from '../db-helper'
 import app from '../../src/app'
-import { JWT_SECRET } from '../../src/util/secrets'
-import auth, { TokenType } from '../../src/middlewares/auth'
-import { UserDocument } from '../../src/models/User'
 import { AuthorDocument } from '../../src/models/Author'
+import { UserDocument } from '../../src/models/User'
+import * as dbHelper from '../db-helper'
 
 async function createUser(override?: Partial<UserDocument>) {
   let newUser: Partial<UserDocument> = {
