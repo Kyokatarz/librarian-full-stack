@@ -7,8 +7,6 @@ import app from '../../src/app'
 import { TokenType } from '../../src/middlewares/auth'
 import { UserDocument } from '../../src/models/User'
 import { BookDocument } from '../../src/models/Book'
-import e from 'express'
-import { isArray } from 'lodash'
 
 async function createUser(override?: Partial<UserDocument>) {
   let newUser: Partial<UserDocument> = {
@@ -104,8 +102,10 @@ describe('book controller', () => {
     const isbnBookRes = await request(app).get(
       `/api/v1/book/${bookRes.body.isbn}`
     )
+    console.log(bookRes.body)
+    console.log(isbnBookRes.body)
     expect(isbnBookRes.status).toBe(200)
-    expect(isbnBookRes.body.isbn).toBe(bookRes.body.isbn)
+    expect(isbnBookRes.body[0].isbn).toBe(bookRes.body.isbn)
   })
 
   it('should check out a book by its ID', async () => {
