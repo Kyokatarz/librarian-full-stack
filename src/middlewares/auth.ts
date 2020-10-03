@@ -26,6 +26,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     next()
   } catch (err) {
     if (err === 'NoToken') next(new UnauthorizedError('No token found', err))
+    if (err.name === 'JsonWebTokenError')
+      next(new UnauthorizedError('Invalid token', err))
     next(new InternalServerError(err))
   }
 }
