@@ -106,7 +106,7 @@ export const errorHandler = (
     case 'ChangingPasswordError':
       return new BadRequestError('Incorrect Password')
     case 'UserNotFound':
-      new NotFoundError('No user found with this Id', err)
+      return new NotFoundError('No user found with this Id', err)
     default:
       return new InternalServerError(err)
   }
