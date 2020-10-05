@@ -1,15 +1,17 @@
-import { NextFunction, Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import { NextFunction, Request, Response } from 'express'
+import { validationResult } from 'express-validator'
 
 import {
-    BadRequestError, InternalServerError, NotFoundError, UnauthorizedError
-} from '../helpers/apiError';
-import { PayloadType } from '../middlewares/auth';
-import Author from '../models/Author';
-import User from '../models/User';
-import * as service from '../services/author';
-import { errorHandler } from '../services/user';
-import stringifyError from '../util/stringifyError';
+  BadRequestError,
+  InternalServerError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../helpers/apiError'
+import { PayloadType } from '../middlewares/auth'
+import Author from '../models/Author'
+import User from '../models/User'
+import * as service from '../services/author'
+import stringifyError from '../util/stringifyError'
 
 /*=========================================+
  |              //!ADMIN ONLY              |
@@ -27,10 +29,11 @@ export const adminAddAuthor = async (
   const errors = validationResult(req)
   const userReq = req.user as PayloadType
   try {
+    if (!errors.isEmpty()) throw 'ValidationError'
     const newAuthor = await service.addAuthor(userReq.id, req.body)
     res.status(200).json(newAuthor)
   } catch (err) {
-    next(errorHandler(err, errors))
+    next(service.errorHandler(err, errors))
   }
 }
 
@@ -53,7 +56,7 @@ export const adminUpdateAuthor = async (
     const author = await service.updateAuthor(userReq.id, authorId, req.body)
     res.status(200).json(author)
   } catch (err) {
-    next(errorHandler(err, errors))
+    next(service.errorHandler(err, errors))
   }
 }
 
@@ -74,6 +77,6 @@ export const adminDeleteAuthor = async (
     const author = await service.deleteAuthor(userReq.id, authorId)
     res.status(200).json(author)
   } catch (err) {
-    next(errorHandler(err))
+    next(service.errorHandler(err))
   }
 }

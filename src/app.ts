@@ -15,23 +15,23 @@ const app = express()
 const mongoUrl = MONGODB_URI
 
 mongoose.Promise = bluebird
-mongoose
-  .connect(mongoUrl, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: true,
-  })
-  .then(() => {
-    console.log('Connected to database!')
-    /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
-  })
-  .catch((err: Error) => {
+async function connectDb() {
+  try {
+    await mongoose.connect(mongoUrl, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+      useFindAndModify: true,
+    })
+  } catch (err) {
     console.log(
       'MongoDB connection error. Please make sure MongoDB is running. ' + err
     )
     process.exit(1)
-  })
+  }
+}
+
+connectDb()
 
 // Express configuration
 app.set('port', process.env.PORT || 3000)

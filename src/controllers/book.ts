@@ -106,6 +106,7 @@ export const adminAddBook = async (
   const errors = validationResult(req)
 
   try {
+    if (!errors.isEmpty()) throw 'ValidationError'
     const newBook = await service.addNewBook(
       userReq.id,
       req.body as Partial<BookDocument>
@@ -131,6 +132,7 @@ export const adminUpdateBook = async (
   const { bookId } = req.params
 
   try {
+    if (!errors.isEmpty()) throw 'ValidationError'
     const newBook = await service.updateBook(
       userReq.id,
       bookId,

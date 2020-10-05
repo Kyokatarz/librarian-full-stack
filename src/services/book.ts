@@ -148,8 +148,7 @@ export const deleteBook = async (
   bookId: string
 ): Promise<BookDocument> => {
   const user = await User.findById(userId)
-  if (!user) throw 'UserNotFound'
-  if (!user.isAdmin) throw 'NotAnAdmin'
+  if (!user!.isAdmin) throw 'NotAnAdmin'
   const book = await Book.findByIdAndDelete(bookId)
   if (!book) throw 'BookNotFound'
   return book
@@ -171,8 +170,6 @@ export const errorHandler = (
       return new UnauthorizedError('You have no right to do this! SHAME!')
     case 'BookNotFound':
       return new NotFoundError('No book found', err)
-    case 'UserNotFound':
-      return new NotFoundError('No user found', err)
     default:
       return new InternalServerError(err)
   }
