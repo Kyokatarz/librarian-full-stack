@@ -1,12 +1,9 @@
-import { Mongoose, Schema } from 'mongoose'
 import request from 'supertest'
 
 import app from '../../src/app'
-import auth from '../../src/middlewares/auth'
 import { AuthorDocument } from '../../src/models/Author'
 import { BookDocument } from '../../src/models/Book'
 import { UserDocument } from '../../src/models/User'
-
 import * as dbHelper from '../db-helper'
 
 const randomId = '!@#!$#adsdwasdacxzs'

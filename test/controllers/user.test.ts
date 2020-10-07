@@ -1,11 +1,7 @@
-import jwt from 'jsonwebtoken'
 import request from 'supertest'
 
 import app from '../../src/app'
-import { TokenType } from '../../src/middlewares/auth'
 import { UserDocument } from '../../src/models/User'
-import * as service from '../../src/services/user'
-import { JWT_SECRET } from '../../src/util/secrets'
 import * as dbHelper from '../db-helper'
 
 const randomId = '!@#!$#adsdwasdacxzs'

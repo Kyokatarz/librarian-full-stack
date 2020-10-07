@@ -1,16 +1,5 @@
-import request from 'supertest'
-import jwt from 'jsonwebtoken'
-
-import app from '../../src/app'
-import { TokenType } from '../../src/middlewares/auth'
-import { UserDocument } from '../../src/models/User'
 import * as service from '../../src/services/user'
-import { JWT_SECRET } from '../../src/util/secrets'
 import * as dbHelper from '../db-helper'
-import { create } from 'lodash'
-
-const randomId = '!@#!$#adsdwasdacxzs'
-const mockMongoId = '5f74ab9ea37c5c08d828d83d'
 
 const userObj = {
   username: 'DonaldJump',

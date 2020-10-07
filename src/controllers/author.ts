@@ -1,17 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 
-import {
-  BadRequestError,
-  InternalServerError,
-  NotFoundError,
-  UnauthorizedError,
-} from '../helpers/apiError'
 import { PayloadType } from '../middlewares/auth'
-import Author from '../models/Author'
-import User from '../models/User'
 import * as service from '../services/author'
-import stringifyError from '../util/stringifyError'
 
 /*=========================================+
  |              //!ADMIN ONLY              |
@@ -48,9 +39,7 @@ export const adminUpdateAuthor = async (
   next: NextFunction
 ) => {
   const errors = validationResult(req)
-  const { name, books } = req.body
   const { authorId } = req.params
-  const newInfo: any = {}
   const userReq = req.user as PayloadType
   try {
     const author = await service.updateAuthor(userReq.id, authorId, req.body)

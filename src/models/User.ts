@@ -1,6 +1,6 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose'
 
-import { BookDocument } from './Book';
+import { BookDocument } from './Book'
 
 export type BorrowedBook = BookDocument & {
   date: { type: Date; required: true }

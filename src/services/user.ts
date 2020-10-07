@@ -1,9 +1,13 @@
-import bcrypt from 'bcrypt';
-import { Result, ValidationError } from 'express-validator';
+import bcrypt from 'bcrypt'
+import { Result, ValidationError } from 'express-validator'
 
-import { BadRequestError, InternalServerError, NotFoundError } from '../helpers/apiError';
-import User, { UserDocument } from '../models/User';
-import stringifyError from '../util/stringifyError';
+import {
+  BadRequestError,
+  InternalServerError,
+  NotFoundError,
+} from '../helpers/apiError'
+import User, { UserDocument } from '../models/User'
+import stringifyError from '../util/stringifyError'
 
 /*===========+
  |Create User|
