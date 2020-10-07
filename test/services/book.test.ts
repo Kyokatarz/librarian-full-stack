@@ -96,7 +96,6 @@ describe('book service', () => {
       .set({ 'x-auth-token': token, Accept: 'application/json' })
       .send()
 
-    console.log(res.body)
     expect(res.status).toBe(209)
     expect(res.body.msg).toBe('Book already borrowed!')
   })
@@ -108,7 +107,6 @@ describe('book service', () => {
 
     const book = await createBook({ title: '' }, token)
 
-    console.log('book: ', book.body)
     expect(book.status).toBe(400)
   })
 
@@ -121,7 +119,6 @@ describe('book service', () => {
       username: 'Admin',
       email: 'admin@email.com',
     })
-    console.log(admin.body)
     expect(admin.status).toBe(200)
     const adminToken = admin.body.token
 
