@@ -168,6 +168,8 @@ export const errorHandler = (
       )
     case 'NotAnAdmin':
       return new UnauthorizedError('You have no right to do this! SHAME!')
+    case 'UserNotFound':
+      return new NotFoundError('User not found')
     case 'BookNotFound':
       return new NotFoundError('No book found', err)
     default:

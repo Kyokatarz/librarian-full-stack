@@ -6,6 +6,9 @@ export type BorrowedBook = BookDocument & {
   date: { type: Date; required: true }
 }
 export type UserDocument = Document & {
+  googleId: string
+  imageUrl: string
+
   username: string
   password: string
   email: string
@@ -16,6 +19,8 @@ export type UserDocument = Document & {
 }
 
 const UserSchema = new mongoose.Schema({
+  googleId: String,
+  imageUrl: String,
   username: {
     type: String,
     required: true,
