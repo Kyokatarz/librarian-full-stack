@@ -20,7 +20,7 @@ export type UserDocument = Document & {
 
 const UserSchema = new mongoose.Schema({
   googleId: String,
-  imageUrl: String,
+  image: String,
   username: {
     type: String,
     required: true,

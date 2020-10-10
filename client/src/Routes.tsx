@@ -6,19 +6,9 @@ import Product from './pages/Product'
 
 const Routes = () => (
   <Switch>
-    <Route
-      exact
-      path='/'
-      component={ Home }
-    />
-    <Route
-      exact
-      path='/products/:id'
-      component={ Product }
-    />
+    <Route exact path="/" component={Home} />
+    <Route exact path="/products/:id" component={Product} />
   </Switch>
 )
 
 export default Routes
-
-

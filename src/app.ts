@@ -4,6 +4,7 @@ import compression from 'compression'
 import express from 'express'
 import lusca from 'lusca'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import authorRouter from './routers/author'
@@ -45,6 +46,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
+app.use(cors())
 app.use(passport.initialize())
 passport.use(strategy)
 // Use routers
