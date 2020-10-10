@@ -38,6 +38,16 @@ export const forgetPasswordValidator = [
   check('email', 'Please enter a valid email').isEmail(),
 ]
 
+export const recoverPasswordValidatorWithAuth = [
+  auth,
+  check('newPassword', 'Password must be provided').notEmpty(),
+  check(
+    'newPassword',
+    'Password length must be more than 6 characters'
+  ).isLength({
+    min: 6,
+  })
+]
 /*====================+
  |BOOK ROUTE VALIDATOR|
  +====================*/

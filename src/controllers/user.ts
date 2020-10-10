@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt'
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import jwt from 'jsonwebtoken'
+import { InternalServerError } from '../helpers/apiError'
+import { PayloadType, TokenType } from '../middlewares/auth'
 
 import User from '../models/User'
 import * as service from '../services/user'
@@ -159,14 +161,38 @@ export const forgetPassword = async (
   next: NextFunction
 ) => {
   const errors = validationResult(req)
+  const {email} = req.body.email
 
   try {
-    if (!errors.isEmpty()) throw 'ValidationError'
-    res.status(200).json({
-      msg:
-        'A recover email has been sent to your email address if you have an account associated with it.',
-    })
+    
+    await service.forgetPassword(req.body.email)
+
+    res.json({msg: 'A recover email has been sent to your email address if you have an account associated with it. '})
   } catch (err) {
-    next(service.errorHandler(err, errors))
+    next(new InternalServerError(err))
   }
 }
+
+/************************************************
+ * @ROUTE POST /v1/user/password/:hashedString   * 
+ * @DESC Recover User Password                  *
+ * @ACCESS Private                              *
+ ************************************************/
+
+ export const recoverPassword = async (req: Request, res: Response, next: NextFunction) => {
+  const {password} = req.body
+  const userId = (req.user as PayloadType).id
+  const errors = validationResult(req)
+
+  try {
+    if (errors) throw 'ValidationError'
+    const user = service.recoverPassword(userId, password)
+    res.redirect('http://localhost:5000')
+  } catch (err) {
+    
+  }
+  
+  
+ 
+
+ }

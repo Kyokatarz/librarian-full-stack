@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { Result, ValidationError } from 'express-validator'
+import jwt from 'jsonwebtoken'
 
 import {
   BadRequestError,
@@ -8,6 +9,9 @@ import {
 } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
 import stringifyError from '../util/stringifyError'
+import sendEmail from '../nodemailer'
+import { JWT_SECRET } from '../util/secrets'
+
 
 /*===========+
  |Create User|
@@ -56,6 +60,24 @@ export const updateUser = async (
   return user.save()
 }
 
+/*=======================+
+ |Forget Password Handler|
+ +=======================*/
+ export const forgetPassword = async (email:string) => {
+  const user = await User.findOne({email})
+
+  if (!user) return
+  const payload = {
+    user: {
+      id: user.id
+    }
+  }
+
+  const hashedString = jwt.sign(payload, JWT_SECRET, {expiresIn: 300}) ;
+  sendEmail(email, hashedString);
+  
+ }
+
 /*====================+
  |Update user password|
  +====================*/
@@ -82,6 +104,13 @@ export const updatePassword = async (
 
   user.password = hashedPassword
   return user.save()
+}
+
+export const recoverPassword = async (userId: string, newPassword: string): Promise<UserDocument> => {
+    const user = await User.findById(userId)
+    user!.password = newPassword
+    return await user!.save()
+  
 }
 
 /*=============+

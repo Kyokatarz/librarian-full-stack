@@ -3,6 +3,7 @@ import express from 'express'
 import * as controller from '../controllers/user'
 import {
   forgetPasswordValidator,
+  recoverPasswordValidatorWithAuth,
   signInValidator,
   signUpValidator,
   userInfoUpdateValidator,
@@ -21,4 +22,5 @@ router.patch(
   controller.updateUserPassword
 )
 router.post('/password', forgetPasswordValidator, controller.forgetPassword)
+router.post('/password/:hashedString',recoverPasswordValidatorWithAuth, controller.recoverPassword)
 export default router
