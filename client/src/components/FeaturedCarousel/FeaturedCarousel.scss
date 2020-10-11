@@ -1,0 +1,21 @@
+.Carousel {
+  height: 100%;
+  width: 100%;
+  background-color: green;
+
+  &__Item {
+    img {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__Caption {
+    transition: opacity 0.2s ease;
+    opacity: 0;
+  }
+}
+
+.Carousel__Item:hover > .Carousel__Caption {
+  opacity: 1;
+}
