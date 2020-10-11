@@ -1,0 +1,42 @@
+.Navbar {
+  justify-content: space-between;
+  position: fixed !important;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: #011627;
+  box-shadow: 7px 5px 13px 0px rgba(255, 255, 255, 1);
+}
+
+.NavbarLinkContainer {
+  width: 40%;
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+  transition: transform 0.25s ease-out;
+
+  &--dark {
+    background-color: #011627;
+  }
+  &.active {
+    flex-direction: column !important;
+    border: 2px solid red;
+    transform: translateX(0%);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .NavbarLinkContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid black;
+    transform: translateX(100%);
+  }
+}
