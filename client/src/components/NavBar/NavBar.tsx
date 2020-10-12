@@ -1,18 +1,29 @@
 import React from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
-import HamburgerIcon from '../HamburgerIcon/index'
+import HamburgerIcon from '../HamburgerIcon'
+import NavBarLink from '../NavBarLink'
+import SignInBtn from '../SignInBtn'
+import SignUpBtn from '../SignUpBtn/'
+
 import './NavBar.scss'
 
 const NavBar = () => {
   return (
     <Navbar className="Navbar" variant="dark">
-      <Navbar.Brand>Librarian</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
-      <Nav className=" NavbarLinkContainer NavbarLinkContainer--dark">
-        <Nav.Link>Home</Nav.Link>
-        <Nav.Link>Books</Nav.Link>
-      </Nav>
+      <Link to="/">
+        <Navbar.Brand>Librarian</Navbar.Brand>
+      </Link>
+      <div className="Navbar__End">
+        <NavBarLink />
+        <div className="Navbar__Buttons">
+          <SignInBtn />
+          <SignUpBtn />
+        </div>
+      </div>
+
+      {/* <UserIcon /> */}
       <HamburgerIcon />
     </Navbar>
   )

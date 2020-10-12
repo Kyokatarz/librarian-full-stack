@@ -1,5 +1,5 @@
 .Navbar {
-  justify-content: space-between;
+  justify-content: space-between !important;
   position: fixed !important;
   width: 100%;
   top: 0;
@@ -7,36 +7,32 @@
   z-index: 99;
   background-color: #011627;
   box-shadow: 7px 5px 13px 0px rgba(255, 255, 255, 1);
-}
 
-.NavbarLinkContainer {
-  width: 40%;
-  display: flex;
-  list-style: none;
-  justify-content: space-around;
-  transition: transform 0.25s ease-out;
-
-  &--dark {
-    background-color: #011627;
-  }
-  &.active {
-    flex-direction: column !important;
-    border: 2px solid red;
-    transform: translateX(0%);
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  .NavbarLinkContainer {
-    position: fixed;
-    top: 0;
-    right: 0;
+  &__End {
     width: 50%;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: space-evenly;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
-    transform: translateX(100%);
+  }
+
+  &__Buttons {
+    display: flex;
+    flex-direction: row;
+    & * {
+      margin: 1px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Navbar__End {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .Navbar__End {
+    width: 100%;
   }
 }
