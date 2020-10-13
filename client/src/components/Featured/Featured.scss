@@ -1,12 +1,14 @@
+@import '../../style/global.scss';
+
 .Featured {
   height: 100vh;
   min-height: 100vh;
-  background-color: black;
+  background-color: $dark-bg-color;
   position: relative;
   &__Content {
     width: 70%;
     height: 70%;
-    background-color: #343a40;
+    background-color: $dark-block-content;
     position: absolute;
     top: 50%;
     left: 50%;
