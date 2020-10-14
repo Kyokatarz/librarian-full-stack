@@ -9,12 +9,16 @@ const LoginForm = () => {
       <Form className="SignInForm">
         <Form.Group>
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter username..." />
+          <Form.Control type="text" placeholder="Enter username..." required />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Enter password..." />
+          <Form.Control
+            type="password"
+            placeholder="Enter password..."
+            required
+          />
         </Form.Group>
 
         <Button type="submit" variant="primary" block>
