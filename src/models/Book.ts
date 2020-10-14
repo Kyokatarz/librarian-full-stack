@@ -28,12 +28,12 @@ const BookSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  author: {
-    id: {
+  author: [
+    {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'authors',
     },
-  },
+  ],
   status: {
     type: String,
     enum: ['available', 'borrowed'],
