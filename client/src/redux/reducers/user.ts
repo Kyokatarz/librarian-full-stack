@@ -1,14 +1,14 @@
-import { LOGIN, UserActions, UserLogInAction } from "../../types/userTypes";
+import { LOGIN, User, UserActions } from "../../types/userTypes";
 
-const initialState = {
+const initialState:Partial<User> = {
     isLoggedIn: false,
-    userId: ''
+    token: ''
 }
 
 export default function(state = initialState, action:UserActions) {
   switch(action.type){
     case LOGIN:
-      return {...state, isLoggedIn: true}
+      return {...state, ...action.payload}
 
     default: 
       return {...state};

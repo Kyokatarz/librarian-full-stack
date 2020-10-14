@@ -1,9 +1,20 @@
+import { Book } from "./bookTypes"
+
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 
+export type UserInfo = {
+  isAdmin: boolean,
+  username: string,
+  email: string,
+  lastName?: string,
+  firstName?: string
+  borrowedBooks: Book[]
+}
 export type User = {
   isLoggedIn: boolean,
-  token: string
+  token: string,
+  userInfo: UserInfo
 }
 
 
@@ -14,7 +25,7 @@ export type UserLogInAction = {
 
 export type UserLogOutAction =  {
   type: typeof LOGOUT,
-  payload: User
+  payload: Partial<User>
 }
 
 

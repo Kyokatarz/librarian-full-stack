@@ -1,0 +1,11 @@
+.User-icon {
+  position: absolute;
+  right: 20%;
+
+  & .dropdown-toggle {
+    padding: 0px;
+    &::after {
+      content: none;
+    }
+  }
+}
