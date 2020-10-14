@@ -96,6 +96,17 @@ export const signUserIn = async (
   }
 }
 
+/*******************************
+ * @ROUTE GET /v1/user/signOut *
+ * @DESC Sign user out         *
+ * @ACCESS Private             *
+ *******************************/
+
+ export const signUserOut = async (req: Request, res: Response, next: NextFunction) => {
+  req.logOut()
+  res.redirect('http://localhost:5000/')
+ }
+
 /********************************
  * @ROUTE GET /v1/user/         *
  * @DESC Get User Info by token *

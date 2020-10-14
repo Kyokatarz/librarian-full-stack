@@ -21,9 +21,7 @@ export const logUserOut = ():UserActions => {
     payload: {
       isLoggedIn: false,
       token: ''
-      
     }
-    
   }
 }
 
@@ -36,12 +34,11 @@ export const sendLogInRequest = (userName: string, password: string) => {
       })
     
     if(resp.status === 200) {
-      // localStorage.setItem('token', resp.data.token)
+      localStorage.setItem('token', resp.data.token)
       dispatch(getUserData(resp.data.token))
     }
     
     } catch(err) {
-      
       console.log('response:', err.response.data.message)
     }
   }
@@ -61,5 +58,12 @@ export const getUserData = (token:string):any => {
     } catch(err) {
       console.log(err.response.data.message)
     }
+  }
+}
+
+export const clearStorageAndLogOut = () => {
+  return (dispatch:Dispatch) => {
+    localStorage.removeItem('token')
+    dispatch(logUserOut())
   }
 }

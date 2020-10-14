@@ -16,6 +16,7 @@ const router = express.Router()
 router.get('/', auth, controller.getUserInfo)
 router.post('/signUp', signUpValidator, controller.createUser)
 router.post('/signIn', signInValidator, controller.signUserIn)
+router.get('/signOut', controller.signUserOut)
 router.patch('/:userId', userInfoUpdateValidator, controller.updateUserInfo)
 router.patch(
   '/:userId/password',
