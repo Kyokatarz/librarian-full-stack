@@ -2,7 +2,7 @@ export const GET_ALL_BOOKS = 'GET_ALL_BOOKS'
 export const SET_BOOKS = 'SET_BOOKS'
 
 export type Book = {
-  id: string
+  _id: string
   isbn: string
   title: string
   description?: string
