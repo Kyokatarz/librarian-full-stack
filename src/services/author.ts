@@ -15,7 +15,8 @@ export const addAuthor = async (
   authorObj: Partial<AuthorDocument>
 ): Promise<AuthorDocument> => {
   const user = await User.findById(userId)
-  if (!user?.isAdmin) throw 'NotAnAdmin'
+  console.log(user)
+  if (!user!.isAdmin) throw 'NotAnAdmin'
 
   const { name, books } = authorObj
 
@@ -26,6 +27,8 @@ export const addAuthor = async (
     name,
     books,
   })
+
+  
 
   return await newAuthor.save()
 }
@@ -59,6 +62,15 @@ export const deleteAuthor = async (userId: string, authorId: string) => {
 
   return author
 }
+
+export const getAuthor = async(authorId: string) => {
+console.log('authorId :', authorId);
+  
+  const author = await Author.findById(authorId).populate('books')
+  if (!author) throw 'AuthorNotFound'
+
+  return author
+}
 /*=============+
  |Error Handler|
  +=============*/
@@ -66,6 +78,7 @@ export const errorHandler = (
   err: any,
   validationErrors?: Result<ValidationError>
 ) => {
+  console.log(err.message)
   if (err.kind === 'ObjectId') return new NotFoundError('ID Invalid')
   switch (err) {
     case 'ValidationError':

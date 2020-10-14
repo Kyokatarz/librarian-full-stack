@@ -69,3 +69,18 @@ export const adminDeleteAuthor = async (
     next(service.errorHandler(err))
   }
 }
+
+/*==================================+
+ |@ROUTE GET v1/author/:authorId    |
+ |@DESC Get an author               |
+ |@ACCESS Public                    |
+ +==================================*/
+export const getAuthor = async (req: Request, res: Response, next: NextFunction) => {
+  const {authorId} = req.params
+  try {
+    const author = await service.getAuthor(authorId)
+    res.status(200).json(author)
+  } catch (err) {
+    next(service.errorHandler(err))
+  }
+}

@@ -10,12 +10,11 @@ const AuthorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   books: [
     {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'books',
-      },
-    },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'book',
+    }
   ],
+  
 })
 
 const Author = mongoose.model<AuthorDocument>('author', AuthorSchema)
