@@ -12,9 +12,13 @@ const NavBarLink = () => {
       variant="pills"
     >
       <Link to="/">
-        <Nav.Item className="text-white">Home</Nav.Item>
+        <Nav.Item as="li" className="text-white">
+          Home
+        </Nav.Item>
       </Link>
-      <Nav.Item className="text-white">Something</Nav.Item>
+      <Link to="/allbooks">
+        <Nav.Item className="text-white">Books</Nav.Item>
+      </Link>
     </Nav>
   )
 }

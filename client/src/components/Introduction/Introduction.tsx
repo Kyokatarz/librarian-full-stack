@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import './Introduction.scss'
 
@@ -16,7 +17,9 @@ const Introduction = () => {
           Personal favorites. <br />
           Built by book enthusiasts.
         </p>
-        <Button className="Introduction__Button">Learn More &gt;&gt;</Button>
+        <Link to="/allbooks">
+          <Button className="Introduction__Button">Learn More &gt;&gt;</Button>
+        </Link>
       </div>
     </div>
   )
