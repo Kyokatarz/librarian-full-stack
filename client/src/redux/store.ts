@@ -6,13 +6,11 @@ import { AppState } from '../types'
 import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
-const initState: AppState = {
-  product: {
-    inCart: [],
-  },
-  ui: {
-    dialogOpen: {},
-  },
+const initState: any = {
+ user: {
+   isLoggedIn: false,
+   userId: ''
+ }
 }
 
 export default function makeStore(initialState = initState) {
@@ -28,7 +26,6 @@ export default function makeStore(initialState = initState) {
 
   const store = createStore(
     createRootReducer(),
-    initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
 

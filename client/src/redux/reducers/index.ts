@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
 
-import product from './product'
-import ui from './ui'
+import user from './user'
+import books from './books'
 
 const createRootReducer = () =>
   combineReducers({
-    product,
-    ui,
+    books,
+    user,
   })
 
 export default createRootReducer
