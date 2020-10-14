@@ -20,11 +20,14 @@ export type UserDocument = Document & {
 
 const UserSchema = new mongoose.Schema({
   googleId: String,
-  image: String,
+  imageUrl: {
+    type: String,
+    default: 'https://via.placeholder.com/40x40'
+  },
   username: {
     type: String,
     required: true,
-  },
+  },  
   password: {
     type: String,
     required: true,

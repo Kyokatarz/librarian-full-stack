@@ -42,6 +42,16 @@ export const create = async (
 }
 
 /*================+
+ |Get user info   |
+ +================*/
+export const getUserInfo = async (userId: string): Promise<UserDocument> => {
+  const user = await User.findById(userId).select('-password')
+  if (!user) throw 'UserNotFound'
+
+  return user
+}
+
+/*================+
  |Update user info|
  +================*/
 export const updateUser = async (

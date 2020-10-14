@@ -19,7 +19,7 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, username, password, lastName, firstName, isAdmin } = req.body
+  const { email, username, password, lastName, firstName, isAdmin, } = req.body
   const errors = validationResult(req)
 
   try {
@@ -93,6 +93,33 @@ export const signUserIn = async (
     res.status(200).json({ token })
   } catch (err) {
     next(service.errorHandler(err, errors))
+  }
+}
+
+/********************************
+ * @ROUTE GET /v1/user/         *
+ * @DESC Get User Info by token *
+ * @ACCESS PRIVATE              *
+ ********************************/
+
+export const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
+  const userReq = req.user as PayloadType
+  try{
+    const user = await service.getUserInfo(userReq.id)
+    const {username, email, lastName, firstName, imageUrl, borrowedBooks, isAdmin} = user
+    return res.status(200).json({
+      userInfo: {
+        username,
+        email,
+        lastName,
+        firstName,
+        imageUrl,
+        borrowedBooks,
+        isAdmin,
+      }
+    })
+  } catch(err) {
+    next(service.errorHandler(err))
   }
 }
 
