@@ -16,7 +16,6 @@ const AllBooksPage = () => {
     console.log('AllBooksPage rendered!')
     console.log(books)
     if (books.length === 0) {
-      console.log('AllBooksPage rendered!')
       dispatch(getAllBooks())
     }
   })
@@ -29,4 +28,4 @@ const AllBooksPage = () => {
   )
 }
 
-export default AllBooksPage
+export default React.memo(AllBooksPage)

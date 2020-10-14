@@ -22,9 +22,10 @@ const BookBlock: React.FC<BookTileType> = ({
 }) => {
   return (
     <div>
-      <Card style={{ width: '18rem' }}>
+      <Card className="BookTile">
         <Card.Title>{title}</Card.Title>
         <Card.Body>
+          <Card.Text>{id}</Card.Text>
           <Card.Text>{isbn}</Card.Text>
           <Card.Text>{description}</Card.Text>
           <Card.Text>{publisher}</Card.Text>
