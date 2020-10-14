@@ -1,7 +1,9 @@
+@import '../../style/global.scss';
+
 .Carousel {
   height: 100%;
   width: 100%;
-  background-color: green;
+  background-color: $dark-block-content;
 
   &__Item {
     img {
