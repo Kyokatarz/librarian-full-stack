@@ -7,7 +7,7 @@ const Footer = () => {
     <div className="Footer">
       <p>Librarian &#169; 2020</p>
       <p>
-        Developed and Design by
+        Designed and Developed by
         <a
           href="https://github.com/Kyokatarz/"
           target="_blank"
