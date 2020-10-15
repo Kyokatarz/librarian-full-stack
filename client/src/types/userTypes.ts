@@ -7,8 +7,8 @@ export type UserInfo = {
   isAdmin: boolean,
   username: string,
   email: string,
-  lastName?: string,
-  firstName?: string
+  lastName: string,
+  firstName: string
   borrowedBooks: Book[]
 }
 export type User = {

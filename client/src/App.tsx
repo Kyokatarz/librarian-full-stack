@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 export default function App() {
   const dispatch = useDispatch()
   useEffect(() => {
+    console.log('App rendered!')
     const token = localStorage.getItem('token')
     if (token) dispatch(getUserData(token))
   })

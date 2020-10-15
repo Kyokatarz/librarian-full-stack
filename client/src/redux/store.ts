@@ -8,8 +8,16 @@ import rootSaga from './sagas'
 
 const initState: any = {
  user: {
-   isLoggedIn: false,
-   userId: ''
+  isLoggedIn: false,
+  token: '',
+  userInfo: {
+    isAdmin: false,
+    username: '',
+    email: '',
+    lastName: '',
+    firstName: '',
+   borrowedBooks: []
+  }
  }
 }
 
@@ -26,6 +34,7 @@ export default function makeStore(initialState = initState) {
 
   const store = createStore(
     createRootReducer(),
+    initState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
 

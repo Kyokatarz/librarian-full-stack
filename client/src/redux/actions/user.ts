@@ -21,7 +21,15 @@ export const logUserOut = ():UserActions => {
     type: LOGOUT,
     payload: {
       isLoggedIn: false,
-      token: ''
+      token: '',
+      userInfo: {
+        isAdmin: false,
+        username: '',
+        email: '',
+        lastName: '',
+        firstName: '',
+        borrowedBooks: []
+      }
     }
   }
 }
@@ -69,10 +77,10 @@ export const getUserData = (token:string):any => {
           'x-auth-token': token
         }
       }
-      const resp = await axios.get('api/v1/user', config)
+      const resp = await axios.get('/api/v1/user', config)
       dispatch(logUserIn(token, resp.data.userInfo))
     } catch(err) {
-      console.log(err.response.data.message)
+      console.log(err.response)
     }
   }
 }
