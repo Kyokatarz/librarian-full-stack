@@ -1,13 +1,20 @@
-import React, { FormEvent, useState } from 'react'
-import { Button, Col, Form } from 'react-bootstrap'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+
 import { signUserUp } from '../../redux/actions/user'
+import ConfirmPasswordInput from '../ConfirmPasswordInput'
+import EmailInput from '../EmailInput'
+import FirstNameInput from '../FirstNameInput'
+import FormSubmitButton from '../FormSubmitButton'
+import LastNameInput from '../LastNameInput'
+import PasswordInput from '../PasswordInput'
+import UsernameInput from '../UsernameInput'
 
 import './SignUpForm.scss'
 
 const SignUpForm = () => {
-  const [username, setUserName] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [email, setEmail] = useState('')
@@ -18,6 +25,10 @@ const SignUpForm = () => {
 
   const dispatch = useDispatch()
 
+  const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!passwordMatch) setPasswordMatch(true)
+    setPassword(event.target.value)
+  }
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     // if (password !== confirmPassword) {
@@ -39,100 +50,25 @@ const SignUpForm = () => {
   return (
     <div className="SignUpForm">
       <Form as="form" onSubmit={(event) => handleSubmit(event)}>
-        <Form.Group>
-          <Form.Label>Username*</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Username"
-            required
-            onChange={(event) => {
-              setUserName(event.target.value)
-            }}
-            value={username}
-          ></Form.Control>
-        </Form.Group>
+        <UsernameInput username={username} setUsername={setUsername} />
+        <EmailInput inputEmail={email} setInputEmail={setEmail} />
+        <div className="SignUpForm__Row">
+          <PasswordInput
+            password={password}
+            onChangeHandler={onPasswordChange}
+          />
+          <ConfirmPasswordInput
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            passwordMatch={passwordMatch}
+            setPasswordMatch={setPasswordMatch}
+          />
+        </div>
 
-        <Form.Group>
-          <Form.Label>Email*</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Email"
-            required
-            onChange={(event) => {
-              setEmail(event.target.value)
-            }}
-            value={email}
-          ></Form.Control>
-        </Form.Group>
-
-        <Form.Row>
-          <Col>
-            <Form.Group>
-              <Form.Label>Password*</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                required
-                onChange={(event) => {
-                  if (!passwordMatch) setPasswordMatch(true)
-                  setPassword(event.target.value)
-                }}
-                value={password}
-              ></Form.Control>
-              {!passwordMatch && (
-                <Form.Text className="text-danger">
-                  Passwords don't match
-                </Form.Text>
-              )}
-            </Form.Group>
-          </Col>
-
-          <Col>
-            <Form.Group>
-              <Form.Label>Confirm Password*</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm Password"
-                required
-                onChange={(event) => {
-                  if (!passwordMatch) setPasswordMatch(true)
-                  setConfirmPassword(event.target.value)
-                }}
-                value={confirmPassword}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-        </Form.Row>
-
-        <Form.Row>
-          <Col>
-            <Form.Group>
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="First Name (optional)"
-                onChange={(event) => {
-                  setFirstName(event.target.value)
-                }}
-                value={firstName}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-
-          <Col>
-            <Form.Group>
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Last Name (optional)"
-                onChange={(event) => {
-                  setLastName(event.target.value)
-                }}
-                value={lastName}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-        </Form.Row>
+        <div className="SignUpForm__Row">
+          <FirstNameInput inputFN={firstName} setInputFN={setFirstName} />
+          <LastNameInput inputLN={lastName} setInputLN={setLastName} />
+        </div>
 
         <Form.Check
           type="checkbox"
@@ -140,9 +76,7 @@ const SignUpForm = () => {
           label="By signing up, you argee to sell us your soul."
         />
 
-        <Button block type="submit">
-          Sign Up
-        </Button>
+        <FormSubmitButton text="Sign Up" />
       </Form>
     </div>
   )

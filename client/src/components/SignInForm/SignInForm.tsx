@@ -1,56 +1,32 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import axios from 'axios'
 
 import './SignInForm.scss'
 import { sendLogInRequest } from '../../redux/actions/user'
+import UsernameInput from '../UsernameInput'
+import PasswordInput from '../PasswordInput'
+import FormSubmitButton from '../FormSubmitButton'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const [userName, setUserName] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
   const [password, setPassWord] = useState<string>('')
 
   const submitHandler = async (event: FormEvent) => {
     event.preventDefault()
-    dispatch(sendLogInRequest(userName, password))
+    dispatch(sendLogInRequest(username, password))
   }
 
-  const onChangeUsername = (event: ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value)
-  }
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+  const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassWord(event.target.value)
   }
-
   return (
     <div className="SignInForm-container">
-      <Form as="form" className="SignInForm" onSubmit={submitHandler}>
-        <Form.Group>
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username..."
-            onChange={onChangeUsername}
-            value={userName}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter password..."
-            onChange={onChangePassword}
-            value={password}
-            required
-          />
-        </Form.Group>
-
-        <Button type="submit" variant="primary" block>
-          Sign In
-        </Button>
+      <Form onSubmit={submitHandler}>
+        <UsernameInput username={username} setUsername={setUsername} />
+        <PasswordInput password={password} onChangeHandler={onPasswordChange} />
+        <FormSubmitButton text="Sign In" />
         <br />
       </Form>
     </div>
