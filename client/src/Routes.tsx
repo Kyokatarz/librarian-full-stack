@@ -7,6 +7,7 @@ import AllBooks from './pages/AllBooks'
 import Home from './pages/Home'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
+import UserInfo from './pages/UserInfo'
 
 const Routes = () => (
   <>
@@ -16,6 +17,7 @@ const Routes = () => (
       <Route exact path="/signin" component={SignIn} />
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/allbooks" component={AllBooks} />
+      <Route exact path="/user/info" component={UserInfo} />
     </Switch>
     <Footer />
   </>
