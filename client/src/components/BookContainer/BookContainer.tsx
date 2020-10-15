@@ -33,7 +33,7 @@ const BookContainer = () => {
       publisher={item.publisher}
       status={item.status}
       authorName={item.author.name}
-      key={item._id} //TODO: Change this later
+      key={item._id}
     />
   ))
 
