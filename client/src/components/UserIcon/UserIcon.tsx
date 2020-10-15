@@ -1,6 +1,7 @@
 import React, { MouseEvent, useEffect } from 'react'
-import { Button, Dropdown, NavDropdown } from 'react-bootstrap'
+import { Button, Dropdown, DropdownButton, NavDropdown } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { clearStorageAndLogOut } from '../../redux/actions/user'
 
 import { RootState } from '../../types/rootState'
@@ -14,31 +15,31 @@ const UserIcon = () => {
   const dispatch = useDispatch()
 
   const { username } = user.userInfo
-  useEffect(() => {
-    try {
-    } catch (err) {}
-  })
 
-  const signOutClickHandler = (event: MouseEvent) => {
+  const signOutClickHandler = (event: any) => {
     event.preventDefault()
     dispatch(clearStorageAndLogOut())
   }
 
   return (
-    <div className="User-icon">
-      <NavDropdown id="NavDropdown" title={<UserImage />}>
-        <Dropdown.Item disabled>Signed in as {username}</Dropdown.Item>
-        <Dropdown.Item>
-          <Button block variant="info">
-            Your Info
-          </Button>
+    <div className="UserIcon">
+      <DropdownButton title={<UserImage />} alignRight={true}>
+        <Dropdown.Item disabled as="li">
+          Signed in as {username}
         </Dropdown.Item>
-        <Dropdown.Item onClick={signOutClickHandler}>
+        <Dropdown.Item as="li">
+          <Link to="/user/info">
+            <Button block variant="info">
+              Your Info
+            </Button>
+          </Link>
+        </Dropdown.Item>
+        <Dropdown.Item as="li" onClick={signOutClickHandler}>
           <Button block variant="danger">
             Sign Out
           </Button>
         </Dropdown.Item>
-      </NavDropdown>
+      </DropdownButton>
     </div>
   )
 }

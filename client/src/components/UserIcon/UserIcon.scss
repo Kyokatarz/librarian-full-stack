@@ -1,11 +1,28 @@
-.User-icon {
+.UserIcon {
   position: absolute;
-  right: 20%;
+  right: 10%;
 
   & .dropdown-toggle {
     padding: 0px;
     &::after {
       content: none;
     }
+  }
+
+  & ul {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.NavDropDown {
+  & .dropdown-menu {
+    transform: translateX(-100%);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .UserIcon {
+    right: 30%;
   }
 }
