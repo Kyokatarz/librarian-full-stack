@@ -17,7 +17,9 @@ export type User = {
   userInfo: UserInfo
 }
 
-
+export type NewUser = Partial<UserInfo> & {
+  password: string,
+}
 export type UserLogInAction = {
   type: typeof LOGIN,
   payload: User

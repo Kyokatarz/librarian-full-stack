@@ -1,19 +1,54 @@
-import { group } from 'console'
-import React from 'react'
+import React, { FormEvent, useState } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { signUserUp } from '../../redux/actions/user'
 
 import './SignUpForm.scss'
 
 const SignUpForm = () => {
+  const [username, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [passwordMatch, setPasswordMatch] = useState(true)
+  const [redirect, setRedirect] = useState('')
+
+  const dispatch = useDispatch()
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    // if (password !== confirmPassword) {
+    //   setPasswordMatch(false)
+    //   return
+    // } //TODO: Uncomment this
+
+    dispatch(
+      signUserUp({
+        username,
+        password,
+        email,
+        lastName,
+        firstName,
+      })
+    )
+  }
+
   return (
     <div className="SignUpForm">
-      <Form>
+      <Form as="form" onSubmit={(event) => handleSubmit(event)}>
         <Form.Group>
           <Form.Label>Username*</Form.Label>
           <Form.Control
             type="text"
             placeholder="Username"
             required
+            onChange={(event) => {
+              setUserName(event.target.value)
+            }}
+            value={username}
           ></Form.Control>
         </Form.Group>
 
@@ -23,6 +58,10 @@ const SignUpForm = () => {
             type="email"
             placeholder="Email"
             required
+            onChange={(event) => {
+              setEmail(event.target.value)
+            }}
+            value={email}
           ></Form.Control>
         </Form.Group>
 
@@ -34,8 +73,17 @@ const SignUpForm = () => {
                 type="password"
                 placeholder="Password"
                 required
-                pattern="/^.{6,}$/"
+                onChange={(event) => {
+                  if (!passwordMatch) setPasswordMatch(true)
+                  setPassword(event.target.value)
+                }}
+                value={password}
               ></Form.Control>
+              {!passwordMatch && (
+                <Form.Text className="text-danger">
+                  Passwords don't match
+                </Form.Text>
+              )}
             </Form.Group>
           </Col>
 
@@ -46,6 +94,11 @@ const SignUpForm = () => {
                 type="password"
                 placeholder="Confirm Password"
                 required
+                onChange={(event) => {
+                  if (!passwordMatch) setPasswordMatch(true)
+                  setConfirmPassword(event.target.value)
+                }}
+                value={confirmPassword}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -58,6 +111,10 @@ const SignUpForm = () => {
               <Form.Control
                 type="text"
                 placeholder="First Name (optional)"
+                onChange={(event) => {
+                  setFirstName(event.target.value)
+                }}
+                value={firstName}
               ></Form.Control>
             </Form.Group>
           </Col>
@@ -68,6 +125,10 @@ const SignUpForm = () => {
               <Form.Control
                 type="text"
                 placeholder="Last Name (optional)"
+                onChange={(event) => {
+                  setLastName(event.target.value)
+                }}
+                value={lastName}
               ></Form.Control>
             </Form.Group>
           </Col>

@@ -1,5 +1,5 @@
 import React, { MouseEvent, useEffect } from 'react'
-import { Dropdown, NavDropdown } from 'react-bootstrap'
+import { Button, Dropdown, NavDropdown } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearStorageAndLogOut } from '../../redux/actions/user'
 
@@ -27,9 +27,17 @@ const UserIcon = () => {
   return (
     <div className="User-icon">
       <NavDropdown id="NavDropdown" title={<UserImage />}>
-        <Dropdown.Item disabled>Sign in as {username}</Dropdown.Item>
-        <Dropdown.Item>Info</Dropdown.Item>
-        <Dropdown.Item onClick={signOutClickHandler}>Sign Out</Dropdown.Item>
+        <Dropdown.Item disabled>Signed in as {username}</Dropdown.Item>
+        <Dropdown.Item>
+          <Button block variant="info">
+            Your Info
+          </Button>
+        </Dropdown.Item>
+        <Dropdown.Item onClick={signOutClickHandler}>
+          <Button block variant="danger">
+            Sign Out
+          </Button>
+        </Dropdown.Item>
       </NavDropdown>
     </div>
   )

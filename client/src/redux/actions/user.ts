@@ -1,7 +1,8 @@
 import { Dispatch } from "redux";
 import axios from 'axios'
 
-import { LOGIN, LOGOUT,  UserActions, UserInfo } from "../../types/userTypes";
+import { LOGIN, LOGOUT,  NewUser,  UserActions, UserInfo } from "../../types/userTypes";
+
 
 
 export const logUserIn = (jwtToken:string, userInfo: UserInfo):UserActions => {
@@ -22,6 +23,22 @@ export const logUserOut = ():UserActions => {
       isLoggedIn: false,
       token: ''
     }
+  }
+}
+
+
+/*==================+
+|REDUX THUNK ACTION|
++==================*/
+export const signUserUp = (userInfo: Partial<NewUser>) => {
+  return async (dispatch:Dispatch) => {
+    try {
+      const resp = await axios.post('api/v1/user/signUp', userInfo)
+      localStorage.setItem('token',resp.data.token)
+      dispatch(getUserData(resp.data.token))
+    } catch (err) {
+      console.log(err.response.data.message)
+    }    
   }
 }
 
@@ -53,7 +70,6 @@ export const getUserData = (token:string):any => {
         }
       }
       const resp = await axios.get('api/v1/user', config)
-      console.log(resp.data)
       dispatch(logUserIn(token, resp.data.userInfo))
     } catch(err) {
       console.log(err.response.data.message)
