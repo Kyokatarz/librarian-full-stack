@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import UserInfo from './pages/UserInfo'
+import UIOverlay from './components/UIOverlay'
 
 const Routes = () => (
   <>
@@ -22,6 +23,7 @@ const Routes = () => (
       <Route exact path="/user/books" component={BorrowedBooks} />
     </Switch>
     <Footer />
+    <UIOverlay />
   </>
 )
 

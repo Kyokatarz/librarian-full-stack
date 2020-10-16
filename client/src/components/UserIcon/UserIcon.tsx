@@ -15,7 +15,8 @@ const UserIcon = () => {
   const dispatch = useDispatch()
 
   const { username } = user.userInfo
-
+  const trimmedUsername =
+    username.length >= 8 ? username.slice(0, 7) + '...' : username
   const signOutClickHandler = (event: any) => {
     event.preventDefault()
     dispatch(clearStorageAndLogOut())
@@ -28,12 +29,19 @@ const UserIcon = () => {
         alignRight={true}
       >
         <Dropdown.Item disabled as="li">
-          Signed in as {username}
+          Signed in as {trimmedUsername}
         </Dropdown.Item>
         <Dropdown.Item as="li">
           <Link to="/user/info">
             <Button block variant="info">
-              Your Info
+              Account Info
+            </Button>
+          </Link>
+        </Dropdown.Item>
+        <Dropdown.Item as="li">
+          <Link to="/user/books">
+            <Button block variant="info">
+              Your books
             </Button>
           </Link>
         </Dropdown.Item>

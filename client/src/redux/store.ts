@@ -19,7 +19,11 @@ const initState: any = {
    borrowedBooks: []
   }
  },
- books: []
+ books: [],
+ ui: {
+   isLoading: false,
+   errMsg: ''
+ }
 }
 
 export default function makeStore(initialState = initState) {

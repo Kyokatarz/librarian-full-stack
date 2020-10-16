@@ -11,6 +11,7 @@ export default function App() {
   useEffect(() => {
     console.log('App rendered!')
     const token = localStorage.getItem('token')
+
     if (token) dispatch(getUserData(token))
     dispatch(getAllBooks())
   }, [])

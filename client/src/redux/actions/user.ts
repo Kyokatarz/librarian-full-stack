@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { ADD_BOOK_TO_USER, LOGIN, LOGOUT,  NewUser,  REMOVE_BOOK_FROM_USER,  UserActions, UserInfo } from "../../types/userTypes";
 import { Book } from "../../types/bookTypes";
+import { clearUI, setErrorMsg, setLoading } from "./ui";
 
 
 
@@ -45,8 +46,6 @@ export const addBookToUser = (bookObj: Book):UserActions => {
 }
 
 export const removeBookFromUser = (bookId: string):UserActions => {
-  console.log('called');
-  
   return {
     type: REMOVE_BOOK_FROM_USER,
     payload: bookId
@@ -61,11 +60,16 @@ export const removeBookFromUser = (bookId: string):UserActions => {
 export const signUserUp = (userInfo: Partial<NewUser>) => {
   return async (dispatch:Dispatch) => {
     try {
+      dispatch(setLoading())
       const resp = await axios.post('/api/v1/user/signUp', userInfo)
+      if(resp.status === 200) {
       localStorage.setItem('token',resp.data.token)
       dispatch(getUserData(resp.data.token))
+      dispatch(clearUI())
+    }
+      
     } catch (err) {
-      console.log(err.response.data.message)
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
     }    
   }
 }
@@ -73,6 +77,7 @@ export const signUserUp = (userInfo: Partial<NewUser>) => {
 export const sendLogInRequest = (userName: string, password: string) => {
   return async (dispatch:Dispatch) => {
     try{
+      dispatch(setLoading())
       const resp = await axios.post('/api/v1/user/signIn', {
         username: userName,
         password
@@ -84,7 +89,7 @@ export const sendLogInRequest = (userName: string, password: string) => {
     }
     
     } catch(err) {
-      console.log('response:', err.response.data.message)
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
     }
   }
 }
@@ -97,10 +102,14 @@ export const getUserData = (token:string):any => {
           'x-auth-token': token
         }
       }
+      dispatch(setLoading())
       const resp = await axios.get('/api/v1/user', config)
-      dispatch(logUserIn(token, resp.data.userInfo))
+      if(resp.status ===200) {
+        dispatch(logUserIn(token, resp.data.userInfo))
+        dispatch(clearUI())
+      }
     } catch(err) {
-      console.log(err.response)
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
     }
   }
 }
@@ -113,10 +122,14 @@ export const updateUserData = (token:string, newData:Partial<UserInfo>) => {
           'x-auth-token': token
         }
       }
+      dispatch(setLoading())
       const resp = await axios.patch('/api/v1/user/', newData, config)
-      dispatch(logUserIn(token, resp.data))
+      if(resp.status === 200) {
+        dispatch(logUserIn(token, resp.data))
+        dispatch(clearUI())
+      }
     } catch (err) {
-      console.log(err.response)
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
     }
     
   }

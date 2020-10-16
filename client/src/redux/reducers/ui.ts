@@ -1,24 +1,22 @@
-import { TOGGLE_DIALOG, UiState, UiActions } from '../../types'
+import { CLEAR_UI, SET_ERROR, SET_LOADING, UI, UIActions } from "../../types/uiTypes"
 
-const defaultState: UiState = {
-  dialogOpen: {},
+
+const defaultState: UI = {
+  isLoading: false,
+  errMsg: ''
 }
 
 export default function ui(
-  state: UiState = defaultState,
-  action: UiActions
-): UiState {
+  state: UI = defaultState,
+  action: UIActions
+): UI {
   switch (action.type) {
-  case TOGGLE_DIALOG: {
-    return {
-      ...state,
-      dialogOpen: {
-        ...state.dialogOpen,
-        [action.payload.dialog]: !state.dialogOpen[action.payload.dialog],
-      },
-    }
-  }
-
+  case SET_LOADING:
+    return {...state, isLoading: true}
+  case SET_ERROR:
+    return {...state, ...action.payload}
+  case CLEAR_UI:
+      return {...state, isLoading: false, errMsg: ''}
   default:
     return state
   }
