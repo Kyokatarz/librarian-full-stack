@@ -34,7 +34,7 @@ const BorrowedBookTile: React.FC<BorrowedBookTileType> = ({
       (bookObj) => bookObj._id === _id
     )
     if (!book) return
-    if (book.status === 'available') dispatch(requestCheckin(user.token, _id))
+    if (book.status === 'borrowed') dispatch(requestCheckin(user.token, _id))
   }
   return (
     <div>

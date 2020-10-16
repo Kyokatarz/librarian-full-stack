@@ -6,6 +6,7 @@ import { addBookToUser, removeBookFromUser } from "./user";
 
 
 
+
 export const setBooks = (books: Book[]):BookActions => {
   return {
     type: SET_BOOKS,
@@ -39,22 +40,17 @@ export const getAllBooks = () => {
 export const requestCheckin = (token:string, bookId:string) => {
   
   return async (dispatch:Dispatch) => {
-    try {
+    try{
       const config = {
         headers:{
           'x-auth-token': token
         }
       }
-      const resp = await axios.patch(`/api/v1/book/${bookId}/checkout`, undefined, config)
-      console.log(resp.data);
       
-      if (resp.status === 200) {
-        dispatch(removeBookFromUser(bookId))
-        dispatch(changeBookStatus(bookId))
-      }
-    } catch (err) {
-      console.log(err.response);
-      
+      const resp = await axios.patch(`/api/v1/book/${bookId}/checkin`, undefined, config)
+      if (resp.status === 200) dispatch(removeBookFromUser(bookId))
+    } catch(err) {
+      console.log(err)
     }
   }
 }

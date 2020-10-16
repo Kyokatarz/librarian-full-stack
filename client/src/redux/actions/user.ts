@@ -45,6 +45,8 @@ export const addBookToUser = (bookObj: Book):UserActions => {
 }
 
 export const removeBookFromUser = (bookId: string):UserActions => {
+  console.log('called');
+  
   return {
     type: REMOVE_BOOK_FROM_USER,
     payload: bookId
