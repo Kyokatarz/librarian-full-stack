@@ -16,8 +16,7 @@ export default function(state = initState, action:BookActions){
 
       tempArray[modifyingIndex].status = newStatus
       return [...tempArray]
-      
-      return [...tempArray]
+
     default:
       return state
   }

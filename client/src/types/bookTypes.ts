@@ -1,3 +1,4 @@
+import { Author } from "./authorTypes"
 
 export const SET_BOOKS = 'SET_BOOKS'
 export const CHANGE_BOOK_STATUS = 'CHANGE_BOOK_STATUS'
@@ -8,7 +9,7 @@ export type Book = {
   title: string
   description?: string
   publisher?: string
-  author: any
+  author: Author[]
   status: 'available' | 'borrowed'
 }
 

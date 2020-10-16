@@ -2,20 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import _ from 'lodash'
 
-import BookTile from '../BookTile'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
-
-import './BookContainer.scss'
 import PaginationBar from '../PaginationBar'
+import BorrowedBookTile from '../BorrowedBookTile'
+import { User } from '../../types/userTypes'
 
-const BookContainer = () => {
+const BorrowedBookContainer = () => {
   const books = useSelector<RootState, Book[]>((state) => state.books)
+  const user = useSelector<RootState, User>((state) => state.user)
   const [page, setPage] = useState(0)
   const [booksToDisplay, setBooksToDisplay] = useState<Book[]>([])
-  const bookChunks: Book[][] = _.chunk(books, 9)
-  //Divide the array into multiple smaller arrays with size = 9
 
+  const bookChunks: Book[][] = _.chunk(user.userInfo.borrowedBooks, 9) //Divide the array into multiple smaller arrays with size = 9
   const switchPage = useCallback(
     (pageNumber: number) => {
       console.log('page', page)
@@ -25,25 +24,29 @@ const BookContainer = () => {
   )
 
   const booksInPage = booksToDisplay?.map((item) => (
-    <BookTile
+    <BorrowedBookTile
       isbn={item.isbn}
       _id={item._id}
       title={item.title}
       description={item.description}
       publisher={item.publisher}
-      status={item.status}
       author={item.author}
+      status={item.status}
       key={item._id}
     />
   ))
 
   useEffect(() => {
-    if (books) setBooksToDisplay(bookChunks[page])
-  }, [books, page])
+    if (user.userInfo.borrowedBooks) setBooksToDisplay(bookChunks[page])
+  }, [user, page])
+
+  useEffect(() => {
+    console.log(booksToDisplay)
+  })
 
   return (
-    <div className="BookContainer">
-      <div className="BookDisplayContainer">{booksInPage}</div>
+    <div className="BorrowedBookContainer">
+      <div className="BorrowedBookDisplayContainer">{booksInPage}</div>
       <PaginationBar
         page={page}
         setPage={switchPage}
@@ -53,4 +56,4 @@ const BookContainer = () => {
   )
 }
 
-export default React.memo(BookContainer)
+export default React.memo(BorrowedBookContainer)

@@ -45,8 +45,9 @@ export const create = async (
  |Get user info   |
  +================*/
 export const getUserInfo = async (userId: string): Promise<UserDocument> => {
-  const user = await User.findById(userId).select('-password')
+  const user = await User.findById(userId).select('-password').populate('borrowedBooks')
   if (!user) throw 'UserNotFound'
+  await user.populate('borrowedBooks.author', 'name').execPopulate()
 
   return user
 }

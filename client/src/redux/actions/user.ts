@@ -126,21 +126,4 @@ export const clearStorageAndLogOut = () => {
   }
 }
 
-export const requestCheckout = (token:string, bookObj: Book) => {
-  return async (dispatch:Dispatch) => {
-    try{
-      const config = {
-        headers:{
-          'x-auth-token': token
-        }
-      }
-      console.log(token, bookObj)
-      const resp = await axios.patch(`/api/v1/book/${bookObj._id}/checkout`, undefined, config)
-      console.log(resp);
-      if (resp.status === 200) dispatch(addBookToUser(bookObj))
-    } catch(err) {
-      console.log(err.response)
-    }
-    
-  }
-}
+

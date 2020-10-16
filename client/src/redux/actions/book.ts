@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import axios from 'axios'
 
 import { Book, BookActions, CHANGE_BOOK_STATUS, SET_BOOKS } from "../../types/bookTypes";
+import { addBookToUser, removeBookFromUser } from "./user";
 
 
 
@@ -24,8 +25,52 @@ export const changeBookStatus = (bookId:string) => {
  +===========*/
 export const getAllBooks = () => {
   return async (dispatch: Dispatch) => {
-    const resp = await axios.get('/api/v1/book')
-    dispatch(setBooks(resp.data))
+    try{
+      const resp = await axios.get('/api/v1/book')
+      if (resp.status === 200)
+      dispatch(setBooks(resp.data))
+
+    } catch(err){
+      console.log(err.response)
+    }
   }
 }
 
+export const requestCheckin = (token:string, bookId:string) => {
+  
+  return async (dispatch:Dispatch) => {
+    try {
+      const config = {
+        headers:{
+          'x-auth-token': token
+        }
+      }
+      const resp = await axios.patch(`/api/v1/book/${bookId}/checkout`, undefined, config)
+      console.log(resp.data);
+      
+      if (resp.status === 200) {
+        dispatch(removeBookFromUser(bookId))
+        dispatch(changeBookStatus(bookId))
+      }
+    } catch (err) {
+      console.log(err.response);
+      
+    }
+  }
+}
+
+export const requestCheckout = (token:string, bookObj: Book) => {
+  return async (dispatch:Dispatch) => {
+    try{
+      const config = {
+        headers:{
+          'x-auth-token': token
+        }
+      }
+      const resp = await axios.patch(`/api/v1/book/${bookObj._id}/checkout`, undefined, config)
+      if (resp.status === 200) dispatch(addBookToUser(bookObj))
+    } catch(err) {
+      console.log(err.response)
+    }
+  }
+}
