@@ -13,7 +13,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassWord] = useState<string>('')
 
-  const submitHandler = async (event: FormEvent) => {
+  const submitHandler = (event: FormEvent) => {
     event.preventDefault()
     dispatch(sendLogInRequest(username, password))
   }
