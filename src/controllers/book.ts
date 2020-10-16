@@ -60,9 +60,10 @@ export const checkoutBook = async (
 
   try {
     const result = await service.checkoutBook(userReq.id, bookId)
-    if (result === null) res.status(209).json({ msg: 'Book already borrowed!' })
+    if (result === null) return res.status(209).json({ msg: 'Book already borrowed!' })
     res.status(200).json(result)
   } catch (err) {
+    console.log(err);
     next(service.errorHandler(err))
   }
 }
@@ -81,10 +82,10 @@ export const checkinBook = async (
   const userReq: PayloadType = req.user as PayloadType //This is from jwt
   try {
     const result = await service.checkinBook(userReq.id, bookId)
-    if (result === null)
-      res.status(209).json({ msg: 'Book already checked in' })
+    if (result === null) return res.status(209).json({ msg: 'Book already checked in' })
     res.status(200).json(result)
   } catch (err) {
+    console.log(err);
     next(service.errorHandler(err))
   }
 }
@@ -113,6 +114,7 @@ export const adminAddBook = async (
     )
     res.status(200).json(newBook)
   } catch (err) {
+    console.log(err)
     next(service.errorHandler(err, errors))
   }
 }

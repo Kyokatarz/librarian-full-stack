@@ -1,4 +1,5 @@
 import { Result, ValidationError } from 'express-validator'
+import { Schema } from 'mongoose'
 
 import {
   BadRequestError,
@@ -14,7 +15,7 @@ import stringifyError from '../util/stringifyError'
  |Get all books|
  +=============*/
 export const getAllBooks = async (): Promise<BookDocument[]> => {
-  const books = await Book.find()
+  const books = await Book.find().populate('author', 'name')
   return books
 }
 
@@ -36,6 +37,7 @@ export const checkoutBook = async (
 ): Promise<UserDocument | null> => {
   const book = await Book.findById(bookId)
   if (!book) throw 'BookNotFound'
+
   if (book.status === 'borrowed') {
     return null
   }
@@ -46,20 +48,12 @@ export const checkoutBook = async (
   //Building book => user:
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
-  const { isbn, title, description, publisher, author, status } = book
-
-  user.borrowedBooks.unshift({
-    _id: bookId,
-    date: new Date(),
-    isbn,
-    title,
-    description,
-    publisher,
-    author,
-    status,
-  })
-
-  return user.save()
+  
+  
+  user.borrowedBooks = [...user.borrowedBooks, {_id: bookId}]
+  await user.populate('borrowedBooks',).execPopulate()
+  await user.populate('borrowedBooks.author', 'name').execPopulate()
+  return await user.save()
 }
 
 /*=====================+
@@ -80,11 +74,15 @@ export const checkinBook = async (
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
 
+  console.log('borrowedBooks', user.borrowedBooks);
+  
   const filteredBooks = user.borrowedBooks.filter(
-    (book: BookDocument) => book.id !== bookId
+    (id: Schema.Types.ObjectId) => id.toString() !== bookId
   )
-
+    console.log('filteredBooks:', filteredBooks)
   user.borrowedBooks = filteredBooks
+  await user.populate('borrowedBooks').execPopulate()
+  await user.populate('borrowedBooks.author', 'name').execPopulate()
   return user.save()
 }
 
@@ -95,6 +93,7 @@ export const addNewBook = async (
   userId: string,
   bookObj: Partial<BookDocument>
 ): Promise<BookDocument> => {
+  
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
@@ -108,6 +107,8 @@ export const addNewBook = async (
     author,
     status,
   })
+  await newBook.populate('author').execPopulate()
+
   return await newBook.save()
 }
 

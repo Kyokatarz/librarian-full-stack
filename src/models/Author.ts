@@ -4,11 +4,11 @@ import { BookDocument } from './Book'
 
 export type AuthorDocument = Document & {
   name: string
-  books: Partial<BookDocument>[]
+  writtenBooks: Partial<BookDocument>[]
 }
 const AuthorSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  books: [
+  writtenBooks: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'book',

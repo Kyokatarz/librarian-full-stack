@@ -18,14 +18,14 @@ export const addAuthor = async (
   console.log(user)
   if (!user!.isAdmin) throw 'NotAnAdmin'
 
-  const { name, books } = authorObj
+  const { name, writtenBooks } = authorObj
 
   const author = await Author.findOne({ name })
   if (author) throw 'IdentificationDuplicated'
 
   const newAuthor = new Author({
     name,
-    books,
+    writtenBooks,
   })
 
   
@@ -38,13 +38,13 @@ export const updateAuthor = async (
   authorId: string,
   authorObj: Partial<AuthorDocument>
 ) => {
-  const { name, books } = authorObj
+  const { name, writtenBooks } = authorObj
   const user = await User.findById(userId)
   if (!user?.isAdmin) throw 'NotAnAdmin'
 
   const newInfo: any = {}
   if (name) newInfo.name = name
-  if (books) newInfo.books = books
+  if (writtenBooks) newInfo.books = writtenBooks
   const author = await Author.findByIdAndUpdate(authorId, newInfo, {
     new: true,
   })
@@ -66,7 +66,7 @@ export const deleteAuthor = async (userId: string, authorId: string) => {
 export const getAuthor = async(authorId: string) => {
 console.log('authorId :', authorId);
   
-  const author = await Author.findById(authorId).populate('books')
+  const author = await Author.findById(authorId).populate('writtenBooks')
   if (!author) throw 'AuthorNotFound'
 
   return author

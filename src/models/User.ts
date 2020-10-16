@@ -8,7 +8,6 @@ export type BorrowedBook = BookDocument & {
 export type UserDocument = Document & {
   googleId: string
   imageUrl: string
-
   username: string
   password: string
   email: string
@@ -40,36 +39,9 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String, default: '' },
   borrowedBooks: [
     {
-      _id: { type: mongoose.Schema.Types.ObjectId, required: true },
-      date: { type: Date, required: true },
-      isbn: {
-        type: String,
-        default: '',
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-        default: '',
-      },
-      publisher: {
-        type: String,
-        default: '',
-      },
-      author: {
-        id: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'authors',
-        },
-      },
-      status: {
-        type: String,
-        enum: ['available', 'borrowed'],
-        required: true,
-      },
-    },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'book',
+    }
   ],
   isAdmin: { type: Boolean, default: false }, //Changable only through db
 })
