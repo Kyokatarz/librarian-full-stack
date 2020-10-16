@@ -1,5 +1,10 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeBookStatus } from '../../redux/actions/book'
+
+import { RootState } from '../../types/rootState'
+import { User } from '../../types/userTypes'
 
 type BookTileType = {
   id: string
@@ -11,7 +16,7 @@ type BookTileType = {
   status: 'available' | 'borrowed'
 }
 
-const BookBlock: React.FC<BookTileType> = ({
+const BookTile: React.FC<BookTileType> = ({
   id,
   isbn,
   title,
@@ -20,6 +25,22 @@ const BookBlock: React.FC<BookTileType> = ({
   authorName,
   status,
 }) => {
+  const dispatch = useDispatch()
+  const user = useSelector<RootState, User>((state) => state.user)
+
+  const onClickHandler = () => {
+    dispatch(changeBookStatus(id))
+  }
+
+  const borrowButton =
+    status === 'available' ? (
+      <Button onClick={onClickHandler}>Borrow</Button>
+    ) : (
+      <Button onClick={onClickHandler} variant="danger">
+        Return
+      </Button>
+    )
+
   return (
     <div>
       <Card className="BookTile">
@@ -30,11 +51,11 @@ const BookBlock: React.FC<BookTileType> = ({
           <Card.Text>{description}</Card.Text>
           <Card.Text>{publisher}</Card.Text>
           <Card.Text>{authorName}</Card.Text>
-          <Card.Text>{status}</Card.Text>
+          {borrowButton}
         </Card.Body>
       </Card>
     </div>
   )
 }
 
-export default BookBlock
+export default React.memo(BookTile)

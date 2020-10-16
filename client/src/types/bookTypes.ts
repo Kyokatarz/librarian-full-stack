@@ -1,5 +1,6 @@
-export const GET_ALL_BOOKS = 'GET_ALL_BOOKS'
+
 export const SET_BOOKS = 'SET_BOOKS'
+export const CHANGE_BOOK_STATUS = 'CHANGE_BOOK_STATUS'
 
 export type Book = {
   _id: string
@@ -11,13 +12,15 @@ export type Book = {
   status: 'available' | 'borrowed'
 }
 
-export type getAllBooksAction = {
-  type: typeof GET_ALL_BOOKS
-  payload: Book[]
-}
+
 export type setBooksAction = {
   type: typeof SET_BOOKS
   payload: Book[]
 }
 
-export type BookActions = getAllBooksAction | setBooksAction
+export type changeBookStatusAction = {
+  type: typeof CHANGE_BOOK_STATUS
+  payload: string
+}
+
+export type BookActions = changeBookStatusAction | setBooksAction
