@@ -41,7 +41,7 @@ export const logUserOut = ():UserActions => {
 export const signUserUp = (userInfo: Partial<NewUser>) => {
   return async (dispatch:Dispatch) => {
     try {
-      const resp = await axios.post('api/v1/user/signUp', userInfo)
+      const resp = await axios.post('/api/v1/user/signUp', userInfo)
       localStorage.setItem('token',resp.data.token)
       dispatch(getUserData(resp.data.token))
     } catch (err) {
@@ -53,7 +53,7 @@ export const signUserUp = (userInfo: Partial<NewUser>) => {
 export const sendLogInRequest = (userName: string, password: string) => {
   return async (dispatch:Dispatch) => {
     try{
-      const resp = await axios.post('api/v1/user/signIn', {
+      const resp = await axios.post('/api/v1/user/signIn', {
         username: userName,
         password
       })
@@ -85,6 +85,22 @@ export const getUserData = (token:string):any => {
   }
 }
 
+export const updateUserData = (token:string, newData:Partial<UserInfo>) => {
+  return async (dispatch:Dispatch) => {
+    try {
+      const config = {
+        headers:{
+          'x-auth-token': token
+        }
+      }
+      const resp = await axios.patch('/api/v1/user/', newData, config)
+      dispatch(logUserIn(token, resp.data))
+    } catch (err) {
+      console.log(err.response)
+    }
+    
+  }
+}
 export const clearStorageAndLogOut = () => {
   return (dispatch:Dispatch) => {
     localStorage.removeItem('token')

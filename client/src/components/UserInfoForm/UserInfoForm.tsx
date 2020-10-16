@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateUserData } from '../../redux/actions/user'
 
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
@@ -11,6 +12,7 @@ import LastNameInput from '../LastNameInput'
 
 const UserInfoForm = () => {
   const user = useSelector<RootState, User>((state) => state.user)
+  const dispatch = useDispatch()
   const { firstName, lastName, email } = user.userInfo
 
   const [inputFN, setInputFN] = useState<string>(firstName)
@@ -18,6 +20,16 @@ const UserInfoForm = () => {
   const [inputEmail, setInputEmail] = useState(email)
   const [newChanges, setNewChanges] = useState(false)
 
+  const submitHandler = (event: FormEvent) => {
+    event.preventDefault()
+    dispatch(
+      updateUserData(user.token, {
+        firstName: inputFN,
+        lastName: inputLN,
+        email: inputEmail,
+      })
+    )
+  }
   useEffect(() => {
     if (inputLN !== lastName || inputFN !== firstName || inputEmail !== email) {
       setNewChanges(true)
@@ -34,7 +46,7 @@ const UserInfoForm = () => {
     console.log('Info form rendered!')
   })
   return (
-    <Form>
+    <Form onSubmit={submitHandler}>
       <FirstNameInput inputFN={inputFN} setInputFN={setInputFN} />
       <LastNameInput inputLN={inputLN} setInputLN={setInputLN} />
       <EmailInput inputEmail={inputEmail} setInputEmail={setInputEmail} />
