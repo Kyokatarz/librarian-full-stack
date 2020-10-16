@@ -1,11 +1,20 @@
 import { LOGIN, LOGOUT, User, UserActions } from "../../types/userTypes";
 
-const initialState:Partial<User> = {
-    isLoggedIn: false,
-    token: ''
-}
+const initialState:User = {
+  isLoggedIn: false,
+  token: '',
+  userInfo: {
+    isAdmin: false,
+    username: '',
+    email: '',
+    lastName: '',
+    firstName: '',
+   borrowedBooks: []
+  }
+ }
 
-export default function(state = initialState, action:UserActions) {
+
+export default function(state: User = initialState, action:UserActions) {
   switch(action.type){
     case LOGIN:
       return {...state, ...action.payload}
