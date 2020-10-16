@@ -18,7 +18,8 @@ const initState: any = {
     firstName: '',
    borrowedBooks: []
   }
- }
+ },
+ books: []
 }
 
 export default function makeStore(initialState = initState) {
@@ -34,7 +35,7 @@ export default function makeStore(initialState = initState) {
 
   const store = createStore(
     createRootReducer(),
-    initState,
+    initialState,
     composeEnhancers(applyMiddleware(...middlewares))
   )
 
