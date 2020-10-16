@@ -1,7 +1,8 @@
 import { Dispatch } from "redux";
 import axios from 'axios'
 
-import { LOGIN, LOGOUT,  NewUser,  UserActions, UserInfo } from "../../types/userTypes";
+import { ADD_BOOK_TO_USER, LOGIN, LOGOUT,  NewUser,  REMOVE_BOOK_FROM_USER,  UserActions, UserInfo } from "../../types/userTypes";
+import { Book } from "../../types/bookTypes";
 
 
 
@@ -28,11 +29,28 @@ export const logUserOut = ():UserActions => {
         email: '',
         lastName: '',
         firstName: '',
+        imageUrl: '',
         borrowedBooks: []
       }
     }
   }
 }
+
+export const addBookToUser = (bookObj: Book):UserActions => {
+  return {
+    type: ADD_BOOK_TO_USER,
+    payload: bookObj
+  }
+
+}
+
+export const removeBookFromUser = (bookId: string):UserActions => {
+  return {
+    type: REMOVE_BOOK_FROM_USER,
+    payload: bookId
+  }
+}
+
 
 
 /*==================+
@@ -105,5 +123,24 @@ export const clearStorageAndLogOut = () => {
   return (dispatch:Dispatch) => {
     localStorage.removeItem('token')
     dispatch(logUserOut())
+  }
+}
+
+export const requestCheckout = (token:string, bookObj: Book) => {
+  return async (dispatch:Dispatch) => {
+    try{
+      const config = {
+        headers:{
+          'x-auth-token': token
+        }
+      }
+      console.log(token, bookObj)
+      const resp = await axios.patch(`/api/v1/book/${bookObj._id}/checkout`, undefined, config)
+      console.log(resp);
+      if (resp.status === 200) dispatch(addBookToUser(bookObj))
+    } catch(err) {
+      console.log(err.response)
+    }
+    
   }
 }
