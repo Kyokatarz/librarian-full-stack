@@ -1,7 +1,8 @@
 .UserIcon {
   position: absolute;
   right: 10%;
-
+  border: 1px solid white;
+  border-radius: 3px;
   & .dropdown-toggle {
     padding: 0px;
     &::after {

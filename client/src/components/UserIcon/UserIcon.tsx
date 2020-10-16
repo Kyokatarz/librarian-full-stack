@@ -23,7 +23,10 @@ const UserIcon = () => {
 
   return (
     <div className="UserIcon">
-      <DropdownButton title={<UserImage />} alignRight={true}>
+      <DropdownButton
+        title={<UserImage imageUrl={user.userInfo.imageUrl} />}
+        alignRight={true}
+      >
         <Dropdown.Item disabled as="li">
           Signed in as {username}
         </Dropdown.Item>
