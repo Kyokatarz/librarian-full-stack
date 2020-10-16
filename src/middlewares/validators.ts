@@ -18,7 +18,8 @@ export const signInValidator = [
   check('password', 'Password must be provided').not().isEmpty(),
 ]
 
-export const userInfoUpdateValidator = [
+export const userInfoUpdateValidatorWithAuth = [
+  auth,
   check('email', 'Please enter a valid email').isEmail().optional(),
 ]
 

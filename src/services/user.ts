@@ -60,14 +60,23 @@ export const updateUser = async (
 ) => {
   const { lastName, firstName, email } = newInfo
 
-  const user = await User.findById(userId)
+  const user = await User.findById(userId).select('-password -id')
   if (!user) throw 'UserNotFound'
 
   if (lastName) user.lastName = lastName
   if (firstName) user.firstName = firstName
   if (email) user.email = email
+  await user.save()
 
-  return user.save()
+  const { isAdmin, username, borrowedBooks} = user
+  return {
+    lastName: user.lastName,
+    firstName: user.firstName,
+    email: user.email,
+    isAdmin, 
+    username, 
+    borrowedBooks
+  }
 }
 
 /*=======================+

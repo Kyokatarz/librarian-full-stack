@@ -145,13 +145,13 @@ export const updateUserInfo = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params
+  const userReq = req.user as PayloadType
   const { lastName, firstName, email } = req.body
   const errors = validationResult(req)
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
 
-    const newUser = await service.updateUser(userId, {
+    const newUser = await service.updateUser(userReq.id, {
       lastName,
       firstName,
       email,
