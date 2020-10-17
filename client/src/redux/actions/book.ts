@@ -60,7 +60,11 @@ export const requestCheckin = (token:string, bookId:string) => {
       const resp = await axios.patch(`/api/v1/book/${bookId}/checkin`, undefined, config)
       if (resp.status === 200) {
         dispatch(removeBookFromUser(bookId))
-        dispatch(clearUI())}
+        dispatch(clearUI())
+      } else if (resp.status === 209) {
+        setErrorMsg('Book borrowed by someone else! :(')
+        dispatch(getAllBooks() as any)
+      }
     } catch(err) {
       dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
     }
