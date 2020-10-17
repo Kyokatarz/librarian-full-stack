@@ -2,6 +2,7 @@ import { Author } from "./authorTypes"
 
 export const SET_BOOKS = 'SET_BOOKS'
 export const CHANGE_BOOK_STATUS = 'CHANGE_BOOK_STATUS'
+export const UPDATE_BOOK_INFO_IN_ALL_BOOKS = 'UPDATE_BOOK_INFO_IN_ALL_BOOKS'
 
 export type Book = {
   _id: string
@@ -24,4 +25,9 @@ export type changeBookStatusAction = {
   payload: string
 }
 
-export type BookActions = changeBookStatusAction | setBooksAction
+export type updateBookInfoAction = {
+  type: typeof UPDATE_BOOK_INFO_IN_ALL_BOOKS
+  payload: Partial<Book>
+}
+
+export type BookActions = changeBookStatusAction | setBooksAction | updateBookInfoAction

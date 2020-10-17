@@ -1,3 +1,5 @@
+
+import { BookModal } from "./bookModalTypes";
 import { Book } from "./bookTypes";
 import { UI } from "./uiTypes";
 import { User } from "./userTypes";
@@ -5,5 +7,6 @@ import { User } from "./userTypes";
 export type RootState = {
   user: User,
   books: Book[],
-  ui: UI
+  ui: UI,
+  bookModal: BookModal
 }

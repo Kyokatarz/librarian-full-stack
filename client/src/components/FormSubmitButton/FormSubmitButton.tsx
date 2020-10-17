@@ -12,7 +12,13 @@ const FormSubmitButton: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   return (
-    <Button type="Submit" onClick={onClick} disabled={disabled} block>
+    <Button
+      type="Submit"
+      onClick={onClick}
+      disabled={disabled}
+      block
+      className="SubmitButton"
+    >
       {text}
     </Button>
   )

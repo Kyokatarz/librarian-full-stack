@@ -8,7 +8,6 @@ import { RootState } from '../../types/rootState'
 
 import './BookContainer.scss'
 import PaginationBar from '../PaginationBar'
-import books from '../../redux/reducers/books'
 
 type BookContainerProps = {
   inBorrowedBooks: boolean

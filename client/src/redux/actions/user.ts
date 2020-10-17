@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import axios from 'axios'
 
-import { ADD_BOOK_TO_USER, LOGIN, LOGOUT,  NewUser,  REMOVE_BOOK_FROM_USER,  UserActions, UserInfo } from "../../types/userTypes";
+import { ADD_BOOK_TO_USER, LOGIN, LOGOUT,  NewUser,  REMOVE_BOOK_FROM_USER,  UPDATE_BOOK_INFO_IN_USER,  UserActions, UserInfo } from "../../types/userTypes";
 import { Book } from "../../types/bookTypes";
 import { clearUI, setErrorMsg, setLoading } from "./ui";
 
@@ -52,6 +52,12 @@ export const removeBookFromUser = (bookId: string):UserActions => {
   }
 }
 
+export const updateBookInfoInUser = (bookObj: Partial<Book>):UserActions => {
+  return {
+    type: UPDATE_BOOK_INFO_IN_USER,
+    payload: bookObj
+  }
+}
 
 
 /*==================+
@@ -78,7 +84,7 @@ export const sendLogInRequest = (userName: string, password: string) => {
   return async (dispatch:Dispatch) => {
     try{
       dispatch(setLoading())
-      const resp = await axios.post('/api/v1/user/signIn', {
+      const resp = await axios.post('/api/v1/usr/signIn', {
         username: userName,
         password
       })

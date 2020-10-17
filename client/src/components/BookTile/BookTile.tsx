@@ -14,6 +14,8 @@ import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
 
 import './BookTile.scss'
+import BookInfoModal from '../BookInfoModal'
+import { showModal } from '../../redux/actions/bookModal'
 
 type BookTileType = {
   _id: string
@@ -48,7 +50,11 @@ const BookTile: React.FC<BookTileType> = ({
     if (book.status === 'borrowed') dispatch(requestCheckin(user.token, _id))
     dispatch(changeBookStatus(_id))
   }
-
+  const showInfoModal = () => {
+    const book = books.find((bookObj) => bookObj._id === _id)
+    if (!book) return
+    dispatch(showModal(book))
+  }
   let button
   switch (inBorrowedBooks) {
     case false:
@@ -75,7 +81,8 @@ const BookTile: React.FC<BookTileType> = ({
     <div>
       <Card className="BookTile">
         <Card.Title className="BookTile__Title">
-          {title} <FcInfo className="BookTile__Title__Icon" />
+          {title}{' '}
+          <FcInfo className="BookTile__Title__Icon" onClick={showInfoModal} />
         </Card.Title>
         <Card.Body>
           <Card.Text>{_id}</Card.Text>

@@ -123,9 +123,9 @@ export const updateBook = async (
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
-
   //Build a new info object
   const { isbn, title, description, publisher, author, status } = bookObj
+  console.log('author:', author)
   let newInfo: any = {}
   if (isbn) newInfo.isbn = isbn
   if (title) newInfo.title = title
@@ -161,7 +161,9 @@ export const errorHandler = (
   err: any,
   validationErrors?: Result<ValidationError>
 ) => {
-  if (err.kind === 'ObjectId') return new NotFoundError('ID Invalid')
+  if (err.kind === 'ObjectId') {
+    console.log(err);
+    return new NotFoundError('ID Invalid')}
   switch (err) {
     case 'ValidationError':
       return new BadRequestError(
