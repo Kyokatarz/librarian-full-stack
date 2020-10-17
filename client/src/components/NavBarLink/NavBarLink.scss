@@ -4,14 +4,9 @@
   list-style: none;
   justify-content: space-around;
   transition: transform 0.25s ease-out;
-
+  flex-direction: row;
   &--dark {
     background-color: #011627;
-  }
-  &.active {
-    flex-direction: column !important;
-    border: 2px solid red;
-    transform: translateX(0%);
   }
 }
 
@@ -27,5 +22,10 @@
     align-items: center;
     border: 1px solid black;
     transform: translateX(100%);
+    &.active {
+      flex-direction: column !important;
+      border: 2px solid red;
+      transform: translateX(0%);
+    }
   }
 }

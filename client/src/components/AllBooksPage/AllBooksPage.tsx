@@ -12,7 +12,7 @@ const AllBooksPage = () => {
   return (
     <div className="AllBooksPage">
       <SearchBar />
-      <BookContainer />
+      <BookContainer inBorrowedBooks={false} />
     </div>
   )
 }

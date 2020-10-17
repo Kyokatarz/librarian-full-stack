@@ -1,11 +1,11 @@
 import React from 'react'
 
-import BorrowedBooksContainer from '../BorrowedBooksContainer'
+import BookContainer from '../BookContainer'
 
 const BorrowedBooksPage: React.FC = () => {
   return (
     <div className="BorrowedBooksPage">
-      <BorrowedBooksContainer />
+      <BookContainer inBorrowedBooks />
     </div>
   )
 }

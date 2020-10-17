@@ -1,0 +1,16 @@
+.BookTile {
+  width: auto;
+  height: auto;
+  font-size: 14px;
+  margin: 5px;
+  padding: 5px;
+  &__Title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__Icon {
+      cursor: pointer;
+    }
+  }
+}

@@ -69,14 +69,15 @@ export const updateUser = async (
   if (email) user.email = email
   await user.save()
 
-  const { isAdmin, username, borrowedBooks} = user
+  const { isAdmin, username, borrowedBooks, imageUrl} = user
   return {
     lastName: user.lastName,
     firstName: user.firstName,
     email: user.email,
     isAdmin, 
     username, 
-    borrowedBooks
+    borrowedBooks,
+    imageUrl
   }
 }
 

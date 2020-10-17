@@ -8,9 +8,17 @@ import { RootState } from '../../types/rootState'
 
 import './BookContainer.scss'
 import PaginationBar from '../PaginationBar'
+import books from '../../redux/reducers/books'
 
-const BookContainer = () => {
-  const books = useSelector<RootState, Book[]>((state) => state.books)
+type BookContainerProps = {
+  inBorrowedBooks: boolean
+}
+const BookContainer: React.FC<BookContainerProps> = ({ inBorrowedBooks }) => {
+  const allBooks = useSelector<RootState, Book[]>((state) => state.books)
+  const borrowedBooks = useSelector<RootState, Book[]>(
+    (state) => state.user.userInfo.borrowedBooks
+  )
+  const books = inBorrowedBooks ? borrowedBooks : allBooks
   const [page, setPage] = useState(0)
   const [booksToDisplay, setBooksToDisplay] = useState<Book[]>([])
   const bookChunks: Book[][] = _.chunk(books, 9)
@@ -34,6 +42,7 @@ const BookContainer = () => {
       status={item.status}
       author={item.author}
       key={item._id}
+      inBorrowedBooks={inBorrowedBooks}
     />
   ))
 

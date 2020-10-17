@@ -1,12 +1,19 @@
 import React from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { FcInfo } from 'react-icons/fc'
 
-import { changeBookStatus, requestCheckout } from '../../redux/actions/book'
+import {
+  changeBookStatus,
+  requestCheckin,
+  requestCheckout,
+} from '../../redux/actions/book'
 import { Author } from '../../types/authorTypes'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
+
+import './BookTile.scss'
 
 type BookTileType = {
   _id: string
@@ -16,6 +23,7 @@ type BookTileType = {
   publisher?: string
   author?: Author[]
   status: 'available' | 'borrowed'
+  inBorrowedBooks: boolean
 }
 
 const BookTile: React.FC<BookTileType> = ({
@@ -26,6 +34,7 @@ const BookTile: React.FC<BookTileType> = ({
   publisher,
   author,
   status,
+  inBorrowedBooks,
 }) => {
   const dispatch = useDispatch()
   const books = useSelector<RootState, Book[]>((state) => state.books)
@@ -36,22 +45,38 @@ const BookTile: React.FC<BookTileType> = ({
     const book = books.find((bookObj) => bookObj._id === _id)
     if (!book) return
     if (book.status === 'available') dispatch(requestCheckout(user.token, book))
+    if (book.status === 'borrowed') dispatch(requestCheckin(user.token, _id))
     dispatch(changeBookStatus(_id))
   }
 
-  const borrowButton =
-    status === 'available' ? (
-      <Button onClick={onClickHandler}>Borrow</Button>
-    ) : (
-      <Button onClick={onClickHandler} variant="danger" disabled>
-        Unavailable
-      </Button>
-    )
+  let button
+  switch (inBorrowedBooks) {
+    case false:
+      switch (status) {
+        case 'available':
+          button = <Button onClick={onClickHandler}>Borrow</Button>
+          break
+        case 'borrowed':
+          button = (
+            <Button variant="danger" disabled>
+              Unavailable
+            </Button>
+          )
+          break
+      }
+      break
+    case true:
+      button = <Button onClick={onClickHandler}>Return Book</Button>
+    default:
+      break
+  }
 
   return (
     <div>
       <Card className="BookTile">
-        <Card.Title>{title}</Card.Title>
+        <Card.Title className="BookTile__Title">
+          {title} <FcInfo className="BookTile__Title__Icon" />
+        </Card.Title>
         <Card.Body>
           <Card.Text>{_id}</Card.Text>
           <Card.Text>{isbn}</Card.Text>
@@ -61,7 +86,7 @@ const BookTile: React.FC<BookTileType> = ({
             author.map((authorObj) => (
               <Card.Text key={authorObj._id}>{authorObj.name}</Card.Text>
             ))}
-          {borrowButton}
+          {button}
         </Card.Body>
       </Card>
     </div>
