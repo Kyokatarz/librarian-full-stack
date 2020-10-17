@@ -1,4 +1,4 @@
-import { Book, BookActions, CHANGE_BOOK_STATUS, SET_BOOKS, UPDATE_BOOK_INFO_IN_ALL_BOOKS } from "../../types/bookTypes";
+import { Book, BookActions, CHANGE_BOOK_STATUS,  SET_BOOKS, UPDATE_BOOK_INFO_IN_ALL_BOOKS } from "../../types/bookTypes";
 
 const initState:Book[] = []
 

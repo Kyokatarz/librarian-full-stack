@@ -3,6 +3,7 @@ import { Author } from "./authorTypes"
 export const SET_BOOKS = 'SET_BOOKS'
 export const CHANGE_BOOK_STATUS = 'CHANGE_BOOK_STATUS'
 export const UPDATE_BOOK_INFO_IN_ALL_BOOKS = 'UPDATE_BOOK_INFO_IN_ALL_BOOKS'
+export const DELETE_BOOK = 'DELETE_BOOK'
 
 export type Book = {
   _id: string
@@ -30,4 +31,9 @@ export type updateBookInfoAction = {
   payload: Partial<Book>
 }
 
-export type BookActions = changeBookStatusAction | setBooksAction | updateBookInfoAction
+export type DeleteBookAction = {
+  type: typeof DELETE_BOOK,
+  payload: string 
+}
+
+export type BookActions = changeBookStatusAction | setBooksAction | updateBookInfoAction | DeleteBookAction

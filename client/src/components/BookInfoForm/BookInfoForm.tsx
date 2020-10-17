@@ -5,6 +5,7 @@ import { requestBookUpdate } from '../../redux/actions/book'
 
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
+import DeleteBookButton from '../DeleteBookButton'
 import FormSubmitButton from '../FormSubmitButton'
 import './BookInfoForm.scss'
 
@@ -52,6 +53,7 @@ const BookInfoForm = () => {
       })
     )
   }
+
   return (
     <Form className="BookInfoForm">
       <Form.Group>
@@ -100,6 +102,7 @@ const BookInfoForm = () => {
         {isAdmin && (
           <FormSubmitButton text="Update Info" onClick={onUpdateClickHandler} />
         )}
+        {isAdmin && <DeleteBookButton bookId={bookInModal._id!} />}
       </Form.Group>
     </Form>
   )

@@ -113,3 +113,24 @@ export const requestBookUpdate = (token:string, bookObj:Partial<Book>) => {
     }
   }
 }
+
+export const requestDeleteBook = (token:string, bookId: string) => {
+  return async (dispatch:Dispatch) => {
+    try {
+      const config = {
+        headers: {
+          'x-auth-token': token
+        }
+      }
+      dispatch(setLoading())
+      const resp = await axios.delete(`/api/v1/book/${bookId}`, config)
+      if (resp.status === 200) {
+        dispatch(removeBookFromUser(bookId))
+        dispatch(getAllBooks() as any)
+        dispatch(clearUI())
+      } else throw new Error
+    }  catch (err) {
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+    }
+  }
+}
