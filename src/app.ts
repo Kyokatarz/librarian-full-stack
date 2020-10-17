@@ -56,7 +56,7 @@ app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/author', authorRouter)
 app.use('/api/v1/auth', authRouter)
 app.use(function(req, res, next){
-  next(new NotFoundError('Page Not Found'))
+  next(new NotFoundError('Endpoint Not Found'))
 })
 // Custom API error handler
 app.use(apiErrorHandler)
