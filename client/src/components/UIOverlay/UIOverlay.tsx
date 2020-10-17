@@ -9,7 +9,7 @@ import './UIOverlay.scss'
 const UIOverlay: React.FC = () => {
   const uiState = useSelector<RootState, UI>((state) => state.ui)
   const { isLoading, errMsg } = uiState
-  const classList = isLoading || errMsg ? 'UIOverlay active' : 'UIOverlay'
+  const classList = isLoading ? 'UIOverlay active' : 'UIOverlay'
   // const onClickHandler = () => {
   //   const overlay = document.querySelector('.UIOverlay')
   //   overlay!.classList.remove('active')
