@@ -14,6 +14,7 @@ import authRouter from './routers/auth'
 import { MONGODB_URI } from './util/secrets'
 import passport from 'passport'
 import strategy from './config/passport'
+import { NotFoundError } from './helpers/apiError'
 
 const app = express()
 const mongoUrl = MONGODB_URI
@@ -54,7 +55,9 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/book', bookRouter)
 app.use('/api/v1/author', authorRouter)
 app.use('/api/v1/auth', authRouter)
+app.use(function(req, res, next){
+  next(new NotFoundError('Page Not Found'))
+})
 // Custom API error handler
 app.use(apiErrorHandler)
-
 export default app
