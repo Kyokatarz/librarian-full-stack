@@ -7,6 +7,7 @@ import { User } from "./userTypes";
 export type RootState = {
   user: User,
   books: Book[],
+  filteredBooks: Book[],
   ui: UI,
   bookModal: BookModal
 }

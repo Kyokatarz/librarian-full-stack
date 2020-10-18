@@ -5,6 +5,7 @@ import { Book, BookActions, CHANGE_BOOK_STATUS, SET_BOOKS, UPDATE_BOOK_INFO_IN_A
 import { addBookToUser, removeBookFromUser, updateBookInfoInUser } from "./user";
 import { setLoading } from ".";
 import { clearUI, setErrorMsg } from "./ui";
+import { setFilteredBooks } from "./filteredBook";
 
 
 
@@ -39,6 +40,7 @@ export const getAllBooks = () => {
       const resp = await axios.get('/api/v1/book')
       if (resp.status === 200){
       dispatch(setBooks(resp.data))
+      dispatch(setFilteredBooks(resp.data))
       dispatch(clearUI())
     }
     } catch(err){

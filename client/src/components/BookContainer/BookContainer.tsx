@@ -13,7 +13,9 @@ type BookContainerProps = {
   inBorrowedBooks: boolean
 }
 const BookContainer: React.FC<BookContainerProps> = ({ inBorrowedBooks }) => {
-  const allBooks = useSelector<RootState, Book[]>((state) => state.books)
+  const allBooks = useSelector<RootState, Book[]>(
+    (state) => state.filteredBooks
+  )
   const borrowedBooks = useSelector<RootState, Book[]>(
     (state) => state.user.userInfo.borrowedBooks
   )
@@ -31,6 +33,7 @@ const BookContainer: React.FC<BookContainerProps> = ({ inBorrowedBooks }) => {
     [page]
   )
 
+  console.log(allBooks)
   const booksInPage = booksToDisplay?.map((item) => (
     <BookTile
       isbn={item.isbn}
