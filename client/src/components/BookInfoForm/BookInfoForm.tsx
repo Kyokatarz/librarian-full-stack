@@ -6,6 +6,7 @@ import { requestBookUpdate } from '../../redux/actions/book'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 import DeleteBookButton from '../DeleteBookButton'
+import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
 import './BookInfoForm.scss'
 
@@ -56,38 +57,46 @@ const BookInfoForm = () => {
 
   return (
     <Form className="BookInfoForm">
-      <Form.Group>
-        <Form.Label>ISBN</Form.Label>
-        <Form.Control
-          readOnly={!isAdmin}
-          value={isbn}
-          onChange={(event) => setIsbn(event.target.value)}
-        ></Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          readOnly={!isAdmin}
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          readOnly={!isAdmin}
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Publisher</Form.Label>
-        <Form.Control
-          readOnly={!isAdmin}
-          value={publisher}
-          onChange={(event) => setPublisher(event.target.value)}
-        />
-      </Form.Group>
+      <FormInputGroup
+        value={isbn!}
+        label="ISBN"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setIsbn(event.target.value)
+        }
+        type="text"
+        placeholder="Enter ISBN..."
+        readOnly={!isAdmin}
+      />
+      <FormInputGroup
+        value={title!}
+        label="Title"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setTitle(event.target.value)
+        }
+        type="text"
+        placeholder="Enter title..."
+        readOnly={!isAdmin}
+      />
+      <FormInputGroup
+        value={description!}
+        label="Description"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setDescription(event.target.value)
+        }
+        type="text"
+        placeholder="Enter description..."
+        readOnly={!isAdmin}
+      />
+      <FormInputGroup
+        value={publisher!}
+        label="Publisher"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setPublisher(event.target.value)
+        }
+        type="text"
+        placeholder="Enter publisher..."
+        readOnly={!isAdmin}
+      />
       <Form.Group>
         <Form.Label>Author</Form.Label>
         {author?.map((authorObj, index) => (
@@ -96,7 +105,8 @@ const BookInfoForm = () => {
             value={authorObj.name}
             onChange={(event) => authorChangeHandler(event, index)}
             key={authorObj._id}
-          ></Form.Control>
+            placeholder={`Author ${index}`}
+          />
         ))}
         {!bookInModal.author && <Form.Text>No Author</Form.Text>}
         {isAdmin && (

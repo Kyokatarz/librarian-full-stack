@@ -3,14 +3,8 @@ import { Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
 import { signUserUp } from '../../redux/actions/user'
-import ConfirmPasswordInput from '../ConfirmPasswordInput'
-import EmailInput from '../EmailInput'
-import FirstNameInput from '../FirstNameInput'
+import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
-import LastNameInput from '../LastNameInput'
-import PasswordInput from '../PasswordInput'
-import UsernameInput from '../UsernameInput'
-
 import './SignUpForm.scss'
 
 const SignUpForm = () => {
@@ -29,12 +23,17 @@ const SignUpForm = () => {
     if (!passwordMatch) setPasswordMatch(true)
     setPassword(event.target.value)
   }
+
+  const onConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!passwordMatch) setPasswordMatch(true)
+    setConfirmPassword(event.target.value)
+  }
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    // if (password !== confirmPassword) {
-    //   setPasswordMatch(false)
-    //   return
-    // } //TODO: Uncomment this
+    if (password !== confirmPassword) {
+      setPasswordMatch(false)
+      return
+    }
 
     dispatch(
       signUserUp({
@@ -50,24 +49,63 @@ const SignUpForm = () => {
   return (
     <div className="SignUpForm">
       <Form as="form" onSubmit={(event) => handleSubmit(event)}>
-        <UsernameInput username={username} setUsername={setUsername} />
-        <EmailInput inputEmail={email} setInputEmail={setEmail} />
+        <FormInputGroup
+          value={username}
+          label="Username"
+          onChangeHandler={(event: ChangeEvent<any>) =>
+            setUsername(event.target.value)
+          }
+          type="type"
+          placeholder="Enter your username..."
+        />
+        <FormInputGroup
+          value={email}
+          label="Password"
+          onChangeHandler={(event: ChangeEvent<any>) =>
+            setEmail(event.target.value)
+          }
+          type="email"
+          placeholder="Enter your email..."
+        />
         <div className="SignUpForm__Row">
-          <PasswordInput
-            password={password}
+          <FormInputGroup
+            value={password}
+            label="Password"
             onChangeHandler={onPasswordChange}
+            type="password"
+            placeholder="Enter your password..."
           />
-          <ConfirmPasswordInput
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
-            passwordMatch={passwordMatch}
-            setPasswordMatch={setPasswordMatch}
+          <FormInputGroup
+            value={confirmPassword}
+            label="Confirm Password"
+            onChangeHandler={onConfirmPasswordChange}
+            type="password"
+            placeholder="Confirm your password..."
           />
         </div>
+        {!passwordMatch && (
+          <Form.Text className="text-danger">Passwords don't match</Form.Text>
+        )}
 
         <div className="SignUpForm__Row">
-          <FirstNameInput inputFN={firstName} setInputFN={setFirstName} />
-          <LastNameInput inputLN={lastName} setInputLN={setLastName} />
+          <FormInputGroup
+            value={firstName}
+            label="First Name"
+            onChangeHandler={(event: ChangeEvent<any>) =>
+              setFirstName(event.target.value)
+            }
+            type="text"
+            placeholder="Enter your First Name (optional)..."
+          />
+          <FormInputGroup
+            value={lastName}
+            label="Last Name"
+            onChangeHandler={(event: ChangeEvent<any>) =>
+              setLastName(event.target.value)
+            }
+            type="text"
+            placeholder="Enter your Last Name (optional)..."
+          />
         </div>
 
         <Form.Check

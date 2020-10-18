@@ -1,12 +1,11 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
-import './SignInForm.scss'
 import { sendLogInRequest } from '../../redux/actions/user'
-import UsernameInput from '../UsernameInput'
-import PasswordInput from '../PasswordInput'
+import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
+import './SignInForm.scss'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -24,8 +23,24 @@ const LoginForm = () => {
   return (
     <div className="SignInForm-container">
       <Form onSubmit={submitHandler}>
-        <UsernameInput username={username} setUsername={setUsername} />
-        <PasswordInput password={password} onChangeHandler={onPasswordChange} />
+        <FormInputGroup
+          value={username}
+          label="Username"
+          onChangeHandler={(event: ChangeEvent<any>) =>
+            setUsername(event.target.value)
+          }
+          type="text"
+          placeholder="Enter your username..."
+        />
+        <FormInputGroup
+          value={password}
+          label="Password"
+          onChangeHandler={(event: ChangeEvent<any>) =>
+            setPassWord(event.target.value)
+          }
+          type="password"
+          placeholder="Enter your password..."
+        />
         <FormSubmitButton text="Sign In" />
         <br />
       </Form>
