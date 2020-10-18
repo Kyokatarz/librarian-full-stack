@@ -15,8 +15,9 @@ export const addAuthor = async (
   authorObj: Partial<AuthorDocument>
 ): Promise<AuthorDocument> => {
   const user = await User.findById(userId)
-  console.log(user)
-  if (!user!.isAdmin) throw 'NotAnAdmin'
+  if(!user) throw 'UserNotFound'
+  
+  if (!user.isAdmin) throw 'NotAnAdmin'
 
   const { name, writtenBooks } = authorObj
 
