@@ -134,3 +134,24 @@ export const requestDeleteBook = (token:string, bookId: string) => {
     }
   }
 }
+
+export const addNewBook = (token:string, bookObj:Partial<Book>) => {
+  return async (dispatch:Dispatch) => {
+    try {
+      const config = {
+        headers: {
+          'x-auth-token': token
+        }
+      }
+
+      dispatch(setLoading())
+      const resp = await axios.post('/api/v1/book', bookObj, config)
+      if(resp.status === 200) {
+        dispatch(getAllBooks() as any)
+      
+      }
+    } catch(err) {
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+    }
+  }
+}

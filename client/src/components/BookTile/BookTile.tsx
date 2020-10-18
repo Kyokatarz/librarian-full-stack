@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -72,6 +72,10 @@ const BookTile: React.FC<BookTileType> = ({
       break
   }
 
+  useEffect(() => {
+    console.log()
+  })
+
   return (
     <div>
       <Card className="BookTile">
@@ -86,10 +90,14 @@ const BookTile: React.FC<BookTileType> = ({
           <Card.Text>{isbn}</Card.Text>
           <Card.Text>{description}</Card.Text>
           <Card.Text>{publisher}</Card.Text>
-          {author &&
-            author.map((authorObj) => (
+          {author!.length > 0 ? (
+            author!.map((authorObj) => (
               <Card.Text key={authorObj._id}>{authorObj.name}</Card.Text>
-            ))}
+            ))
+          ) : (
+            <Card.Text> No Author</Card.Text>
+          )}
+
           {button}
         </Card.Body>
       </Card>
