@@ -6,8 +6,8 @@ import BookContainer from '../BookContainer'
 import BookInfoModal from '../BookInfoModal'
 import { RootState } from '../../types/rootState'
 import AddNewBookButton from '../AddNewBookButton'
-import './AllBooksPage.scss'
 import NewBookModal from '../NewBookModal'
+import './AllBooksPage.scss'
 
 const AllBooksPage = () => {
   const isAdmin = useSelector<RootState, boolean>(

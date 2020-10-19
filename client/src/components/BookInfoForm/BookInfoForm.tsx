@@ -108,7 +108,7 @@ const BookInfoForm = () => {
             placeholder={`Author ${index}`}
           />
         ))}
-        {!bookInModal.author && <Form.Text>No Author</Form.Text>}
+        {bookInModal.author!.length > 0 && <Form.Text>No Author</Form.Text>}
         {isAdmin && (
           <FormSubmitButton text="Update Info" onClick={onUpdateClickHandler} />
         )}

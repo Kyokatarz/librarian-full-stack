@@ -1,14 +1,19 @@
+@import '../../style/global.scss';
+
 .BookTile {
-  width: auto;
+  width: 400px;
   height: auto;
   font-size: 14px;
   margin: 5px;
   padding: 5px;
+  background-color: $dark-block-content !important;
+  color: white;
+  border: 1px solid white !important;
   &__Title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    color: #347fc9;
     &__Icon {
       cursor: pointer;
     }

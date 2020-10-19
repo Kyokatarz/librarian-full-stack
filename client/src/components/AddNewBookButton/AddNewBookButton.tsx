@@ -6,7 +6,7 @@ type AddNewBookButtonProps = {
 }
 
 const AddNewBookButton: React.FC<AddNewBookButtonProps> = ({ onClick }) => {
-  return <Button onClick={onClick}> + </Button>
+  return <Button onClick={onClick}> + New Book </Button>
 }
 
 export default AddNewBookButton

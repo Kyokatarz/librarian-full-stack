@@ -41,7 +41,7 @@ const SearchBar = () => {
   })
 
   return (
-    <Form className="SearchBarForm">
+    <Form className="SearchBar">
       <Form.Group>
         <Form.Control
           type="text"
@@ -52,7 +52,9 @@ const SearchBar = () => {
         ></Form.Control>
       </Form.Group>
       <Form.Group controlId="SearchForm.ControlSelect1">
-        <Form.Label className="SearchBarForm__Label">Search type</Form.Label>
+        <Form.Label className="SearchBar__Label" aria-hidden={false}>
+          Search type
+        </Form.Label>
         <Form.Control
           as="select"
           value={selectValue}

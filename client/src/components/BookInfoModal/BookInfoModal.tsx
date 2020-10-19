@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeModal } from '../../redux/actions/bookModal'
 
-import { BookModal } from '../../types/bookModalTypes'
-import { Book } from '../../types/bookTypes'
+import { closeModal } from '../../redux/actions/bookModal'
 import { RootState } from '../../types/rootState'
 import BookInfoForm from '../BookInfoForm'
 

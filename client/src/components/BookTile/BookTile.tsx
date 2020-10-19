@@ -86,13 +86,26 @@ const BookTile: React.FC<BookTileType> = ({
           </span>
         </Card.Title>
         <Card.Body>
-          <Card.Text>{_id}</Card.Text>
-          <Card.Text>{isbn}</Card.Text>
-          <Card.Text>{description}</Card.Text>
-          <Card.Text>{publisher}</Card.Text>
+          <Card.Text>
+            <span>ISBN:</span> {isbn}
+          </Card.Text>
+          <Card.Text>
+            <span>Description:</span>
+            {description!.length > 100
+              ? description?.slice(0, 100) + '...'
+              : description}
+          </Card.Text>
+          <Card.Text>
+            <span>Publisher:</span>
+            {publisher}
+          </Card.Text>
+
           {author!.length > 0 ? (
             author!.map((authorObj) => (
-              <Card.Text key={authorObj._id}>{authorObj.name}</Card.Text>
+              <Card.Text key={authorObj._id}>
+                <span>Author:</span>
+                {authorObj.name}
+              </Card.Text>
             ))
           ) : (
             <Card.Text> No Author</Card.Text>
