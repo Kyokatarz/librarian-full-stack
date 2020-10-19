@@ -172,13 +172,13 @@ export const updateUserPassword = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.params
+  const { id } = req.user as PayloadType
   const { oldPassword, newPassword } = req.body
   const errors = validationResult(req)
 
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
-    const newUser = await service.updatePassword(userId, {
+    const newUser = await service.updatePassword(id, {
       oldPassword,
       newPassword,
     })

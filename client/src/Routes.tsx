@@ -11,6 +11,7 @@ import SignUp from './pages/SignUp'
 import UserInfo from './pages/UserInfo'
 import UIOverlay from './components/UIOverlay'
 import NotFound from './pages/NotFound'
+import ChangePassword from './pages/ChangePassword'
 
 const Routes = () => (
   <>
@@ -22,6 +23,8 @@ const Routes = () => (
       <Route exact path="/allbooks" component={AllBooks} />
       <Route exact path="/user/info" component={UserInfo} />
       <Route exact path="/user/books" component={BorrowedBooks} />
+      <Route exact path="/user/changepassword" component={ChangePassword} />
+
       <Route exact component={NotFound} />
     </Switch>
     <Footer />

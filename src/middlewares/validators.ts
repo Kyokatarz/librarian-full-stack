@@ -23,7 +23,8 @@ export const userInfoUpdateValidatorWithAuth = [
   check('email', 'Please enter a valid email').isEmail().optional(),
 ]
 
-export const userPasswordChangeValidator = [
+export const userPasswordChangeValidatorWithAuth = [
+  auth,
   check(
     'newPassword',
     'Password length must be more than 6 characters'

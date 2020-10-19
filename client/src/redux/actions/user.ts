@@ -140,6 +140,26 @@ export const updateUserData = (token:string, newData:Partial<UserInfo>) => {
     
   }
 }
+
+export const changeUserPassword = (token:string, passwordObj: object) => {
+  return async (dispatch:Dispatch) => {
+    try {
+      const config = {
+        headers:{
+          'x-auth-token': token
+        }
+      }
+      dispatch(setLoading())
+      const resp = await axios.patch('/api/v1/user/password', passwordObj, config)
+      if(resp.status === 200) {
+        dispatch(clearUI())
+      }
+    } catch (err) {
+      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+    }
+  }
+}
+
 export const clearStorageAndLogOut = () => {
   return (dispatch:Dispatch) => {
     localStorage.removeItem('token')

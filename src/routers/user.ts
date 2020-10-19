@@ -8,7 +8,7 @@ import {
   signInValidator,
   signUpValidator,
   userInfoUpdateValidatorWithAuth,
-  userPasswordChangeValidator,
+  userPasswordChangeValidatorWithAuth,
 } from '../middlewares/validators'
 
 const router = express.Router()
@@ -19,8 +19,8 @@ router.post('/signIn', signInValidator, controller.signUserIn)
 router.get('/signOut', controller.signUserOut)
 router.patch('/', userInfoUpdateValidatorWithAuth, controller.updateUserInfo)
 router.patch(
-  '/:userId/password',
-  userPasswordChangeValidator,
+  '/password',
+  userPasswordChangeValidatorWithAuth,
   controller.updateUserPassword
 )
 router.post('/password', forgetPasswordValidator, controller.forgetPassword)
