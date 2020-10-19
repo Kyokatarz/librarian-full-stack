@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-
+import { AiFillWarning } from 'react-icons/ai'
 import { clearUI } from '../../redux/actions'
 
 type ErrorWindowProps = {
@@ -17,7 +17,12 @@ const ErrorWindow: React.FC<ErrorWindowProps> = ({ errMsg }) => {
       <Modal.Header>
         <Modal.Title className="text-danger">Something went wrong</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Something went terribly wrong - {errMsg}</Modal.Body>
+      <Modal.Body>
+        <span>
+          <AiFillWarning />
+        </span>
+        <span>Something went terribly wrong - {errMsg}</span>
+      </Modal.Body>
       <Modal.Footer>
         <Button onClick={closeHandler}>Okay</Button>
       </Modal.Footer>

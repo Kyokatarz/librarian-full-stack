@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
 import Routes from './Routes'
-import './App.scss'
 import { getUserData, logUserIn } from './redux/actions/user'
-import { useDispatch } from 'react-redux'
 import { getAllBooks } from './redux/actions/book'
+import UIOverlay from './components/UIOverlay'
+import './App.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
+toast.configure()
 export default function App() {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -18,6 +22,18 @@ export default function App() {
   return (
     <>
       <Routes />
+      <UIOverlay />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   )
 }

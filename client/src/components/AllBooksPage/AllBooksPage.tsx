@@ -8,6 +8,8 @@ import { RootState } from '../../types/rootState'
 import AddNewBookButton from '../AddNewBookButton'
 import NewBookModal from '../NewBookModal'
 import './AllBooksPage.scss'
+import { toast } from 'react-toastify'
+import { Button } from 'react-bootstrap'
 
 const AllBooksPage = () => {
   const isAdmin = useSelector<RootState, boolean>(
@@ -15,6 +17,7 @@ const AllBooksPage = () => {
   )
   const [showNewBookModal, setShowNewBookModal] = useState(false)
 
+  const onClickHandler = () => toast('🦄 Wow so easy!')
   useEffect(() => {
     console.log('AllBooksPage rendered!')
   })

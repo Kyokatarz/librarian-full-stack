@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ADD_BOOK_TO_USER, LOGIN, LOGOUT,  NewUser,  REMOVE_BOOK_FROM_USER,  UPDATE_BOOK_INFO_IN_USER,  UserActions, UserInfo } from "../../types/userTypes";
 import { Book } from "../../types/bookTypes";
 import { clearUI, setErrorMsg, setLoading } from "./ui";
+import { toast } from "react-toastify";
 
 
 
@@ -72,6 +73,7 @@ export const signUserUp = (userInfo: Partial<NewUser>) => {
       localStorage.setItem('token',resp.data.token)
       dispatch(getUserData(resp.data.token))
       dispatch(clearUI())
+      
     }
       
     } catch (err) {
@@ -113,6 +115,7 @@ export const getUserData = (token:string):any => {
       if(resp.status ===200) {
         dispatch(logUserIn(token, resp.data.userInfo))
         dispatch(clearUI())
+        toast.success('Sign In Successfully')
       }
     } catch(err) {
       dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
@@ -133,6 +136,7 @@ export const updateUserData = (token:string, newData:Partial<UserInfo>) => {
       if(resp.status === 200) {
         dispatch(logUserIn(token, resp.data))
         dispatch(clearUI())
+        toast.info('User updated successfully')
       }
     } catch (err) {
       dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
@@ -164,6 +168,7 @@ export const clearStorageAndLogOut = () => {
   return (dispatch:Dispatch) => {
     localStorage.removeItem('token')
     dispatch(logUserOut())
+    toast.warning("You're signed out!")
   }
 }
 
