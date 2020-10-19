@@ -33,7 +33,6 @@ const BookContainer: React.FC<BookContainerProps> = ({ inBorrowedBooks }) => {
     [page]
   )
 
-  console.log(allBooks)
   const booksInPage = booksToDisplay?.map((item) => (
     <BookTile
       isbn={item.isbn}
