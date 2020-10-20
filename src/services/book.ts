@@ -12,6 +12,15 @@ import Book, { BookDocument } from '../models/Book'
 import User, { UserDocument } from '../models/User'
 import stringifyError from '../util/stringifyError'
 
+type BookPayloadType = {
+  isbn: string,
+  title: string,
+  description: string,
+  publisher: string,
+  status: string,
+  author: string,
+}
+
 /*=============+
  |Get all books|
  +=============*/
@@ -92,22 +101,42 @@ export const checkinBook = async (
  +============*/
 export const addNewBook = async (
   userId: string,
-  bookObj: Partial<BookDocument>
+  bookObj: Partial<BookPayloadType>
 ): Promise<BookDocument> => {
   
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
 
-  const { isbn, title, description, publisher, author, status } = bookObj
+  let { isbn, title, description, publisher, author: authorName, status } = bookObj
+  let author;
+
   const newBook = new Book({
     isbn,
     title,
     description,
     publisher,
-    author,
     status,
+    author
   })
+
+  const authorExistsInDb = await Author.findOne({ name: authorName })
+  if (authorExistsInDb) {
+    newBook.author = {_id: authorExistsInDb._id}
+    authorExistsInDb.writtenBooks.unshift({_id: newBook._id})
+    await authorExistsInDb.save()
+
+  } else {
+    const newAuthor = new Author({
+      name: authorName,
+      writtenBooks: [{_id: newBook._id}]
+    })
+    await newAuthor.save()
+    newBook.author = {_id: newAuthor._id}
+  }
+
+
+  
   await newBook.populate('author').execPopulate()
 
   return await newBook.save()
@@ -116,25 +145,18 @@ export const addNewBook = async (
 /*================+
  |Update book info|
  +================*/
- type UpdateBookObjType = {
-   isbn: string,
-   title: string,
-   description: string,
-   publisher: string,
-   status: string,
-   authorName: string,
- }
+ 
 export const updateBook = async (
   userId: string,
   bookId: string,
-  bookObj: Partial<UpdateBookObjType>
+  bookObj: Partial<BookPayloadType>
 ): Promise<BookDocument> => {
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
   
   //Build a new info object
-  const { isbn, title, description, publisher, authorName, status } = bookObj
+  const { isbn, title, description, publisher, author:authorName, status } = bookObj
   
   let newInfo: any = {}
 
@@ -144,11 +166,14 @@ export const updateBook = async (
   if (publisher) newInfo.publisher = publisher
   if (status) newInfo.status = status
 
-  
+  const book = await Book.findById(bookId)
+  if(!book) throw 'BookNotFound'
 
   if (authorName){
     const authorExistsInDb = await Author.findOne({name: authorName})
     if (authorExistsInDb){
+      authorExistsInDb.writtenBooks.unshift({_id: bookId})
+      await authorExistsInDb.save()
       newInfo.author = {
        _id: authorExistsInDb._id
       }
@@ -167,6 +192,21 @@ export const updateBook = async (
       newInfo.author = {
         _id: newAuthor._id
       }
+    }
+
+    if(book.author) {
+      const oldAuthor = await Author.findById(book.author)
+      if (!oldAuthor) throw 'AuthorNotFound'
+
+      const books = [...oldAuthor.writtenBooks]
+      const newBooks = [...books].filter(bookObj => bookObj._id.toString() !== bookId.toString())
+
+      oldAuthor.writtenBooks = newBooks
+      await oldAuthor.save()
+    } 
+  } else {
+    newInfo.author = {
+      _id: book.author._id || null
     }
   }
 
@@ -188,7 +228,9 @@ export const deleteBook = async (
   bookId: string
 ): Promise<BookDocument> => {
   const user = await User.findById(userId)
-  if (!user!.isAdmin) throw 'NotAnAdmin'
+  if (!user) throw 'UserNotFound'
+  if (!user.isAdmin) throw 'NotAnAdmin'
+
   const book = await Book.findByIdAndDelete(bookId)
   if (!book) throw 'BookNotFound'
   return book
@@ -215,6 +257,7 @@ export const errorHandler = (
     case 'BookNotFound':
       return new NotFoundError('No book found', err)
     default:
+      console.log(err);
       return new InternalServerError(err)
   }
 }

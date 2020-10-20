@@ -6,7 +6,7 @@ export type BookDocument = Document & {
   description: string
   publisher: string
   author: {
-    id: mongoose.Schema.Types.ObjectId
+    _id: mongoose.Schema.Types.ObjectId
   }
   status: 'available' | 'borrowed'
 }

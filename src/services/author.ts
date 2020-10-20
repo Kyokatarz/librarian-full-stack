@@ -7,6 +7,7 @@ import {
   UnauthorizedError,
 } from '../helpers/apiError'
 import Author, { AuthorDocument } from '../models/Author'
+import Book from '../models/Book'
 import User from '../models/User'
 import stringifyError from '../util/stringifyError'
 
@@ -16,20 +17,21 @@ export const addAuthor = async (
 ): Promise<AuthorDocument> => {
   const user = await User.findById(userId)
   if(!user) throw 'UserNotFound'
-  
   if (!user.isAdmin) throw 'NotAnAdmin'
 
   const { name, writtenBooks } = authorObj
-
   const author = await Author.findOne({ name })
   if (author) throw 'IdentificationDuplicated'
 
+  const allBooks = await Book.find()
+  const allBooksId = allBooks.map(book => book.id)
+  const allBooksAuthor = allBooks.map(book => book.author)
+
+
   const newAuthor = new Author({
     name,
-    writtenBooks,
+    writtenBooks: [],
   })
-
-  
 
   return await newAuthor.save()
 }
@@ -88,6 +90,8 @@ export const errorHandler = (
       )
     case 'IdentificationDuplicated':
       return new BadRequestError('Author already existed', err)
+    case 'BookHasAuthor':
+      return new BadRequestError('The book(s) given already has an author. Use update book instead.')
     case 'NotAnAdmin':
       return new UnauthorizedError('You have no right to do this! SHAME!')
     case 'AuthorNotFound':
