@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 import {
   changeBookStatus,
@@ -11,10 +12,8 @@ import { Author } from '../../types/authorTypes'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
-
-import './BookTile.scss'
-import { showModal } from '../../redux/actions/bookModal'
 import InfoIcon from '../InfoIcon'
+import './BookTile.scss'
 
 type BookTileType = {
   _id: string
@@ -22,7 +21,7 @@ type BookTileType = {
   title: string
   description?: string
   publisher?: string
-  author?: Author[]
+  author?: Author
   status: 'available' | 'borrowed'
   inBorrowedBooks: boolean
 }
@@ -42,7 +41,7 @@ const BookTile: React.FC<BookTileType> = ({
   const user = useSelector<RootState, User>((state) => state.user)
 
   const onClickHandler = () => {
-    if (!user.isLoggedIn) return //TODO: Add action here
+    if (!user.isLoggedIn) return toast.error('You are not logged in')
     const book = books.find((bookObj) => bookObj._id === _id)
     if (!book) return
     if (book.status === 'available') dispatch(requestCheckout(user.token, book))
@@ -100,16 +99,7 @@ const BookTile: React.FC<BookTileType> = ({
             {publisher}
           </Card.Text>
 
-          {author!.length > 0 ? (
-            author!.map((authorObj) => (
-              <Card.Text key={authorObj._id}>
-                <span>Author:</span>
-                {authorObj.name}
-              </Card.Text>
-            ))
-          ) : (
-            <Card.Text> No Author</Card.Text>
-          )}
+          <Card.Text>{author ? author.name : 'No Author'}</Card.Text>
 
           {button}
         </Card.Body>

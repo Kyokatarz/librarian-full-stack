@@ -12,7 +12,7 @@ export type Book = {
   title: string
   description?: string
   publisher?: string
-  author: Author[]
+  author: Author
   status: 'available' | 'borrowed'
 }
 

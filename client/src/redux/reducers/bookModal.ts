@@ -8,7 +8,6 @@ const initState = {
     title: '',
     description: '',
     publisher: '',
-    author: [],
   },
   show: false
 }

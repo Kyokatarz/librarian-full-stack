@@ -27,19 +27,6 @@ const SearchBar = () => {
     dispatch(setFilteredBooks(filteredBooks))
   }
 
-  useEffect(() => {
-    console.log(
-      allBooks
-        .filter((bookObj: any) => bookObj.author.length > 0)
-        .filter(
-          (bookObj: any) =>
-            !!bookObj.author.find(
-              (author: any) => author.name === inputRef.current.value
-            )
-        )
-    )
-  })
-
   return (
     <Form className="SearchBar">
       <Form.Group>

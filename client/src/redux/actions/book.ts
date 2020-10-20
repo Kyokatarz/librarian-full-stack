@@ -106,7 +106,7 @@ export const requestBookUpdate = (token:string, bookObj:Partial<Book>) => {
           'x-auth-token': token
         }
       }
-      const data = {...bookObj, author: bookObj.author?.map(authorObj => ({_id: authorObj._id}))}
+      const data = {...bookObj, author: bookObj.author?._id}
       console.log('data:', data)
       dispatch(setLoading())
       const resp = await axios.put(`/api/v1/book/${bookObj._id}`, data, config)

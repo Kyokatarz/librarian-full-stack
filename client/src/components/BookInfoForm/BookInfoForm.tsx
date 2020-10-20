@@ -26,23 +26,8 @@ const BookInfoForm = () => {
   const [publisher, setPublisher] = useState(bookInModal.publisher)
   const [author, setAuthor] = useState(bookInModal.author)
 
-  const authorChangeHandler = (event: ChangeEvent<any>, index: number) => {
-    //Cuz it's more complicated
-    const tempArray = [...bookInModal.author!]
-    tempArray[index].name = event.target.value
-    setAuthor(tempArray)
-  }
-
   const onUpdateClickHandler = (event: any) => {
     event.preventDefault()
-    console.log({
-      _id: bookInModal._id,
-      isbn,
-      title,
-      description,
-      publisher,
-      author,
-    })
     dispatch(
       requestBookUpdate(token, {
         _id: bookInModal._id,
@@ -97,23 +82,11 @@ const BookInfoForm = () => {
         placeholder="Enter publisher..."
         readOnly={!isAdmin}
       />
-      <Form.Group>
-        <Form.Label>Author</Form.Label>
-        {author?.map((authorObj, index) => (
-          <Form.Control
-            readOnly={!isAdmin}
-            value={authorObj.name}
-            onChange={(event) => authorChangeHandler(event, index)}
-            key={authorObj._id}
-            placeholder={`Author ${index}`}
-          />
-        ))}
-        {bookInModal.author!.length > 0 && <Form.Text>No Author</Form.Text>}
-        {isAdmin && (
-          <FormSubmitButton text="Update Info" onClick={onUpdateClickHandler} />
-        )}
-        {isAdmin && <DeleteBookButton bookId={bookInModal._id!} />}
-      </Form.Group>
+
+      {isAdmin && (
+        <FormSubmitButton text="Update Info" onClick={onUpdateClickHandler} />
+      )}
+      {isAdmin && <DeleteBookButton bookId={bookInModal._id!} />}
     </Form>
   )
 }
