@@ -4,7 +4,7 @@ import { BookDocument } from './Book'
 
 export type AuthorDocument = Document & {
   name: string
-  writtenBooks: Partial<BookDocument>[]
+  writtenBooks: {_id: string}[]
 }
 const AuthorSchema = new mongoose.Schema({
   name: { type: String, required: true },

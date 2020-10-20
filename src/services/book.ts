@@ -7,6 +7,7 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from '../helpers/apiError'
+import Author from '../models/Author'
 import Book, { BookDocument } from '../models/Book'
 import User, { UserDocument } from '../models/User'
 import stringifyError from '../util/stringifyError'
@@ -115,29 +116,67 @@ export const addNewBook = async (
 /*================+
  |Update book info|
  +================*/
+ type UpdateBookObjType = {
+   isbn: string,
+   title: string,
+   description: string,
+   publisher: string,
+   status: string,
+   authorName: string,
+ }
 export const updateBook = async (
   userId: string,
   bookId: string,
-  bookObj: Partial<BookDocument>
+  bookObj: Partial<UpdateBookObjType>
 ): Promise<BookDocument> => {
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
+  
   //Build a new info object
-  const { isbn, title, description, publisher, author, status } = bookObj
-  console.log('author:', author)
+  const { isbn, title, description, publisher, authorName, status } = bookObj
+  
   let newInfo: any = {}
+
   if (isbn) newInfo.isbn = isbn
   if (title) newInfo.title = title
   if (description) newInfo.description = description
   if (publisher) newInfo.publisher = publisher
-  if (author) newInfo.author = author
   if (status) newInfo.status = status
 
+  
+
+  if (authorName){
+    const authorExistsInDb = await Author.findOne({name: authorName})
+    if (authorExistsInDb){
+      newInfo.author = {
+       _id: authorExistsInDb._id
+      }
+    }
+
+    if (!authorExistsInDb){
+      const newAuthor = new Author({
+        name: authorName,
+        writtenBooks: [
+          {
+            _id: bookId
+          }
+        ]
+      })
+      await newAuthor.save()
+      newInfo.author = {
+        _id: newAuthor._id
+      }
+    }
+  }
+
+  console.log('newInfo:', newInfo)
   const newBook = await Book.findByIdAndUpdate(bookId, newInfo, {
     new: true,
   })
+  
   if (!newBook) throw 'BookNotFound'
+  await newBook.populate('author','name').execPopulate()
   return newBook
 }
 
