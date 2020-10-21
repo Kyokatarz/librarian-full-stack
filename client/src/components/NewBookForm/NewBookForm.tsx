@@ -3,9 +3,7 @@ import { Form } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { addNewBook, requestBookUpdate } from '../../redux/actions/book'
-import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
-import DeleteBookButton from '../DeleteBookButton'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
 
@@ -17,21 +15,18 @@ const NewBookForm = () => {
   const [isbn, setIsbn] = useState('')
   const [description, setDescription] = useState('')
   const [publisher, setPublisher] = useState('')
-  const [author, setAuthor] = useState('')
+  const [authorName, setAuthorName] = useState('')
 
   const onSubmitHandler = (event: any) => {
     event.preventDefault()
-    const authorObj = author
-      .split(',')
-      .map((string) => string.trim())
-      .map((string) => ({ _id: string }))
+
     dispatch(
       addNewBook(token, {
         title,
         isbn,
         description,
         publisher,
-        author: author ? authorObj : [],
+        author: { name: authorName },
         status: 'available',
       })
     )
@@ -76,11 +71,11 @@ const NewBookForm = () => {
         placeholder="Enter publisher..."
       />
       <FormInputGroup
-        value={author}
+        value={authorName}
         type="text"
-        label="Author IDs"
+        label="Author Name"
         onChangeHandler={(event: ChangeEvent<any>) =>
-          setAuthor(event.target.value)
+          setAuthorName(event.target.value)
         }
         placeholder="Leave blank if don't know"
       />

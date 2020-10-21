@@ -11,23 +11,19 @@ import PaginationBar from '../PaginationBar'
 
 type BookContainerProps = {
   inBorrowedBooks: boolean
+  content: Book[]
 }
-const BookContainer: React.FC<BookContainerProps> = ({ inBorrowedBooks }) => {
-  const allBooks = useSelector<RootState, Book[]>(
-    (state) => state.filteredBooks
-  )
-  const borrowedBooks = useSelector<RootState, Book[]>(
-    (state) => state.user.userInfo.borrowedBooks
-  )
-  const books = inBorrowedBooks ? borrowedBooks : allBooks
+const BookContainer: React.FC<BookContainerProps> = ({
+  inBorrowedBooks,
+  content,
+}) => {
   const [page, setPage] = useState(0)
   const [booksToDisplay, setBooksToDisplay] = useState<Book[]>([])
-  const bookChunks: Book[][] = _.chunk(books, 9)
+  const bookChunks: Book[][] = _.chunk(content, 9)
   //Divide the array into multiple smaller arrays with size = 9
 
   const switchPage = useCallback(
     (pageNumber: number) => {
-      console.log('page', page)
       setPage(pageNumber)
     },
     [page]
@@ -48,9 +44,13 @@ const BookContainer: React.FC<BookContainerProps> = ({ inBorrowedBooks }) => {
   ))
 
   useEffect(() => {
-    if (books) setBooksToDisplay(bookChunks[page])
-  }, [books, page])
+    console.log('books changed')
+    if (content) setBooksToDisplay(bookChunks[page])
+  }, [content])
 
+  useEffect(() => {
+    console.log('content:', content)
+  })
   return (
     <div className="BookContainer">
       <div className="BookDisplayContainer">{booksInPage}</div>

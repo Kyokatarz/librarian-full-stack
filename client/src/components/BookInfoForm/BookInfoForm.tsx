@@ -24,7 +24,7 @@ const BookInfoForm = () => {
   const [isbn, setIsbn] = useState(bookInModal.isbn)
   const [description, setDescription] = useState(bookInModal.description)
   const [publisher, setPublisher] = useState(bookInModal.publisher)
-  const [author, setAuthor] = useState(bookInModal.author)
+  const [authorName, setAuthorName] = useState(bookInModal.author?.name)
 
   const onUpdateClickHandler = (event: any) => {
     event.preventDefault()
@@ -35,7 +35,7 @@ const BookInfoForm = () => {
         title,
         description,
         publisher,
-        author,
+        author: { name: authorName },
       })
     )
   }
@@ -80,6 +80,17 @@ const BookInfoForm = () => {
         }
         type="text"
         placeholder="Enter publisher..."
+        readOnly={!isAdmin}
+      />
+
+      <FormInputGroup
+        value={authorName!}
+        label="Author"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setAuthorName(event.target.value)
+        }
+        type="text"
+        placeholder="Enter author name..."
         readOnly={!isAdmin}
       />
 

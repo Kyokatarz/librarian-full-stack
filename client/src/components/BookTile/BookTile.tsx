@@ -21,7 +21,7 @@ type BookTileType = {
   title: string
   description?: string
   publisher?: string
-  author?: Author
+  author?: Partial<Author>
   status: 'available' | 'borrowed'
   inBorrowedBooks: boolean
 }

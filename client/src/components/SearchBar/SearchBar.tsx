@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -9,23 +15,21 @@ import { RootState } from '../../types/rootState'
 
 import './SearchBar.scss'
 
-const SearchBar = () => {
+type SearchBarProps = {
+  search: string
+  onSearchChangeHandler: any
+  select: string
+  onSelectChangeHandler: any
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({
+  search,
+  onSearchChangeHandler,
+  select,
+  onSelectChangeHandler,
+}) => {
   const dispatch = useDispatch()
-  const [searchValue, setSearchValue] = useState('')
-  const [selectValue, setSelectValue] = useState('title')
-
-  const inputRef = useRef() as any
-
   const allBooks = useSelector<RootState, Book[]>((state) => state.books)
-
-  const onChangeHandler = (event: ChangeEvent<any>) => {
-    setSearchValue(event.target.value)
-    let filteredBooks = allBooks.filter((bookObj: any) =>
-      bookObj[selectValue].includes(inputRef.current.value)
-    )
-
-    dispatch(setFilteredBooks(filteredBooks))
-  }
 
   return (
     <Form className="SearchBar">
@@ -33,9 +37,8 @@ const SearchBar = () => {
         <Form.Control
           type="text"
           placeholder="Search something..."
-          value={searchValue}
-          onChange={onChangeHandler}
-          ref={inputRef}
+          value={search}
+          onChange={onSearchChangeHandler}
         ></Form.Control>
       </Form.Group>
       <Form.Group controlId="SearchForm.ControlSelect1">
@@ -44,10 +47,8 @@ const SearchBar = () => {
         </Form.Label>
         <Form.Control
           as="select"
-          value={selectValue}
-          onChange={(event: ChangeEvent<any>) =>
-            setSelectValue(event.target.value)
-          }
+          value={select}
+          onChange={onSelectChangeHandler}
         >
           <option value="title">Title</option>
           <option value="isbn">ISBN</option>
