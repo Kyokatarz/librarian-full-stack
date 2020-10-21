@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
 import HamburgerIcon from '../HamburgerIcon'
+import NavbarIcon from '../NavbarIcon'
 import NavBarLink from '../NavBarLink'
 import SignInBtn from '../SignInBtn'
 import SignUpBtn from '../SignUpBtn/'
@@ -17,10 +18,12 @@ const NavBar = () => {
   const user = useSelector<RootState, User>((state) => state.user)
   return (
     <Navbar className="Navbar" variant="dark">
-      <Link to="/">
-        <Navbar.Brand>Librarian</Navbar.Brand>
-      </Link>
-
+      <div className="Navbar__Start">
+        <NavbarIcon />
+        <Link to="/">
+          <Navbar.Brand>Librarian</Navbar.Brand>
+        </Link>
+      </div>
       <div className="Navbar__End">
         <NavBarLink />
 

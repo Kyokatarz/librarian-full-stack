@@ -24,6 +24,12 @@
 
 @media only screen and (max-width: 768px) {
   .UserIcon {
-    right: 30%;
+    right: 10%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .UserIcon {
+    right: 20%;
   }
 }

@@ -67,9 +67,8 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .Introduction {
-    & h2 {
-      font-size: 7vw;
-    }
+  h2 {
+    font-size: 7vw;
+    text-align: center;
   }
 }
