@@ -4,6 +4,24 @@ import { validationResult } from 'express-validator'
 import { PayloadType } from '../middlewares/auth'
 import * as service from '../services/author'
 
+/*======================+
+ |@ROUTE GET v1/author  |
+ |@DESC GET ALL AUTHOR  |
+ |@ACCESS Public        |
+ +======================*/
+export const getAllAuthor = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const authors = await service.getAllAuthors()
+    res.status(200).json(authors)
+  } catch (err) {
+    next(service.errorHandler(err))
+  }
+}
+
 /*=========================================+
  |              //!ADMIN ONLY              |
  +=========================================*/
@@ -75,8 +93,12 @@ export const adminDeleteAuthor = async (
  |@DESC Get an author               |
  |@ACCESS Public                    |
  +==================================*/
-export const getAuthor = async (req: Request, res: Response, next: NextFunction) => {
-  const {authorId} = req.params
+export const getAuthor = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { authorId } = req.params
   try {
     const author = await service.getAuthor(authorId)
     res.status(200).json(author)

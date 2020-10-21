@@ -19,6 +19,8 @@ import NewBookModal from '../NewBookModal'
 import './AllBooksPage.scss'
 import { Book } from '../../types/bookTypes'
 import { select } from 'redux-saga/effects'
+import NewAuthorModal from '../NewAuthorModal.tsx'
+import AddNewAuthorButton from '../AddNewAuthorButton'
 
 const AllBooksPage = () => {
   const isAdmin = useSelector<RootState, boolean>(
@@ -26,6 +28,7 @@ const AllBooksPage = () => {
   )
   const allBooks = useSelector<RootState, Book[]>((state) => state.books)
   const [showNewBookModal, setShowNewBookModal] = useState(false)
+  const [showNewAuthorModal, setShowNewAuthorModal] = useState(false)
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([])
   const [search, setSearch] = useState('')
   const [select, setSelect] = useState('title')
@@ -64,11 +67,18 @@ const AllBooksPage = () => {
       {isAdmin && (
         <AddNewBookButton onClick={() => setShowNewBookModal(true)} />
       )}
+      {isAdmin && (
+        <AddNewAuthorButton onClick={() => setShowNewAuthorModal(true)} />
+      )}
       <BookContainer inBorrowedBooks={false} content={filteredBooks} />
       <BookInfoModal />
       <NewBookModal
         show={showNewBookModal}
         closeHandler={() => setShowNewBookModal(false)}
+      />
+      <NewAuthorModal
+        show={showNewAuthorModal}
+        closeHandler={() => setShowNewAuthorModal(false)}
       />
     </div>
   )

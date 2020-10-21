@@ -125,7 +125,7 @@ export const requestBookUpdate = (token: string, bookObj: Partial<Book>) => {
         toast.info('Book updated successfully!')
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }

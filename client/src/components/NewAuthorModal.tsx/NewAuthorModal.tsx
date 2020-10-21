@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 
-import NewBookForm from '../NewBookForm'
+import NewAuthorForm from '../NewAuthorForm'
 
 type NewAuthorModalProps = {
   show: boolean
@@ -17,7 +17,9 @@ const NewAuthorModal: React.FC<NewAuthorModalProps> = ({
       <Modal.Header closeButton>
         <Modal.Title>Add a new author </Modal.Title>
       </Modal.Header>
-      <Modal.Body></Modal.Body>
+      <Modal.Body>
+        <NewAuthorForm />
+      </Modal.Body>
     </Modal>
   )
 }

@@ -8,6 +8,7 @@ import { getAllBooks } from './redux/actions/book'
 import UIOverlay from './components/UIOverlay'
 import './App.scss'
 import 'react-toastify/dist/ReactToastify.css'
+import { requestAllAuthors } from './redux/actions'
 
 toast.configure()
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
 
     if (token) dispatch(getUserData(token))
     dispatch(getAllBooks())
+    dispatch(requestAllAuthors())
   }, [])
   return (
     <>

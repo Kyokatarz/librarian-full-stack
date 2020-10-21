@@ -2,29 +2,28 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import thunk from 'redux-thunk'
 
-
 import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
 const initState: any = {
- user: {
-  isLoggedIn: false,
-  token: '',
-  userInfo: {
-    isAdmin: false,
-    username: '',
-    email: '',
-    lastName: '',
-    firstName: '',
-   borrowedBooks: []
-  }
- },
- filteredBooks: [],
- books: [],
- ui: {
-   isLoading: false,
-   errMsg: ''
- }
+  user: {
+    isLoggedIn: false,
+    token: '',
+    userInfo: {
+      isAdmin: false,
+      username: '',
+      email: '',
+      lastName: '',
+      firstName: '',
+      borrowedBooks: [],
+    },
+  },
+  books: [],
+  ui: {
+    isLoading: false,
+    errMsg: '',
+  },
+  authors: [],
 }
 
 export default function makeStore(initialState = initState) {

@@ -1,15 +1,7 @@
-import React, {
-  ChangeEvent,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { FormEvent } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setFilteredBooks } from '../../redux/actions/filteredBook'
-import { Author } from '../../types/authorTypes'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 
@@ -30,9 +22,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const dispatch = useDispatch()
   const allBooks = useSelector<RootState, Book[]>((state) => state.books)
+  const submitHandler = (event: FormEvent<HTMLInputElement>) => {
+    event.preventDefault()
+  }
 
   return (
-    <Form className="SearchBar">
+    <Form className="SearchBar" onSubmit={submitHandler}>
       <Form.Group>
         <Form.Control
           type="text"

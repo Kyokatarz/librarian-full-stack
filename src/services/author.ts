@@ -16,7 +16,7 @@ export const addAuthor = async (
   authorObj: Partial<AuthorDocument>
 ): Promise<AuthorDocument> => {
   const user = await User.findById(userId)
-  if(!user) throw 'UserNotFound'
+  if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
 
   const { name, writtenBooks } = authorObj
@@ -24,9 +24,8 @@ export const addAuthor = async (
   if (author) throw 'IdentificationDuplicated'
 
   const allBooks = await Book.find()
-  const allBooksId = allBooks.map(book => book.id)
-  const allBooksAuthor = allBooks.map(book => book.author)
-
+  const allBooksId = allBooks.map((book) => book.id)
+  const allBooksAuthor = allBooks.map((book) => book.author)
 
   const newAuthor = new Author({
     name,
@@ -66,13 +65,17 @@ export const deleteAuthor = async (userId: string, authorId: string) => {
   return author
 }
 
-export const getAuthor = async(authorId: string) => {
-console.log('authorId :', authorId);
-  
+export const getAuthor = async (authorId: string) => {
+  console.log('authorId :', authorId)
+
   const author = await Author.findById(authorId).populate('writtenBooks')
   if (!author) throw 'AuthorNotFound'
 
   return author
+}
+
+export const getAllAuthors = async () => {
+  return await Author.find().populate('writtenBooks').exec()
 }
 /*=============+
  |Error Handler|
@@ -91,7 +94,9 @@ export const errorHandler = (
     case 'IdentificationDuplicated':
       return new BadRequestError('Author already existed', err)
     case 'BookHasAuthor':
-      return new BadRequestError('The book(s) given already has an author. Use update book instead.')
+      return new BadRequestError(
+        'The book(s) given already has an author. Use update book instead.'
+      )
     case 'NotAnAdmin':
       return new UnauthorizedError('You have no right to do this! SHAME!')
     case 'AuthorNotFound':

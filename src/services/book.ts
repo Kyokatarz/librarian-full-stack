@@ -181,8 +181,9 @@ export const updateBook = async (
   if (authorName) {
     const authorExistsInDb = await Author.findOne({ name: authorName })
     if (authorExistsInDb) {
-      authorExistsInDb.writtenBooks.unshift({ _id: bookId })
+      authorExistsInDb.writtenBooks.push({ _id: bookId })
       await authorExistsInDb.save()
+      console.log('authorExistsInDb :', authorExistsInDb)
       newInfo.author = {
         _id: authorExistsInDb._id,
       }
@@ -206,14 +207,15 @@ export const updateBook = async (
     if (book.author) {
       const oldAuthor = await Author.findById(book.author)
       if (!oldAuthor) throw 'AuthorNotFound'
+      if (oldAuthor.name !== authorName) {
+        const books = [...oldAuthor.writtenBooks]
+        const newBooks = [...books].filter(
+          (bookObj) => bookObj._id.toString() !== bookId.toString()
+        )
 
-      const books = [...oldAuthor.writtenBooks]
-      const newBooks = [...books].filter(
-        (bookObj) => bookObj._id.toString() !== bookId.toString()
-      )
-
-      oldAuthor.writtenBooks = newBooks
-      await oldAuthor.save()
+        oldAuthor.writtenBooks = newBooks
+        await oldAuthor.save()
+      }
     }
   } else {
     newInfo.author = {

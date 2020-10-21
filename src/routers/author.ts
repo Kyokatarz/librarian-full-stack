@@ -4,7 +4,8 @@ import {
   adminAddAuthor,
   adminDeleteAuthor,
   adminUpdateAuthor,
-  getAuthor
+  getAllAuthor,
+  getAuthor,
 } from '../controllers/author'
 import auth from '../middlewares/auth'
 import {
@@ -14,9 +15,13 @@ import {
 
 const router = express.Router()
 
+router.get('/', getAllAuthor)
+router.get('/:authorId', getAuthor)
+/*=========+
+ |PROTECTED|
+ +=========*/
 router.post('/', addAuthorValidatorWithAuth, adminAddAuthor)
 router.put('/:authorId', updateAuthorValidatorWithAuth, adminUpdateAuthor)
 router.delete('/:authorId', auth, adminDeleteAuthor)
-router.get('/:authorId', getAuthor)
 
 export default router

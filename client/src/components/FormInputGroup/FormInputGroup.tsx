@@ -8,6 +8,7 @@ type FormInputGroupProps = {
   type: string
   placeholder: string
   readOnly?: boolean
+  required?: boolean
 }
 
 const FormInputGroup: React.FC<FormInputGroupProps> = ({
@@ -17,6 +18,7 @@ const FormInputGroup: React.FC<FormInputGroupProps> = ({
   type,
   placeholder,
   readOnly,
+  required,
 }) => {
   return (
     <Form.Group>
@@ -27,6 +29,7 @@ const FormInputGroup: React.FC<FormInputGroupProps> = ({
         onChange={onChangeHandler}
         placeholder={placeholder}
         readOnly={readOnly}
+        required={required}
       ></Form.Control>
     </Form.Group>
   )
