@@ -12,7 +12,7 @@ export type Book = {
   title: string
   description?: string
   publisher?: string
-  author: Author
+  author: Partial<Author>
   status: 'available' | 'borrowed'
 }
 
@@ -31,6 +31,7 @@ export type updateBookInfoAction = {
   type: typeof UPDATE_BOOK_INFO_IN_ALL_BOOKS
   payload: Partial<Book>
 }
+
 
 export type DeleteBookAction = {
   type: typeof DELETE_BOOK,
