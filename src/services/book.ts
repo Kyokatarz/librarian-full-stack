@@ -13,12 +13,12 @@ import User, { UserDocument } from '../models/User'
 import stringifyError from '../util/stringifyError'
 
 type BookPayloadType = {
-  isbn: string,
-  title: string,
-  description: string,
-  publisher: string,
-  status: string,
-  author: string,
+  isbn: string
+  title: string
+  description: string
+  publisher: string
+  status: string
+  author: string
 }
 
 /*=============+
@@ -58,10 +58,9 @@ export const checkoutBook = async (
   //Building book => user:
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
-  
-  
-  user.borrowedBooks = [...user.borrowedBooks, {_id: bookId}]
-  await user.populate('borrowedBooks',).execPopulate()
+
+  user.borrowedBooks = [...user.borrowedBooks, { _id: bookId }]
+  await user.populate('borrowedBooks').execPopulate()
   await user.populate('borrowedBooks.author', 'name').execPopulate()
   return await user.save()
 }
@@ -84,12 +83,12 @@ export const checkinBook = async (
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
 
-  console.log('borrowedBooks', user.borrowedBooks);
-  
+  console.log('borrowedBooks', user.borrowedBooks)
+
   const filteredBooks = user.borrowedBooks.filter(
     (id: Schema.Types.ObjectId) => id.toString() !== bookId
   )
-    console.log('filteredBooks:', filteredBooks)
+  console.log('filteredBooks:', filteredBooks)
   user.borrowedBooks = filteredBooks
   await user.populate('borrowedBooks').execPopulate()
   await user.populate('borrowedBooks.author', 'name').execPopulate()
@@ -103,13 +102,19 @@ export const addNewBook = async (
   userId: string,
   bookObj: Partial<BookPayloadType>
 ): Promise<BookDocument> => {
-  
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
 
-  let { isbn, title, description, publisher, author: authorName, status } = bookObj
-  let author;
+  let {
+    isbn,
+    title,
+    description,
+    publisher,
+    author: authorName,
+    status,
+  } = bookObj
+  let author
 
   const newBook = new Book({
     isbn,
@@ -117,26 +122,23 @@ export const addNewBook = async (
     description,
     publisher,
     status,
-    author
+    author,
   })
 
   const authorExistsInDb = await Author.findOne({ name: authorName })
   if (authorExistsInDb) {
-    newBook.author = {_id: authorExistsInDb._id}
-    authorExistsInDb.writtenBooks.unshift({_id: newBook._id})
+    newBook.author = { _id: authorExistsInDb._id }
+    authorExistsInDb.writtenBooks.unshift({ _id: newBook._id })
     await authorExistsInDb.save()
-
   } else {
     const newAuthor = new Author({
       name: authorName,
-      writtenBooks: [{_id: newBook._id}]
+      writtenBooks: [{ _id: newBook._id }],
     })
     await newAuthor.save()
-    newBook.author = {_id: newAuthor._id}
+    newBook.author = { _id: newAuthor._id }
   }
 
-
-  
   await newBook.populate('author').execPopulate()
 
   return await newBook.save()
@@ -145,7 +147,7 @@ export const addNewBook = async (
 /*================+
  |Update book info|
  +================*/
- 
+
 export const updateBook = async (
   userId: string,
   bookId: string,
@@ -154,10 +156,17 @@ export const updateBook = async (
   const user = await User.findById(userId)
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
-  
+
   //Build a new info object
-  const { isbn, title, description, publisher, author:authorName, status } = bookObj
-  
+  const {
+    isbn,
+    title,
+    description,
+    publisher,
+    author: authorName,
+    status,
+  } = bookObj
+
   let newInfo: any = {}
 
   if (isbn) newInfo.isbn = isbn
@@ -167,46 +176,48 @@ export const updateBook = async (
   if (status) newInfo.status = status
 
   const book = await Book.findById(bookId)
-  if(!book) throw 'BookNotFound'
+  if (!book) throw 'BookNotFound'
 
-  if (authorName){
-    const authorExistsInDb = await Author.findOne({name: authorName})
-    if (authorExistsInDb){
-      authorExistsInDb.writtenBooks.unshift({_id: bookId})
+  if (authorName) {
+    const authorExistsInDb = await Author.findOne({ name: authorName })
+    if (authorExistsInDb) {
+      authorExistsInDb.writtenBooks.unshift({ _id: bookId })
       await authorExistsInDb.save()
       newInfo.author = {
-       _id: authorExistsInDb._id
+        _id: authorExistsInDb._id,
       }
     }
 
-    if (!authorExistsInDb){
+    if (!authorExistsInDb) {
       const newAuthor = new Author({
         name: authorName,
         writtenBooks: [
           {
-            _id: bookId
-          }
-        ]
+            _id: bookId,
+          },
+        ],
       })
       await newAuthor.save()
       newInfo.author = {
-        _id: newAuthor._id
+        _id: newAuthor._id,
       }
     }
 
-    if(book.author) {
+    if (book.author) {
       const oldAuthor = await Author.findById(book.author)
       if (!oldAuthor) throw 'AuthorNotFound'
 
       const books = [...oldAuthor.writtenBooks]
-      const newBooks = [...books].filter(bookObj => bookObj._id.toString() !== bookId.toString())
+      const newBooks = [...books].filter(
+        (bookObj) => bookObj._id.toString() !== bookId.toString()
+      )
 
       oldAuthor.writtenBooks = newBooks
       await oldAuthor.save()
-    } 
+    }
   } else {
     newInfo.author = {
-      _id: book.author._id || null
+      _id: book.author._id || null,
     }
   }
 
@@ -214,9 +225,9 @@ export const updateBook = async (
   const newBook = await Book.findByIdAndUpdate(bookId, newInfo, {
     new: true,
   })
-  
+
   if (!newBook) throw 'BookNotFound'
-  await newBook.populate('author','name').execPopulate()
+  await newBook.populate('author', 'name').execPopulate()
   return newBook
 }
 
@@ -243,8 +254,9 @@ export const errorHandler = (
   validationErrors?: Result<ValidationError>
 ) => {
   if (err.kind === 'ObjectId') {
-    console.log(err);
-    return new NotFoundError('ID Invalid')}
+    console.log(err)
+    return new NotFoundError('ID Invalid')
+  }
   switch (err) {
     case 'ValidationError':
       return new BadRequestError(
@@ -257,7 +269,7 @@ export const errorHandler = (
     case 'BookNotFound':
       return new NotFoundError('No book found', err)
     default:
-      console.log(err);
+      console.log(err)
       return new InternalServerError(err)
   }
 }
