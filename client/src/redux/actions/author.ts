@@ -57,7 +57,7 @@ export const requestAllAuthors = () => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading())
-      const resp = await axios.get('api/v1/author')
+      const resp = await axios.get('/api/v1/author')
       if (resp.status === 200) {
         dispatch(addAuthor(resp.data))
         dispatch(clearUI())

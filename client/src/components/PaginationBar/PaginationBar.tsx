@@ -1,6 +1,8 @@
 import React from 'react'
 import { Pagination } from 'react-bootstrap'
 
+import './PaginationBar.scss'
+
 type PaginationBar = {
   page: number
   size: number
@@ -19,7 +21,7 @@ const PaginationBar: React.FC<PaginationBar> = ({ page, size, setPage }) => {
     )
   }
 
-  return <Pagination>{items}</Pagination>
+  return <Pagination className="PaginationBar">{items}</Pagination>
 }
 
 export default React.memo(PaginationBar)

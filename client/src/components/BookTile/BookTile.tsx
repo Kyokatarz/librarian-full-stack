@@ -78,12 +78,16 @@ const BookTile: React.FC<BookTileType> = ({
   return (
     <div>
       <Card className="BookTile">
+        <Card.Img variant="top" src="https://via.placeholder.com/300x200" />
         <Card.Title className="BookTile__Title">
           {title}{' '}
           <span className="BookTile__Title__Icon">
             <InfoIcon _id={_id} />
           </span>
         </Card.Title>
+        <Card.Subtitle className="BookTile__Subtitle">
+          {author ? author.name : 'No Author'}
+        </Card.Subtitle>
         <Card.Body>
           <Card.Text>
             <span>ISBN:</span> {isbn}
@@ -98,11 +102,8 @@ const BookTile: React.FC<BookTileType> = ({
             <span>Publisher:</span>
             {publisher}
           </Card.Text>
-
-          <Card.Text>{author ? author.name : 'No Author'}</Card.Text>
-
-          {button}
         </Card.Body>
+        {button}
       </Card>
     </div>
   )

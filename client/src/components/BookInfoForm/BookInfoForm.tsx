@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestBookUpdate } from '../../redux/actions/book'
@@ -25,6 +25,7 @@ const BookInfoForm = () => {
   const [description, setDescription] = useState(bookInModal.description)
   const [publisher, setPublisher] = useState(bookInModal.publisher)
   const [authorName, setAuthorName] = useState(bookInModal.author?.name)
+  const [disabled, setDisabled] = useState(true)
 
   const onUpdateClickHandler = (event: any) => {
     event.preventDefault()
@@ -39,6 +40,18 @@ const BookInfoForm = () => {
       })
     )
   }
+
+  useEffect(() => {
+    if (
+      title !== bookInModal.title ||
+      isbn !== bookInModal.isbn ||
+      description !== bookInModal.description ||
+      publisher !== bookInModal.publisher ||
+      authorName !== bookInModal.author?.name
+    ) {
+      setDisabled(false)
+    } else setDisabled(true)
+  })
 
   return (
     <Form className="BookInfoForm">
@@ -95,7 +108,11 @@ const BookInfoForm = () => {
       />
 
       {isAdmin && (
-        <FormSubmitButton text="Update Info" onClick={onUpdateClickHandler} />
+        <FormSubmitButton
+          text="Update Info"
+          onClick={onUpdateClickHandler}
+          disabled={disabled}
+        />
       )}
       {isAdmin && <DeleteBookButton bookId={bookInModal._id!} />}
     </Form>

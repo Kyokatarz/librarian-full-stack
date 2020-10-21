@@ -2,20 +2,29 @@
 
 .BookTile {
   width: 300px;
-  height: auto;
+  height: 550px;
   font-size: 14px;
   margin: 5px;
   padding: 5px;
   background-color: $dark-block-content !important;
   color: white;
-  border: 1px solid white !important;
+  border: 1px solid rgb(255, 255, 255) !important;
+  box-shadow: 4px 6px 3px 2px #0f1214;
   &__Title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    color: #347fc9;
+    color: $text-highlight;
     &__Icon {
       cursor: pointer;
     }
+  }
+
+  &__Subtitle {
+    color: #2d608d;
+  }
+
+  & span {
+    color: $text-secondary;
   }
 }

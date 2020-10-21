@@ -18,7 +18,9 @@ const Introduction = () => {
           Built by book enthusiasts.
         </p>
         <Link to="/allbooks">
-          <Button className="Introduction__Button">Learn More &gt;&gt;</Button>
+          <Button className="Introduction__Button">
+            See all books &gt;&gt;
+          </Button>
         </Link>
       </div>
     </div>

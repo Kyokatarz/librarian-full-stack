@@ -5,6 +5,7 @@ import { RootState } from '../../types/rootState'
 
 import BookContainer from '../BookContainer'
 import BookInfoModal from '../BookInfoModal'
+import EmptyPage from '../EmptyPage'
 import './BorrowedBooksPage.scss'
 
 const BorrowedBooksPage: React.FC = () => {
@@ -13,7 +14,11 @@ const BorrowedBooksPage: React.FC = () => {
   )
   return (
     <div className="BorrowedBooksPage">
-      <BookContainer inBorrowedBooks content={borrowedBooks} />
+      {borrowedBooks.length === 0 ? (
+        <EmptyPage />
+      ) : (
+        <BookContainer inBorrowedBooks content={borrowedBooks} />
+      )}
       <BookInfoModal />
     </div>
   )

@@ -27,29 +27,31 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }
 
   return (
-    <Form className="SearchBar" onSubmit={submitHandler}>
-      <Form.Group>
-        <Form.Control
-          type="text"
-          placeholder="Search something..."
-          value={search}
-          onChange={onSearchChangeHandler}
-        ></Form.Control>
-      </Form.Group>
-      <Form.Group controlId="SearchForm.ControlSelect1">
-        <Form.Label className="SearchBar__Label" aria-hidden={false}>
-          Search type
-        </Form.Label>
-        <Form.Control
-          as="select"
-          value={select}
-          onChange={onSelectChangeHandler}
-        >
-          <option value="title">Title</option>
-          <option value="isbn">ISBN</option>
-        </Form.Control>
-      </Form.Group>
-    </Form>
+    <div className="SearchBarContainer">
+      <Form className="SearchBar" onSubmit={submitHandler}>
+        <Form.Group>
+          <Form.Control
+            type="text"
+            placeholder="Search something..."
+            value={search}
+            onChange={onSearchChangeHandler}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group controlId="SearchForm.ControlSelect1">
+          <Form.Label className="SearchBar__Label" aria-hidden={false}>
+            Search type
+          </Form.Label>
+          <Form.Control
+            as="select"
+            value={select}
+            onChange={onSelectChangeHandler}
+          >
+            <option value="title">Title</option>
+            <option value="isbn">ISBN</option>
+          </Form.Control>
+        </Form.Group>
+      </Form>
+    </div>
   )
 }
 

@@ -4,7 +4,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 100;
   background-color: #011627;
   border-bottom: 2px solid #5a799c;
 
@@ -37,12 +37,12 @@
     }
 
     &__End {
-      width: 60%;
+      width: 70%;
     }
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .Navbar {
     &__Icon {
       display: none;

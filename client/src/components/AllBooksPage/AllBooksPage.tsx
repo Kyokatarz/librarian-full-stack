@@ -7,8 +7,6 @@ import React, {
   useState,
 } from 'react'
 import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import { Button } from 'react-bootstrap'
 
 import SearchBar from '../SearchBar'
 import BookContainer from '../BookContainer'
@@ -16,11 +14,10 @@ import BookInfoModal from '../BookInfoModal'
 import { RootState } from '../../types/rootState'
 import AddNewBookButton from '../AddNewBookButton'
 import NewBookModal from '../NewBookModal'
-import './AllBooksPage.scss'
 import { Book } from '../../types/bookTypes'
-import { select } from 'redux-saga/effects'
 import NewAuthorModal from '../NewAuthorModal.tsx'
 import AddNewAuthorButton from '../AddNewAuthorButton'
+import './AllBooksPage.scss'
 
 const AllBooksPage = () => {
   const isAdmin = useSelector<RootState, boolean>(

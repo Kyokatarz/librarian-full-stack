@@ -14,6 +14,7 @@
   transform: translate(5%, -50%);
   margin-right: 20px;
   z-index: 9999;
+  cursor: pointer;
   &__Line-1 {
     @include hamburger-line();
     &.active {
@@ -36,7 +37,7 @@
   }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
   .Hamburger {
     display: block;
   }
