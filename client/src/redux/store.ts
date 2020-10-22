@@ -10,6 +10,7 @@ const initState: any = {
     isLoggedIn: false,
     token: '',
     userInfo: {
+      isGoogleUser: false,
       isAdmin: false,
       username: '',
       email: '',

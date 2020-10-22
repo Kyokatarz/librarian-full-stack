@@ -6,7 +6,6 @@ export type BorrowedBook = BookDocument & {
   date: { type: Date; required: true }
 }
 export type UserDocument = Document & {
-  googleId: string
   imageUrl: string
   username: string
   password: string
@@ -14,19 +13,20 @@ export type UserDocument = Document & {
   lastName: string
   firstName: string
   borrowedBooks: any
-  isAdmin: Boolean
+  isGoogleUser: boolean
+  isAdmin: boolean
+  resetToken: string
 }
 
 const UserSchema = new mongoose.Schema({
-  googleId: String,
   imageUrl: {
     type: String,
-    default: 'https://via.placeholder.com/40x40'
+    default: 'https://via.placeholder.com/40x40',
   },
   username: {
     type: String,
     required: true,
-  },  
+  },
   password: {
     type: String,
     required: true,
@@ -41,9 +41,14 @@ const UserSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'book',
-    }
+    },
   ],
   isAdmin: { type: Boolean, default: false }, //Changable only through db
+  isGoogleUser: { type: Boolean, default: false },
+  resetToken: {
+    token: String,
+    expirationDate: Date,
+  },
 })
 
 const User = mongoose.model<UserDocument>('user', UserSchema)

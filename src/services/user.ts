@@ -12,7 +12,6 @@ import stringifyError from '../util/stringifyError'
 import sendEmail from '../nodemailer'
 import { JWT_SECRET } from '../util/secrets'
 
-
 /*===========+
  |Create User|
  +===========*/
@@ -45,7 +44,12 @@ export const create = async (
  |Get user info   |
  +================*/
 export const getUserInfo = async (userId: string): Promise<UserDocument> => {
-  const user = await User.findById(userId).select('-password').populate('borrowedBooks')
+  const user = await User.findById(userId)
+    .select('-password')
+    .populate('borrowedBooks')
+    .exec()
+
+  console.log(user)
   if (!user) throw 'UserNotFound'
   await user.populate('borrowedBooks.author', 'name').execPopulate()
 
@@ -69,35 +73,34 @@ export const updateUser = async (
   if (email) user.email = email
   await user.save()
 
-  const { isAdmin, username, borrowedBooks, imageUrl} = user
+  const { isAdmin, username, borrowedBooks, imageUrl } = user
   return {
     lastName: user.lastName,
     firstName: user.firstName,
     email: user.email,
-    isAdmin, 
-    username, 
+    isAdmin,
+    username,
     borrowedBooks,
-    imageUrl
+    imageUrl,
   }
 }
 
 /*=======================+
  |Forget Password Handler|
  +=======================*/
- export const forgetPassword = async (email:string) => {
-  const user = await User.findOne({email})
+export const forgetPassword = async (email: string) => {
+  const user = await User.findOne({ email })
 
   if (!user) return
   const payload = {
     user: {
-      id: user.id
-    }
+      id: user.id,
+    },
   }
 
-  const hashedString = jwt.sign(payload, JWT_SECRET, {expiresIn: 300}) ;
-  sendEmail(email, hashedString);
-  
- }
+  const hashedString = jwt.sign(payload, JWT_SECRET, { expiresIn: 300 })
+  sendEmail(email, hashedString)
+}
 
 /*====================+
  |Update user password|
@@ -127,11 +130,13 @@ export const updatePassword = async (
   return user.save()
 }
 
-export const recoverPassword = async (userId: string, newPassword: string): Promise<UserDocument> => {
-    const user = await User.findById(userId)
-    user!.password = newPassword
-    return await user!.save()
-  
+export const recoverPassword = async (
+  userId: string,
+  newPassword: string
+): Promise<UserDocument> => {
+  const user = await User.findById(userId)
+  user!.password = newPassword
+  return await user!.save()
 }
 
 /*=============+

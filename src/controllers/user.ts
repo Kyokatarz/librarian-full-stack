@@ -19,7 +19,7 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, username, password, lastName, firstName, isAdmin, } = req.body
+  const { email, username, password, lastName, firstName, isAdmin } = req.body
   const errors = validationResult(req)
 
   try {
@@ -102,10 +102,14 @@ export const signUserIn = async (
  * @ACCESS Private             *
  *******************************/
 
- export const signUserOut = async (req: Request, res: Response, next: NextFunction) => {
+export const signUserOut = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   req.logOut()
   res.redirect('http://localhost:5000/')
- }
+}
 
 /********************************
  * @ROUTE GET /v1/user/         *
@@ -113,11 +117,24 @@ export const signUserIn = async (
  * @ACCESS PRIVATE              *
  ********************************/
 
-export const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
+export const getUserInfo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const userReq = req.user as PayloadType
-  try{
+  try {
     const user = await service.getUserInfo(userReq.id)
-    const {username, email, lastName, firstName, imageUrl, borrowedBooks, isAdmin} = user
+    const {
+      username,
+      email,
+      lastName,
+      firstName,
+      imageUrl,
+      borrowedBooks,
+      isAdmin,
+      isGoogleUser,
+    } = user
     return res.status(200).json({
       userInfo: {
         username,
@@ -127,9 +144,10 @@ export const getUserInfo = async (req: Request, res: Response, next: NextFunctio
         imageUrl,
         borrowedBooks,
         isAdmin,
-      }
+        isGoogleUser,
+      },
     })
-  } catch(err) {
+  } catch (err) {
     next(service.errorHandler(err))
   }
 }
@@ -199,26 +217,32 @@ export const forgetPassword = async (
   next: NextFunction
 ) => {
   const errors = validationResult(req)
-  const {email} = req.body.email
+  const { email } = req.body.email
 
   try {
-    
     await service.forgetPassword(req.body.email)
 
-    res.json({msg: 'A recover email has been sent to your email address if you have an account associated with it. '})
+    res.json({
+      msg:
+        'A recover email has been sent to your email address if you have an account associated with it. ',
+    })
   } catch (err) {
     next(new InternalServerError(err))
   }
 }
 
 /************************************************
- * @ROUTE POST /v1/user/password/:hashedString   * 
+ * @ROUTE POST /v1/user/password/:hashedString   *
  * @DESC Recover User Password                  *
  * @ACCESS Private                              *
  ************************************************/
 
- export const recoverPassword = async (req: Request, res: Response, next: NextFunction) => {
-  const {password} = req.body
+export const recoverPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { password } = req.body
   const userId = (req.user as PayloadType).id
   const errors = validationResult(req)
 
@@ -226,11 +250,5 @@ export const forgetPassword = async (
     if (errors) throw 'ValidationError'
     const user = service.recoverPassword(userId, password)
     res.redirect('http://localhost:5000')
-  } catch (err) {
-    
-  }
-  
-  
- 
-
- }
+  } catch (err) {}
+}

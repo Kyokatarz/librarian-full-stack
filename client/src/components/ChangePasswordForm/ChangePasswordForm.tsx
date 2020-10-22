@@ -10,16 +10,17 @@ import FormSubmitButton from '../FormSubmitButton'
 const ChangePasswordForm = () => {
   const dispatch = useDispatch()
   const token = useSelector<RootState, string>((state) => state.user.token)
+
   const username = useSelector<RootState, string>(
     (state) => state.user.userInfo.username
+  )
+  const disabled = useSelector<RootState, boolean>(
+    (state) => state.user.userInfo.isGoogleUser
   )
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [passwordMatch, setPasswordMatch] = useState(true)
-  const disabled = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/i.test(
-    username
-  )
   const onNewPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!passwordMatch) setPasswordMatch(true)
     setNewPassword(event.target.value)

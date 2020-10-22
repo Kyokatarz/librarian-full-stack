@@ -17,9 +17,6 @@ const LoginForm = () => {
     dispatch(sendLogInRequest(username, password))
   }
 
-  const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassWord(event.target.value)
-  }
   return (
     <div className="SignInForm-container">
       <Form onSubmit={submitHandler}>
