@@ -1,0 +1,12 @@
+@import '../../style/global.scss';
+
+.FormInputGroup {
+  &__Label {
+    color: $text-highlight;
+  }
+
+  &__Control {
+    background-color: $grey-block !important;
+    color: white !important;
+  }
+}

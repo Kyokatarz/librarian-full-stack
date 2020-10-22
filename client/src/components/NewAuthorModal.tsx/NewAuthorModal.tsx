@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap'
 
 import NewAuthorForm from '../NewAuthorForm'
 
+import './NewAuthorModal.scss'
+
 type NewAuthorModalProps = {
   show: boolean
   closeHandler: () => void
@@ -13,7 +15,7 @@ const NewAuthorModal: React.FC<NewAuthorModalProps> = ({
   closeHandler,
 }) => {
   return (
-    <Modal show={show} onHide={closeHandler}>
+    <Modal show={show} onHide={closeHandler} className="NewAuthorModal">
       <Modal.Header closeButton>
         <Modal.Title>Add a new author </Modal.Title>
       </Modal.Header>

@@ -1,9 +1,5 @@
 import React, { FormEvent } from 'react'
 import { Form } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { Book } from '../../types/bookTypes'
-import { RootState } from '../../types/rootState'
 
 import './SearchBar.scss'
 
@@ -20,8 +16,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   select,
   onSelectChangeHandler,
 }) => {
-  const dispatch = useDispatch()
-  const allBooks = useSelector<RootState, Book[]>((state) => state.books)
   const submitHandler = (event: FormEvent<HTMLInputElement>) => {
     event.preventDefault()
   }
@@ -31,6 +25,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <Form className="SearchBar" onSubmit={submitHandler}>
         <Form.Group>
           <Form.Control
+            className="SearchBar__Control"
             type="text"
             placeholder="Search something..."
             value={search}
@@ -45,9 +40,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
             as="select"
             value={select}
             onChange={onSelectChangeHandler}
+            className="SearchBar__Control"
           >
             <option value="title">Title</option>
             <option value="isbn">ISBN</option>
+            <option value="author">Author</option>
           </Form.Control>
         </Form.Group>
       </Form>

@@ -1,6 +1,8 @@
 import React from 'react'
-import { Modal, ModalTitle } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import NewBookForm from '../NewBookForm/'
+
+import './NewBookModal.scss'
 
 type NewBookModalProps = {
   show: boolean
@@ -9,7 +11,7 @@ type NewBookModalProps = {
 
 const NewBookModal: React.FC<NewBookModalProps> = ({ show, closeHandler }) => {
   return (
-    <Modal show={show} onHide={closeHandler}>
+    <Modal show={show} onHide={closeHandler} className="NewBookModal">
       <Modal.Header closeButton>
         <Modal.Title>Add a new book</Modal.Title>
       </Modal.Header>

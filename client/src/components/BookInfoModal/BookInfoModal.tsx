@@ -6,13 +6,20 @@ import { closeModal } from '../../redux/actions/bookModal'
 import { RootState } from '../../types/rootState'
 import BookInfoForm from '../BookInfoForm'
 
+import './BookInfoModal.scss'
+
 const BookInfoModal: React.FC = () => {
   const show = useSelector<RootState, boolean>((state) => state.bookModal.show)
   const dispatch = useDispatch()
 
   const closeHandler = () => dispatch(closeModal())
   return (
-    <Modal show={show} scrollable onHide={closeHandler}>
+    <Modal
+      show={show}
+      scrollable
+      onHide={closeHandler}
+      className="BookInfoModal"
+    >
       <Modal.Header closeButton>Book Info</Modal.Header>
       <Modal.Body>
         <BookInfoForm />

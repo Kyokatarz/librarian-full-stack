@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 
+import './FormInputGroup.scss'
+
 type FormInputGroupProps = {
   label: string
   value: string
@@ -21,9 +23,10 @@ const FormInputGroup: React.FC<FormInputGroupProps> = ({
   required,
 }) => {
   return (
-    <Form.Group>
-      <Form.Label>{label}</Form.Label>
+    <Form.Group className="FormInputGroup">
+      <Form.Label className="FormInputGroup__Label">{label}</Form.Label>
       <Form.Control
+        className="FormInputGroup__Control"
         type={type}
         value={value}
         onChange={onChangeHandler}

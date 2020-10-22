@@ -19,8 +19,8 @@ const BookContainer: React.FC<BookContainerProps> = ({
 }) => {
   const [page, setPage] = useState(0)
   const [booksToDisplay, setBooksToDisplay] = useState<Book[]>([])
-  const bookChunks: Book[][] = _.chunk(content, 9)
-  //Divide the array into multiple smaller arrays with size = 9
+  const bookChunks: Book[][] = _.chunk(content, 8)
+  //Divide the array into multiple smaller arrays with size = 8
 
   const switchPage = useCallback(
     (pageNumber: number) => {

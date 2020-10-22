@@ -1,3 +1,5 @@
+@import '../../style/global.scss';
+
 .SearchBarContainer {
   height: 100px;
   position: sticky;
@@ -15,6 +17,12 @@
 
   &__Label {
     display: none;
+    color: $text-highlight;
+  }
+
+  &__Control {
+    background-color: $grey-block !important;
+    color: rgb(194, 194, 194) !important;
   }
 
   & div {

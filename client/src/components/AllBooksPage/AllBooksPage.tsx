@@ -37,7 +37,9 @@ const AllBooksPage = () => {
       const searchValue = event.target.value
       setSearch(searchValue)
       const books = allBooks.filter((bookObj: any) =>
-        bookObj[select].includes(searchValue)
+        select !== 'author'
+          ? bookObj[select].includes(searchValue)
+          : bookObj[select].name.includes(searchValue)
       )
       setFilteredBooks([...books])
     },
@@ -64,12 +66,15 @@ const AllBooksPage = () => {
         select={select}
         onSelectChangeHandler={onSelectChangeHandler}
       />
-      {isAdmin && (
-        <AddNewBookButton onClick={() => setShowNewBookModal(true)} />
-      )}
-      {isAdmin && (
-        <AddNewAuthorButton onClick={() => setShowNewAuthorModal(true)} />
-      )}
+
+      <div className="AllBooksPage__FunctionalityButton">
+        {isAdmin && (
+          <AddNewBookButton onClick={() => setShowNewBookModal(true)} />
+        )}
+        {isAdmin && (
+          <AddNewAuthorButton onClick={() => setShowNewAuthorModal(true)} />
+        )}
+      </div>
       {filteredBooks.length === 0 ? (
         <FilteredBooksEmpty />
       ) : (

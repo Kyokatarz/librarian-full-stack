@@ -59,7 +59,7 @@ const BookInfoForm = () => {
     <Form className="BookInfoForm">
       <FormInputGroup
         value={imageUrl!}
-        label="ISBN"
+        label="Image URL"
         onChangeHandler={(event: ChangeEvent<any>) =>
           setImageUrl(event.target.value)
         }
