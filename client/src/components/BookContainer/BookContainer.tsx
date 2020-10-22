@@ -39,6 +39,7 @@ const BookContainer: React.FC<BookContainerProps> = ({
       status={item.status}
       author={item.author}
       key={item._id}
+      imageUrl={item.imageUrl}
       inBorrowedBooks={inBorrowedBooks}
     />
   ))

@@ -19,6 +19,7 @@ type BookPayloadType = {
   publisher: string
   status: string
   author: string
+  imageUrl: string
 }
 
 /*=============+
@@ -113,6 +114,7 @@ export const addNewBook = async (
     publisher,
     author: authorName,
     status,
+    imageUrl,
   } = bookObj
   let author
 
@@ -123,6 +125,7 @@ export const addNewBook = async (
     publisher,
     status,
     author,
+    imageUrl,
   })
 
   const authorExistsInDb = await Author.findOne({ name: authorName })
@@ -157,6 +160,8 @@ export const updateBook = async (
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
 
+  const book = await Book.findById(bookId)
+  if (!book) throw 'BookNotFound'
   //Build a new info object
   const {
     isbn,
@@ -165,6 +170,7 @@ export const updateBook = async (
     publisher,
     author: authorName,
     status,
+    imageUrl,
   } = bookObj
 
   let newInfo: any = {}
@@ -174,9 +180,7 @@ export const updateBook = async (
   if (description) newInfo.description = description
   if (publisher) newInfo.publisher = publisher
   if (status) newInfo.status = status
-
-  const book = await Book.findById(bookId)
-  if (!book) throw 'BookNotFound'
+  if (imageUrl) newInfo.imageUrl = imageUrl
 
   if (authorName) {
     const authorExistsInDb = await Author.findOne({ name: authorName })

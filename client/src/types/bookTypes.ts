@@ -1,4 +1,4 @@
-import { Author } from "./authorTypes"
+import { Author } from './authorTypes'
 
 export const SET_BOOKS = 'SET_BOOKS'
 export const CHANGE_BOOK_STATUS = 'CHANGE_BOOK_STATUS'
@@ -14,8 +14,8 @@ export type Book = {
   publisher?: string
   author: Partial<Author>
   status: 'available' | 'borrowed'
+  imageUrl: string
 }
-
 
 export type setBooksAction = {
   type: typeof SET_BOOKS
@@ -32,15 +32,19 @@ export type updateBookInfoAction = {
   payload: Partial<Book>
 }
 
-
 export type DeleteBookAction = {
-  type: typeof DELETE_BOOK,
-  payload: string 
+  type: typeof DELETE_BOOK
+  payload: string
 }
 
 export type SetFilteredBookAction = {
-  type: typeof SET_FILTERED_BOOKS,
+  type: typeof SET_FILTERED_BOOKS
   payload: Book[]
 }
 
-export type BookActions = SetFilteredBookAction | changeBookStatusAction | setBooksAction | updateBookInfoAction | DeleteBookAction
+export type BookActions =
+  | SetFilteredBookAction
+  | changeBookStatusAction
+  | setBooksAction
+  | updateBookInfoAction
+  | DeleteBookAction

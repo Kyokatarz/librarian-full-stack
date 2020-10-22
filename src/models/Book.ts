@@ -9,6 +9,7 @@ export type BookDocument = Document & {
     _id: mongoose.Schema.Types.ObjectId
   }
   status: 'available' | 'borrowed'
+  imageUrl: string
 }
 
 const BookSchema = new mongoose.Schema({
@@ -28,16 +29,19 @@ const BookSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
-  author: 
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'author',
-    },
-  
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'author',
+  },
+
   status: {
     type: String,
     enum: ['available', 'borrowed'],
     required: true,
+  },
+  imageUrl: {
+    type: String,
+    default: 'https://via.placeholder.com/300x200',
   },
 })
 

@@ -19,8 +19,8 @@ export const getAllBooks = async (
   next: NextFunction
 ) => {
   try {
-    const book = await service.getAllBooks()
-    res.status(200).json(book)
+    const books = await service.getAllBooks()
+    res.status(200).json(books)
   } catch (err) {
     next(service.errorHandler(err))
   }
@@ -60,10 +60,11 @@ export const checkoutBook = async (
 
   try {
     const result = await service.checkoutBook(userReq.id, bookId)
-    if (result === null) return res.status(209).json({ msg: 'Book already borrowed!' })
+    if (result === null)
+      return res.status(209).json({ msg: 'Book already borrowed!' })
     res.status(200).json(result)
   } catch (err) {
-    console.log(err);
+    console.log(err)
     next(service.errorHandler(err))
   }
 }
@@ -82,10 +83,11 @@ export const checkinBook = async (
   const userReq: PayloadType = req.user as PayloadType //This is from jwt
   try {
     const result = await service.checkinBook(userReq.id, bookId)
-    if (result === null) return res.status(209).json({ msg: 'Book already checked in' })
+    if (result === null)
+      return res.status(209).json({ msg: 'Book already checked in' })
     res.status(200).json(result)
   } catch (err) {
-    console.log(err);
+    console.log(err)
     next(service.errorHandler(err))
   }
 }
@@ -108,10 +110,7 @@ export const adminAddBook = async (
 
   try {
     if (!errors.isEmpty()) throw 'ValidationError'
-    const newBook = await service.addNewBook(
-      userReq.id,
-      req.body as any
-    )
+    const newBook = await service.addNewBook(userReq.id, req.body as any)
     res.status(200).json(newBook)
   } catch (err) {
     console.log(err)

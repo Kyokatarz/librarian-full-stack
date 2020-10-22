@@ -16,6 +16,7 @@ const NewBookForm = () => {
   const [description, setDescription] = useState('')
   const [publisher, setPublisher] = useState('')
   const [authorName, setAuthorName] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
 
   const onSubmitHandler = (event: any) => {
     event.preventDefault()
@@ -28,12 +29,22 @@ const NewBookForm = () => {
         publisher,
         author: { name: authorName },
         status: 'available',
+        imageUrl,
       })
     )
   }
 
   return (
     <Form className="NewBookForm" onSubmit={onSubmitHandler}>
+      <FormInputGroup
+        value={imageUrl}
+        label="Image URL"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setImageUrl(event.target.value)
+        }
+        type="text"
+        placeholder="Enter book cover image url..."
+      />
       <FormInputGroup
         value={isbn!}
         label="ISBN"

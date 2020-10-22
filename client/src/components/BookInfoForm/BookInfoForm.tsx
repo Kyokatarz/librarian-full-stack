@@ -25,6 +25,7 @@ const BookInfoForm = () => {
   const [description, setDescription] = useState(bookInModal.description)
   const [publisher, setPublisher] = useState(bookInModal.publisher)
   const [authorName, setAuthorName] = useState(bookInModal.author?.name)
+  const [imageUrl, setImageUrl] = useState(bookInModal.imageUrl)
   const [disabled, setDisabled] = useState(true)
 
   const onUpdateClickHandler = (event: any) => {
@@ -47,7 +48,8 @@ const BookInfoForm = () => {
       isbn !== bookInModal.isbn ||
       description !== bookInModal.description ||
       publisher !== bookInModal.publisher ||
-      authorName !== bookInModal.author?.name
+      authorName !== bookInModal.author?.name ||
+      imageUrl !== bookInModal.imageUrl
     ) {
       setDisabled(false)
     } else setDisabled(true)
@@ -55,6 +57,16 @@ const BookInfoForm = () => {
 
   return (
     <Form className="BookInfoForm">
+      <FormInputGroup
+        value={imageUrl!}
+        label="ISBN"
+        onChangeHandler={(event: ChangeEvent<any>) =>
+          setImageUrl(event.target.value)
+        }
+        type="text"
+        placeholder="Enter book cover URL..."
+        readOnly={!isAdmin}
+      />
       <FormInputGroup
         value={isbn!}
         label="ISBN"

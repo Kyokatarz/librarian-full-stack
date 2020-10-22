@@ -4,7 +4,7 @@
   width: 300px;
   height: 550px;
   font-size: 14px;
-  margin: 5px;
+  margin: 10px;
   padding: 5px;
   background-color: $dark-block-content !important;
   color: white;
@@ -15,9 +15,17 @@
     flex-direction: row;
     justify-content: space-between;
     color: $text-highlight;
+
     &__Icon {
       cursor: pointer;
     }
+  }
+
+  &__Img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
   }
 
   &__Subtitle {

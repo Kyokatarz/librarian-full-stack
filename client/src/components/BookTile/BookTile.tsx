@@ -24,6 +24,7 @@ type BookTileType = {
   author?: Partial<Author>
   status: 'available' | 'borrowed'
   inBorrowedBooks: boolean
+  imageUrl?: string
 }
 
 const BookTile: React.FC<BookTileType> = ({
@@ -35,6 +36,7 @@ const BookTile: React.FC<BookTileType> = ({
   author,
   status,
   inBorrowedBooks,
+  imageUrl,
 }) => {
   const dispatch = useDispatch()
   const books = useSelector<RootState, Book[]>((state) => state.books)
@@ -79,7 +81,11 @@ const BookTile: React.FC<BookTileType> = ({
   return (
     <div>
       <Card className="BookTile">
-        <Card.Img variant="top" src="https://via.placeholder.com/300x200" />
+        <Card.Img
+          className="BookTile__Img"
+          variant="top"
+          src={imageUrl || 'https://via.placeholder.com/300x200'}
+        />
         <Card.Title className="BookTile__Title">
           {title}{' '}
           <span className="BookTile__Title__Icon">
@@ -94,13 +100,13 @@ const BookTile: React.FC<BookTileType> = ({
             <span>ISBN:</span> {isbn}
           </Card.Text>
           <Card.Text>
-            <span>Description:</span>
+            <span>Description: </span>
             {description!.length > 100
               ? description?.slice(0, 100) + '...'
               : description}
           </Card.Text>
           <Card.Text>
-            <span>Publisher:</span>
+            <span>Publisher: </span>
             {publisher}
           </Card.Text>
         </Card.Body>
