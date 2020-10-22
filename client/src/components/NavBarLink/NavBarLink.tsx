@@ -20,7 +20,7 @@ const NavBarLink = () => {
         <Nav.Item className="text-white">All Books</Nav.Item>
       </Link>
       <Link to="/author">
-        <Nav.Item className="text-white">Author</Nav.Item>
+        <Nav.Item className="text-white">Authors</Nav.Item>
       </Link>
     </Nav>
   )

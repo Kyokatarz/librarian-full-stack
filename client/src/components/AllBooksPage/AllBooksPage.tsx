@@ -18,6 +18,8 @@ import { Book } from '../../types/bookTypes'
 import NewAuthorModal from '../NewAuthorModal.tsx'
 import AddNewAuthorButton from '../AddNewAuthorButton'
 import './AllBooksPage.scss'
+import filteredBooksEmpty from '../FilteredBooksEmpty'
+import FilteredBooksEmpty from '../FilteredBooksEmpty'
 
 const AllBooksPage = () => {
   const isAdmin = useSelector<RootState, boolean>(
@@ -53,6 +55,7 @@ const AllBooksPage = () => {
     console.log('AllBooksPage rendered!')
   }, [allBooks])
 
+  console.log(filteredBooks.length)
   return (
     <div className="AllBooksPage">
       <SearchBar
@@ -67,7 +70,11 @@ const AllBooksPage = () => {
       {isAdmin && (
         <AddNewAuthorButton onClick={() => setShowNewAuthorModal(true)} />
       )}
-      <BookContainer inBorrowedBooks={false} content={filteredBooks} />
+      {filteredBooks.length === 0 ? (
+        <FilteredBooksEmpty />
+      ) : (
+        <BookContainer inBorrowedBooks={false} content={filteredBooks} />
+      )}
       <BookInfoModal />
       <NewBookModal
         show={showNewBookModal}

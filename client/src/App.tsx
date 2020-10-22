@@ -9,6 +9,7 @@ import UIOverlay from './components/UIOverlay'
 import './App.scss'
 import 'react-toastify/dist/ReactToastify.css'
 import { requestAllAuthors } from './redux/actions'
+import HamburgerOverlay from './components/HamburgerOverlay'
 
 toast.configure()
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
     <>
       <Routes />
       <UIOverlay />
+      <HamburgerOverlay />
       <ToastContainer
         position="top-right"
         autoClose={2000}

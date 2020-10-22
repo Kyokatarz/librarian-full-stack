@@ -3,3 +3,10 @@
   flex-wrap: wrap;
   margin: 3px;
 }
+
+@media only screen and (max-width: 650px) {
+  .BookDisplayContainer {
+    align-items: center;
+    justify-content: center;
+  }
+}

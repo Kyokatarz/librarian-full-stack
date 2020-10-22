@@ -5,6 +5,7 @@ import './HamburgerIcon.scss'
 const HamburgerIcon: React.FC = () => {
   const onCLickHandler = () => {
     document.querySelector('.NavbarLinkContainer')?.classList.toggle('active')
+    document.querySelector('.HamburgerOverlay')?.classList.toggle('active')
     for (let i = 1; i <= 3; i++) {
       document
         .querySelector('.Hamburger__Line-' + i)

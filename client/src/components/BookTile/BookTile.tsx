@@ -67,6 +67,7 @@ const BookTile: React.FC<BookTileType> = ({
       break
     case true:
       button = <Button onClick={onClickHandler}>Return Book</Button>
+      break
     default:
       break
   }
