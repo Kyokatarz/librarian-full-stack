@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import { Result, ValidationError } from 'express-validator'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 
 import {
   BadRequestError,
@@ -11,6 +12,7 @@ import User, { UserDocument } from '../models/User'
 import stringifyError from '../util/stringifyError'
 import sendEmail from '../nodemailer'
 import { JWT_SECRET } from '../util/secrets'
+import { has } from 'lodash'
 
 /*===========+
  |Create User|
@@ -89,17 +91,19 @@ export const updateUser = async (
  |Forget Password Handler|
  +=======================*/
 export const forgetPassword = async (email: string) => {
+  const now = Date.now()
+  const duration = 5 // mins
+  const later = now + duration * 1000 * 60
+
   const user = await User.findOne({ email })
-
   if (!user) return
-  const payload = {
-    user: {
-      id: user.id,
-    },
+  const hashedString = crypto.randomBytes(16).toString('hex')
+  user.resetToken = {
+    token: hashedString,
+    expirationDate: later,
   }
-
-  const hashedString = jwt.sign(payload, JWT_SECRET, { expiresIn: 300 })
-  sendEmail(email, hashedString)
+  await user.save()
+  return sendEmail(email, hashedString)
 }
 
 /*====================+

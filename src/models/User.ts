@@ -15,7 +15,10 @@ export type UserDocument = Document & {
   borrowedBooks: any
   isGoogleUser: boolean
   isAdmin: boolean
-  resetToken: string
+  resetToken: {
+    token: string
+    expirationDate: number
+  }
 }
 
 const UserSchema = new mongoose.Schema({
@@ -47,7 +50,7 @@ const UserSchema = new mongoose.Schema({
   isGoogleUser: { type: Boolean, default: false },
   resetToken: {
     token: String,
-    expirationDate: Date,
+    expirationDate: Number,
   },
 })
 

@@ -84,7 +84,7 @@ export const signUserUp = (userInfo: Partial<NewUser>) => {
         dispatch(clearUI())
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -102,7 +102,7 @@ export const sendLogInRequest = (username: string, password: string) => {
         dispatch(getUserData(resp.data.token))
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -123,7 +123,7 @@ export const getUserData = (token: string): any => {
         toast.success('Sign In Successfully')
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -144,7 +144,7 @@ export const updateUserData = (token: string, newData: Partial<UserInfo>) => {
         toast.info('User updated successfully')
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -165,9 +165,10 @@ export const changeUserPassword = (token: string, passwordObj: object) => {
       )
       if (resp.status === 200) {
         dispatch(clearUI())
+        toast.info('Password Changed Successfully')
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }

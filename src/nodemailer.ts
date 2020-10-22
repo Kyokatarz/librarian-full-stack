@@ -22,7 +22,7 @@ export default function (
     from: 'libraryoct2020@outlook.com',
     to: receiver,
     subject: 'Reset Password Request',
-    html: `<a href="http://localhost:5000/recoverpassword/${hashedString}"> Click here to reset your password. Your link is valid for 5 mins</a>`,
+    html: `<div><a href="http://localhost:5000/recoverpassword/${hashedString}"> Click here to reset your password.</a> Your link is valid for 5 mins.</div>`,
   }
 
   if (override) options = { ...options, ...override }
