@@ -7,13 +7,13 @@ export default function authorReducer(
   action: AuthorActions
 ) {
   switch (action.type) {
-    case 'ADD_AUTHOR':
-      return [...action.payload]
+  case 'ADD_AUTHOR':
+    return [...action.payload]
 
-    case 'DELETE_AUTHOR':
-      return [...state].filter((author) => author._id !== action.payload)
+  case 'DELETE_AUTHOR':
+    return [...state].filter((author) => author._id !== action.payload)
 
-    default:
-      return state
+  default:
+    return state
   }
 }

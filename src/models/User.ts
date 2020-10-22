@@ -3,22 +3,22 @@ import mongoose, { Document } from 'mongoose'
 import { BookDocument } from './Book'
 
 export type BorrowedBook = BookDocument & {
-  date: { type: Date; required: true }
+  date: { type: Date; required: true };
 }
 export type UserDocument = Document & {
-  imageUrl: string
-  username: string
-  password: string
-  email: string
-  lastName: string
-  firstName: string
-  borrowedBooks: any
-  isGoogleUser: boolean
-  isAdmin: boolean
+  imageUrl: string;
+  username: string;
+  password: string;
+  email: string;
+  lastName: string;
+  firstName: string;
+  borrowedBooks: any;
+  isGoogleUser: boolean;
+  isAdmin: boolean;
   resetToken: {
-    token: string
-    expirationDate: number
-  }
+    token: string;
+    expirationDate: number;
+  };
 }
 
 const UserSchema = new mongoose.Schema({

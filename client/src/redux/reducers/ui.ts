@@ -16,7 +16,7 @@ export default function ui(
   case SET_ERROR:
     return {...state, ...action.payload}
   case CLEAR_UI:
-      return {...state, isLoading: false, errMsg: ''}
+    return {...state, isLoading: false, errMsg: ''}
   default:
     return state
   }

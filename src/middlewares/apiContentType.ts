@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express'
 
-import { BadRequestError } from '../helpers/apiError';
+import { BadRequestError } from '../helpers/apiError'
 
 export default function(req: Request, res: Response, next: NextFunction) {
   if (

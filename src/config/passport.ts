@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 //@ts-ignore
 import GoogleTokenStrategy from 'passport-google-id-token'
 import bcrypt from 'bcrypt'

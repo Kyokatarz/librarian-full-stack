@@ -1,6 +1,6 @@
-import { check, oneOf } from 'express-validator';
+import { check, oneOf } from 'express-validator'
 
-import auth from '../middlewares/auth';
+import auth from '../middlewares/auth'
 
 /************************
  * USER ROUTE VALIDATOR *
@@ -59,7 +59,7 @@ export const addBookValidatorWithAuth = [
   check('status', 'Status must be provided').notEmpty(),
   oneOf(
     [check('status').equals('available'), check('status').equals('borrowed')],
-    "Status must be either 'available' or 'borrowed' "
+    'Status must be either \'available\' or \'borrowed\' '
   ),
 ]
 
@@ -70,7 +70,7 @@ export const updateBookValidatorWithAuth = [
   check('status', 'Status must be provided').notEmpty(),
   oneOf(
     [check('status').equals('available'), check('status').equals('borrowed')],
-    "Status must be either 'available' or 'borrowed' "
+    'Status must be either \'available\' or \'borrowed\' '
   ),
 ]
 

@@ -14,11 +14,11 @@ const initState = {
 
 export default function bookModal(state:BookModal = initState, action:BookModalActionType){
   switch(action.type){
-    case SHOW_MODAL:
-      return {...state, ...action.payload}
-    case CLOSE_MODAL:
-      return {...state, ...action.payload}
-    default:
-      return {...state}
+  case SHOW_MODAL:
+    return {...state, ...action.payload}
+  case CLOSE_MODAL:
+    return {...state, ...action.payload}
+  default:
+    return {...state}
   }
 }

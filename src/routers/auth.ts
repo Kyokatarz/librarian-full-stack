@@ -5,7 +5,7 @@ import { BadRequestError, UnauthorizedError } from '../helpers/apiError'
 const router = express.Router()
 
 type jwtToken = {
-  token: string
+  token: string;
 }
 
 router.post(

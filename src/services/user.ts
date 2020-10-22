@@ -110,8 +110,8 @@ export const forgetPassword = async (email: string) => {
  |Update user password|
  +====================*/
 type passwordType = {
-  oldPassword: string
-  newPassword: string
+  oldPassword: string;
+  newPassword: string;
 }
 export const updatePassword = async (
   userId: Partial<UserDocument>,

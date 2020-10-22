@@ -1,4 +1,4 @@
-import squareNumber from '../src/util/squareNumber';
+import squareNumber from '../src/util/squareNumber'
 
 describe('square number', () => {
   it('should square a positive number', () => {

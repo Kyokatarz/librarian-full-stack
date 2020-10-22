@@ -1,15 +1,15 @@
 import mongoose, { Document } from 'mongoose'
 
 export type BookDocument = Document & {
-  isbn: string
-  title: string
-  description: string
-  publisher: string
+  isbn: string;
+  title: string;
+  description: string;
+  publisher: string;
   author: {
-    _id: mongoose.Schema.Types.ObjectId
-  }
-  status: 'available' | 'borrowed'
-  imageUrl: string
+    _id: mongoose.Schema.Types.ObjectId;
+  };
+  status: 'available' | 'borrowed';
+  imageUrl: string;
 }
 
 const BookSchema = new mongoose.Schema({

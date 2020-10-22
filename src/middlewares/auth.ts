@@ -1,17 +1,17 @@
-import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import { NextFunction, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 
-import { InternalServerError, UnauthorizedError } from '../helpers/apiError';
-import { JWT_SECRET } from '../util/secrets';
+import { InternalServerError, UnauthorizedError } from '../helpers/apiError'
+import { JWT_SECRET } from '../util/secrets'
 
 export type TokenType = {
   user: {
-    id: string
-  }
+    id: string;
+  };
 }
 
 export type PayloadType = {
-  id: string
+  id: string;
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {

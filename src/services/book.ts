@@ -13,13 +13,13 @@ import User, { UserDocument } from '../models/User'
 import stringifyError from '../util/stringifyError'
 
 type BookPayloadType = {
-  isbn: string
-  title: string
-  description: string
-  publisher: string
-  status: string
-  author: string
-  imageUrl: string
+  isbn: string;
+  title: string;
+  description: string;
+  publisher: string;
+  status: string;
+  author: string;
+  imageUrl: string;
 }
 
 /*=============+
@@ -107,7 +107,7 @@ export const addNewBook = async (
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
 
-  let {
+  const {
     isbn,
     title,
     description,
@@ -173,7 +173,7 @@ export const updateBook = async (
     imageUrl,
   } = bookObj
 
-  let newInfo: any = {}
+  const newInfo: any = {}
 
   if (isbn) newInfo.isbn = isbn
   if (title) newInfo.title = title

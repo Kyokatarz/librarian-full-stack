@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express'
 
-import ApiError from '../helpers/apiError';
-import logger from '../util/logger';
+import ApiError from '../helpers/apiError'
+import logger from '../util/logger'
 
 export default function(
   error: ApiError,
