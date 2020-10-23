@@ -61,7 +61,4 @@ app.use(function (req, res, next) {
 })
 // Custom API error handler
 app.use(apiErrorHandler)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/../client/build/index.html'))
-})
 export default app
