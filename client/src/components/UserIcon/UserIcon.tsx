@@ -1,14 +1,14 @@
-import React, { MouseEvent, useEffect } from 'react'
-import { Button, Dropdown, DropdownButton, NavDropdown } from 'react-bootstrap'
+import './UserIcon.scss'
+
+import React from 'react'
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { clearStorageAndLogOut } from '../../redux/actions/user'
 
+import { clearStorageAndLogOut } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
 import UserImage from '../UserImage/UserImage'
-
-import './UserIcon.scss'
 
 const UserIcon = () => {
   const user = useSelector<RootState, User>((state) => state.user)

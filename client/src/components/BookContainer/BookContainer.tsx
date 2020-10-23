@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import _ from 'lodash'
+import React, { useCallback, useEffect, useState } from 'react'
 
-import BookTile from '../BookTile'
 import { Book } from '../../types/bookTypes'
-import { RootState } from '../../types/rootState'
+import BookTile from '../BookTile'
+import PaginationBar from '../PaginationBar'
 
 import './BookContainer.scss'
-import PaginationBar from '../PaginationBar'
 
 type BookContainerProps = {
   inBorrowedBooks: boolean

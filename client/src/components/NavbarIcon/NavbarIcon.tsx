@@ -1,7 +1,7 @@
+import './NavbarIcon.scss'
+
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-import './NavbarIcon.scss'
 
 const NavbarIcon = () => {
   return (

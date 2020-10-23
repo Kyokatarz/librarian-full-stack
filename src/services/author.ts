@@ -19,13 +19,9 @@ export const addAuthor = async (
   if (!user) throw 'UserNotFound'
   if (!user.isAdmin) throw 'NotAnAdmin'
 
-  const { name, writtenBooks } = authorObj
+  const { name } = authorObj
   const author = await Author.findOne({ name })
   if (author) throw 'IdentificationDuplicated'
-
-  const allBooks = await Book.find()
-  const allBooksId = allBooks.map((book) => book.id)
-  const allBooksAuthor = allBooks.map((book) => book.author)
 
   const newAuthor = new Author({
     name,

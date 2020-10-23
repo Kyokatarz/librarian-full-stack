@@ -1,4 +1,5 @@
 import React from 'react'
+
 import ChangePasswordForm from '../ChangePasswordForm'
 
 import './ChangePassword.scss'

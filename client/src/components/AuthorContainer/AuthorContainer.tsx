@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { Author } from '../../types/authorTypes'
 import { RootState } from '../../types/rootState'
 import AuthorTile from '../AuthorTile'
+
 import './AuthorContainer.scss'
 
 const AuthorContainer = () => {

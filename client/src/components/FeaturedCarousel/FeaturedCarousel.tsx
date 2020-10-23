@@ -1,7 +1,7 @@
+import './FeaturedCarousel.scss'
+
 import React from 'react'
 import { Button, Carousel } from 'react-bootstrap'
-
-import './FeaturedCarousel.scss'
 
 const FeaturedCarousel = () => {
   return (

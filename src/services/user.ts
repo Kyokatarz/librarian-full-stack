@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
-import { Result, ValidationError } from 'express-validator'
-import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
+import { Result, ValidationError } from 'express-validator'
 
 import {
   BadRequestError,
@@ -9,10 +8,8 @@ import {
   NotFoundError,
 } from '../helpers/apiError'
 import User, { UserDocument } from '../models/User'
-import stringifyError from '../util/stringifyError'
 import sendEmail from '../nodemailer'
-import { JWT_SECRET } from '../util/secrets'
-import { has } from 'lodash'
+import stringifyError from '../util/stringifyError'
 
 /*===========+
  |Create User|
@@ -110,8 +107,8 @@ export const forgetPassword = async (email: string) => {
  |Update user password|
  +====================*/
 type passwordType = {
-  oldPassword: string;
-  newPassword: string;
+  oldPassword: string
+  newPassword: string
 }
 export const updatePassword = async (
   userId: Partial<UserDocument>,

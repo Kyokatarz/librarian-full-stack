@@ -1,8 +1,9 @@
+import './NewBookModal.scss'
+
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import NewBookForm from '../NewBookForm/'
 
-import './NewBookModal.scss'
+import NewBookForm from '../NewBookForm/'
 
 type NewBookModalProps = {
   show: boolean

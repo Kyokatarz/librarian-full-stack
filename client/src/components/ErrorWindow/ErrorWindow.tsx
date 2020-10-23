@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
 import { AiFillWarning } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
+
 import { clearUI } from '../../redux/actions'
 
 type ErrorWindowProps = {

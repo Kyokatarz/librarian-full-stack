@@ -1,10 +1,11 @@
 import React from 'react'
 import { ImCross } from 'react-icons/im'
 import { useDispatch, useSelector } from 'react-redux'
-import { requestDeleteAuthor } from '../../redux/actions'
 
+import { requestDeleteAuthor } from '../../redux/actions'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
+
 import './AuthorTile.scss'
 
 type AuthorTileProps = {

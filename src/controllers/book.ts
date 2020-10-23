@@ -2,10 +2,8 @@ import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 
 import { PayloadType } from '../middlewares/auth'
-import { BookDocument } from '../models/Book'
-import * as service from '../services/book'
 
-//TODO: Get book with pagnition, filtering by author...
+import * as service from '../services/book'
 
 /*===================+
  |@ROUTE GET v1/book |

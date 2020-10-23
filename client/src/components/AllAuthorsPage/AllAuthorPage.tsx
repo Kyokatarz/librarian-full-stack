@@ -1,8 +1,8 @@
+import './AllAuthorPage.scss'
+
 import React from 'react'
 
 import AuthorContainer from '../AuthorContainer'
-
-import './AllAuthorPage.scss'
 
 const AllAuthorPage = () => {
   return (

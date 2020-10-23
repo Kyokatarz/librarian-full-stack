@@ -1,13 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { requestBookUpdate } from '../../redux/actions/book'
 
+import { requestBookUpdate } from '../../redux/actions/book'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 import DeleteBookButton from '../DeleteBookButton'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
+
 import './BookInfoForm.scss'
 
 const BookInfoForm = () => {

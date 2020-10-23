@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
+
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
 import GoogleLogInBtn from '../GoogleLogInBtn'
-
 import SignInForm from '../SignInForm'
+
 import './SignInPage.scss'
 
 const SignInPage: React.FC = () => {

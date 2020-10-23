@@ -1,4 +1,5 @@
 import React from 'react'
+
 import AllAuthorPage from '../components/AllAuthorsPage'
 
 const AllAuthor = () => {

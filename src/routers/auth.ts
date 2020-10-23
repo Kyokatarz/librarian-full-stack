@@ -1,11 +1,11 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import passport from 'passport'
-import { BadRequestError, UnauthorizedError } from '../helpers/apiError'
+import { UnauthorizedError } from '../helpers/apiError'
 
 const router = express.Router()
 
 type jwtToken = {
-  token: string;
+  token: string
 }
 
 router.post(

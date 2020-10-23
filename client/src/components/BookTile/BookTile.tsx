@@ -13,6 +13,7 @@ import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
 import InfoIcon from '../InfoIcon'
+
 import './BookTile.scss'
 
 type BookTileType = {

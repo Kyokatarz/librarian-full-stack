@@ -1,7 +1,7 @@
+import './SearchBar.scss'
+
 import React, { FormEvent } from 'react'
 import { Form } from 'react-bootstrap'
-
-import './SearchBar.scss'
 
 type SearchBarProps = {
   search: string

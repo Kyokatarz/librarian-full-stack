@@ -3,12 +3,11 @@
 import GoogleTokenStrategy from 'passport-google-id-token'
 import bcrypt from 'bcrypt'
 import crypto from 'crypto'
+import jwt from 'jsonwebtoken'
 import passportFacebook from 'passport-facebook'
 import passportLocal from 'passport-local'
-import jwt from 'jsonwebtoken'
-
 import { InternalServerError } from '../helpers/apiError'
-import User, { UserDocument } from '../models/User'
+import User from '../models/User'
 import { JWT_SECRET } from '../util/secrets'
 
 const LocalStrategy = passportLocal.Strategy

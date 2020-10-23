@@ -1,8 +1,9 @@
+import './UserInfoPage.scss'
+
 import React from 'react'
 import { Link } from 'react-router-dom'
-import UserInfoForm from '../UserInfoForm'
 
-import './UserInfoPage.scss'
+import UserInfoForm from '../UserInfoForm'
 
 const UserInfoPage = () => {
   return (

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Form } from 'react-bootstrap'
+
 import FormInputGroup from '../FormInputGroup'
 
 const ForgetPasswordForm = () => {

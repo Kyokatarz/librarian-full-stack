@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { sendLogInRequest } from '../../redux/actions/user'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
+
 import './SignInForm.scss'
 
 const LoginForm = () => {

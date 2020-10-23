@@ -1,7 +1,7 @@
+import './PaginationBar.scss'
+
 import React from 'react'
 import { Pagination } from 'react-bootstrap'
-
-import './PaginationBar.scss'
 
 type PaginationBar = {
   page: number

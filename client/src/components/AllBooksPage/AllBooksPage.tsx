@@ -1,25 +1,18 @@
-import React, {
-  ChangeEvent,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import './AllBooksPage.scss'
+
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import SearchBar from '../SearchBar'
+import { Book } from '../../types/bookTypes'
+import { RootState } from '../../types/rootState'
+import AddNewAuthorButton from '../AddNewAuthorButton'
+import AddNewBookButton from '../AddNewBookButton'
 import BookContainer from '../BookContainer'
 import BookInfoModal from '../BookInfoModal'
-import { RootState } from '../../types/rootState'
-import AddNewBookButton from '../AddNewBookButton'
-import NewBookModal from '../NewBookModal'
-import { Book } from '../../types/bookTypes'
-import NewAuthorModal from '../NewAuthorModal.tsx'
-import AddNewAuthorButton from '../AddNewAuthorButton'
-import './AllBooksPage.scss'
-import filteredBooksEmpty from '../FilteredBooksEmpty'
 import FilteredBooksEmpty from '../FilteredBooksEmpty'
+import NewAuthorModal from '../NewAuthorModal.tsx'
+import NewBookModal from '../NewBookModal'
+import SearchBar from '../SearchBar'
 
 const AllBooksPage = () => {
   const isAdmin = useSelector<RootState, boolean>(

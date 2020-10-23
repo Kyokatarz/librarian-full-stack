@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeUserPassword } from '../../redux/actions/user'
 
+import { changeUserPassword } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
