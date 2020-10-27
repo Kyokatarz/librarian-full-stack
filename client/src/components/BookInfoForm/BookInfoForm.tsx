@@ -54,7 +54,7 @@ const BookInfoForm = () => {
     ) {
       setDisabled(false)
     } else setDisabled(true)
-  })
+  }, [title, isbn, description, publisher, authorName, imageUrl, bookInModal])
 
   return (
     <Form className="BookInfoForm">
@@ -97,6 +97,7 @@ const BookInfoForm = () => {
         type="text"
         placeholder="Enter description..."
         readOnly={!isAdmin}
+        as="textarea"
       />
       <FormInputGroup
         value={publisher!}

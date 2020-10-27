@@ -11,6 +11,7 @@ type FormInputGroupProps = {
   placeholder: string
   readOnly?: boolean
   required?: boolean
+  as?: any
 }
 
 const FormInputGroup: React.FC<FormInputGroupProps> = ({
@@ -21,12 +22,14 @@ const FormInputGroup: React.FC<FormInputGroupProps> = ({
   placeholder,
   readOnly,
   required,
+  as,
 }) => {
   return (
     <Form.Group className="FormInputGroup">
       <Form.Label className="FormInputGroup__Label">{label}</Form.Label>
       <Form.Control
         className="FormInputGroup__Control"
+        as={as}
         type={type}
         value={value}
         onChange={onChangeHandler}

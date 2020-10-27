@@ -2,6 +2,7 @@ import './AllBooksPage.scss'
 
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import _ from 'lodash'
 
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
@@ -31,12 +32,12 @@ const AllBooksPage = () => {
       setSearch(searchValue)
       const books = allBooks.filter((bookObj: any) =>
         select !== 'author'
-          ? bookObj[select].includes(searchValue)
+          ? bookObj[select].toLowerCase().includes(searchValue.toLowerCase())
           : bookObj[select].name.includes(searchValue)
       )
-      setFilteredBooks([...books])
+      setFilteredBooks(_.orderBy([...books], [select], 'asc'))
     },
-    [search, select]
+    [search, select, allBooks]
   )
 
   const onSelectChangeHandler = (event: ChangeEvent<any>) => {
@@ -46,11 +47,10 @@ const AllBooksPage = () => {
   }
 
   useEffect(() => {
-    setFilteredBooks(allBooks)
+    setFilteredBooks(_.orderBy(allBooks, [select], 'asc'))
     console.log('AllBooksPage rendered!')
   }, [allBooks])
 
-  console.log(filteredBooks.length)
   return (
     <div className="AllBooksPage">
       <SearchBar

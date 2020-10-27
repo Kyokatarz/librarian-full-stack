@@ -26,8 +26,8 @@ const AuthorTile: React.FC<AuthorTileProps> = ({ _id, name, writtenBooks }) => {
 
   return (
     <div className="AuthorTile">
-      <div>{_id}</div>
       <div>{name}</div>
+      <div>{_id}</div>
       {isAdmin && (
         <ImCross onClick={deleteAuthor} className="AuthorTile__Icon" />
       )}

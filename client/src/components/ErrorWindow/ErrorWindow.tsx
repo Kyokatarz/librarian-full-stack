@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 
 import { clearUI } from '../../redux/actions'
 
+import './ErrorWindow.scss'
+
 type ErrorWindowProps = {
   errMsg: string
 }
