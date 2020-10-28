@@ -4,12 +4,4 @@
   &__Label {
     color: $text-highlight;
   }
-
-  &__Control {
-    background-color: $grey-block !important;
-    color: white !important;
-    &::placeholder {
-      color: rgb(163, 158, 158) !important;
-    }
-  }
 }
