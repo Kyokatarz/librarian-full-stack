@@ -25,8 +25,23 @@ export const deleteAuthor = (authorId: string) => {
   }
 }
 /*============+
- |REDUX THUNK |
- +============*/
+|REDUX THUNK |
++============*/
+export const requestAllAuthors = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(setLoading())
+      const resp = await axios.get('/api/v1/author')
+      if (resp.status === 200) {
+        dispatch(addAuthor(resp.data))
+        dispatch(clearUI())
+      }
+    } catch (err) {
+      console.error(err)
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
+    }
+  }
+}
 export const requestNewAuthor = (token: string, authorName: string) => {
   return async (dispatch: Dispatch) => {
     try {
@@ -45,22 +60,6 @@ export const requestNewAuthor = (token: string, authorName: string) => {
       if (resp.status === 200) {
         dispatch(requestAllAuthors() as any)
         toast.info('Author added successfully!')
-      }
-    } catch (err) {
-      console.error(err)
-      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
-    }
-  }
-}
-
-export const requestAllAuthors = () => {
-  return async (dispatch: Dispatch) => {
-    try {
-      dispatch(setLoading())
-      const resp = await axios.get('/api/v1/author')
-      if (resp.status === 200) {
-        dispatch(addAuthor(resp.data))
-        dispatch(clearUI())
       }
     } catch (err) {
       console.error(err)

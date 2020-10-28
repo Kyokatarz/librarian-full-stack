@@ -73,6 +73,26 @@ export const updateBookInfoInUser = (bookObj: Partial<Book>): UserActions => {
 /*==================+
 |REDUX THUNK ACTION|
 +==================*/
+export const getUserData = (token: string): any => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const config = {
+        headers: {
+          'x-auth-token': token,
+        },
+      }
+      dispatch(setLoading())
+      const resp = await axios.get('/api/v1/user', config)
+      if (resp.status === 200) {
+        dispatch(logUserIn(token, resp.data.userInfo))
+        dispatch(clearUI())
+        toast.success('Sign In Successfully')
+      }
+    } catch (err) {
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
+    }
+  }
+}
 export const signUserUp = (userInfo: Partial<NewUser>) => {
   return async (dispatch: Dispatch) => {
     try {
@@ -100,27 +120,6 @@ export const sendLogInRequest = (username: string, password: string) => {
       if (resp.status === 200) {
         localStorage.setItem('token', resp.data.token)
         dispatch(getUserData(resp.data.token))
-      }
-    } catch (err) {
-      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
-    }
-  }
-}
-
-export const getUserData = (token: string): any => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const config = {
-        headers: {
-          'x-auth-token': token,
-        },
-      }
-      dispatch(setLoading())
-      const resp = await axios.get('/api/v1/user', config)
-      if (resp.status === 200) {
-        dispatch(logUserIn(token, resp.data.userInfo))
-        dispatch(clearUI())
-        toast.success('Sign In Successfully')
       }
     } catch (err) {
       dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
