@@ -11,3 +11,4 @@ coverage/*
 /src/types/
 /src/config/*
 /client/node_modules/*
+/client/src/setupProxy.js
