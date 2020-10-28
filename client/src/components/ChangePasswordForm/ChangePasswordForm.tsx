@@ -11,9 +11,6 @@ const ChangePasswordForm = () => {
   const dispatch = useDispatch()
   const token = useSelector<RootState, string>((state) => state.user.token)
 
-  const username = useSelector<RootState, string>(
-    (state) => state.user.userInfo.username
-  )
   const disabled = useSelector<RootState, boolean>(
     (state) => state.user.userInfo.isGoogleUser
   )

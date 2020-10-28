@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addNewBook, requestBookUpdate } from '../../redux/actions/book'
+import { addNewBook } from '../../redux/actions/book'
 import { RootState } from '../../types/rootState'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'

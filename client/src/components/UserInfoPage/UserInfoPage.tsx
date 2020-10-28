@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import UserInfoForm from '../UserInfoForm'
@@ -6,8 +6,6 @@ import UserInfoForm from '../UserInfoForm'
 import './UserInfoPage.scss'
 
 const UserInfoPage = () => {
-  const [redirect, setRedirect] = useState('')
-
   return (
     <div className="UserInfoPage">
       <div className="UserInfoPage__Content">

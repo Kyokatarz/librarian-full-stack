@@ -3,7 +3,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 
 import Routes from './Routes'
-import { getUserData, logUserIn } from './redux/actions/user'
+import { getUserData } from './redux/actions/user'
 import { getAllBooks } from './redux/actions/book'
 import UIOverlay from './components/UIOverlay'
 import './App.scss'
@@ -21,7 +21,7 @@ export default function App() {
     if (token) dispatch(getUserData(token))
     dispatch(getAllBooks())
     dispatch(requestAllAuthors())
-  }, [])
+  }, [dispatch])
   return (
     <>
       <Routes />

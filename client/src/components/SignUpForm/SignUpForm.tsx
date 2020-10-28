@@ -16,7 +16,6 @@ const SignUpForm = () => {
   const [lastName, setLastName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [passwordMatch, setPasswordMatch] = useState(true)
-  const [redirect, setRedirect] = useState('')
 
   const dispatch = useDispatch()
 

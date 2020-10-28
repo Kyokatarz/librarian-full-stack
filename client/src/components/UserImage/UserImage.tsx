@@ -9,7 +9,7 @@ type UserImageProps = {
 const UserImage: React.FC<UserImageProps> = ({ imageUrl }) => {
   return (
     <div className="UserImage">
-      <img src={imageUrl} />
+      <img src={imageUrl} alt="User" />
     </div>
   )
 }

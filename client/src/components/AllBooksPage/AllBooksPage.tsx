@@ -37,7 +37,7 @@ const AllBooksPage = () => {
       )
       setFilteredBooks(_.orderBy([...books], [select], 'asc'))
     },
-    [search, select, allBooks]
+    [select, allBooks]
   )
 
   const onSelectChangeHandler = (event: ChangeEvent<any>) => {
@@ -49,7 +49,7 @@ const AllBooksPage = () => {
   useEffect(() => {
     setFilteredBooks(_.orderBy(allBooks, [select], 'asc'))
     console.log('AllBooksPage rendered!')
-  }, [allBooks])
+  }, [allBooks, select])
 
   return (
     <div className="AllBooksPage">
