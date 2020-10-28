@@ -88,8 +88,8 @@ export const updateUser = async (
 |Update user password|
 +====================*/
 type passwordType = {
-  oldPassword: string
-  newPassword: string
+  oldPassword: string;
+  newPassword: string;
 }
 export const updatePassword = async (
   userId: Partial<UserDocument>,
