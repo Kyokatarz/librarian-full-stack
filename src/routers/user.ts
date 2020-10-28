@@ -4,7 +4,7 @@ import * as controller from '../controllers/user'
 import auth from '../middlewares/auth'
 import {
   forgetPasswordValidator,
-  recoverPasswordValidatorWithAuth,
+  recoverPasswordValidator,
   signInValidator,
   signUpValidator,
   userInfoUpdateValidatorWithAuth,
@@ -24,5 +24,9 @@ router.patch(
   controller.updateUserPassword
 )
 router.post('/password', forgetPasswordValidator, controller.forgetPassword)
-router.post('/password/:hashedString',recoverPasswordValidatorWithAuth, controller.recoverPassword)
+router.post(
+  '/password/:resetToken',
+  recoverPasswordValidator,
+  controller.recoverPassword
+)
 export default router

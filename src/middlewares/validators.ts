@@ -31,24 +31,20 @@ export const userPasswordChangeValidatorWithAuth = [
   ).isLength({
     min: 6,
   }),
-  check('oldPassword', 'Password must be provided').notEmpty(),
-  check('newPassword', 'Password must be provided').notEmpty(),
+  check('oldPassword', 'Password must be provided').not().isEmpty(),
+  check('newPassword', 'Password must be provided').not().isEmpty(),
 ]
 
 export const forgetPasswordValidator = [
-  check('email', 'Email must be provided').notEmpty(),
+  check('email', 'Email must be provided').not().isEmpty(),
   check('email', 'Please enter a valid email').isEmail(),
 ]
 
-export const recoverPasswordValidatorWithAuth = [
-  auth,
-  check('newPassword', 'Password must be provided').notEmpty(),
-  check(
-    'newPassword',
-    'Password length must be more than 6 characters'
-  ).isLength({
+export const recoverPasswordValidator = [
+  check('password', 'Password must be provided').notEmpty(),
+  check('password', 'Password length must be more than 6 characters').isLength({
     min: 6,
-  })
+  }),
 ]
 /*====================+
  |BOOK ROUTE VALIDATOR|
@@ -59,7 +55,7 @@ export const addBookValidatorWithAuth = [
   check('status', 'Status must be provided').notEmpty(),
   oneOf(
     [check('status').equals('available'), check('status').equals('borrowed')],
-    'Status must be either \'available\' or \'borrowed\' '
+    "Status must be either 'available' or 'borrowed' "
   ),
 ]
 
@@ -70,7 +66,7 @@ export const updateBookValidatorWithAuth = [
   check('status', 'Status must be provided').notEmpty(),
   oneOf(
     [check('status').equals('available'), check('status').equals('borrowed')],
-    'Status must be either \'available\' or \'borrowed\' '
+    "Status must be either 'available' or 'borrowed' "
   ),
 ]
 

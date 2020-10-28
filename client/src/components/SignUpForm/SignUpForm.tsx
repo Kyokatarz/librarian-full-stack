@@ -61,7 +61,7 @@ const SignUpForm = () => {
         />
         <FormInputGroup
           value={email}
-          label="Password"
+          label="Email"
           onChangeHandler={(event: ChangeEvent<any>) =>
             setEmail(event.target.value)
           }

@@ -5,7 +5,6 @@ import express from 'express'
 import lusca from 'lusca'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import path from 'path'
 
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import authorRouter from './routers/author'
@@ -41,7 +40,6 @@ connectDb()
 
 // Express configuration
 app.set('port', process.env.PORT || 3000)
-app.use(express.static(path.join(__dirname, '../client/build')))
 // Use common 3rd-party middlewares
 app.use(compression())
 app.use(bodyParser.json())

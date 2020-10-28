@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 import {
   ADD_BOOK_TO_USER,
@@ -13,7 +14,6 @@ import {
 } from '../../types/userTypes'
 import { Book } from '../../types/bookTypes'
 import { clearUI, setErrorMsg, setLoading } from './ui'
-import { toast } from 'react-toastify'
 
 export const logUserIn = (
   jwtToken: string,

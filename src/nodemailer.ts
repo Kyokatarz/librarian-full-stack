@@ -1,15 +1,15 @@
 import nodemailer from 'nodemailer'
 
 type overrideObject = {
-  subject: string;
-  text: string;
+  subject: string
+  text: string
 }
 
 const transporter = nodemailer.createTransport({
   service: 'hotmail',
   auth: {
     user: 'libraryoct2020@outlook.com',
-    pass: 'ItDoesn\'tMatter',
+    pass: "ItDoesn'tMatter",
   },
 })
 

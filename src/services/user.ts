@@ -84,28 +84,9 @@ export const updateUser = async (
   }
 }
 
-/*=======================+
- |Forget Password Handler|
- +=======================*/
-export const forgetPassword = async (email: string) => {
-  const now = Date.now()
-  const duration = 5 // mins
-  const later = now + duration * 1000 * 60
-
-  const user = await User.findOne({ email })
-  if (!user) return
-  const hashedString = crypto.randomBytes(16).toString('hex')
-  user.resetToken = {
-    token: hashedString,
-    expirationDate: later,
-  }
-  await user.save()
-  return sendEmail(email, hashedString)
-}
-
 /*====================+
- |Update user password|
- +====================*/
+|Update user password|
++====================*/
 type passwordType = {
   oldPassword: string
   newPassword: string
@@ -131,13 +112,66 @@ export const updatePassword = async (
   return user.save()
 }
 
+/*========================+
+ | Forget Password Handler|
+ +=======================*/
+export const forgetPassword = async (email: string) => {
+  const now = Date.now()
+  const duration = 600 // mins
+  const later = now + duration * 1000 * 60
+
+  const user = await User.findOne({ email })
+  if (!user)
+    return {
+      msg:
+        'A recover email has been sent to your email address if you have an account associated with it. ',
+    }
+
+  if (user.isGoogleUser)
+    return {
+      msg:
+        'Your account was created with Google. Please use Login with Google to sign in.',
+    }
+
+  const hashedString = crypto.randomBytes(16).toString('hex')
+  user.resetToken = {
+    token: hashedString,
+    expirationDate: later,
+  }
+  await user.save()
+  sendEmail(email, hashedString)
+  return {
+    msg:
+      'A recover email has been sent to your email address if you have an account associated with it. ',
+  }
+}
+
+/*================+
+ |RECOVER PASSWORD|
+ +================*/
 export const recoverPassword = async (
-  userId: string,
+  resetToken: string,
   newPassword: string
 ): Promise<UserDocument> => {
-  const user = await User.findById(userId)
-  user!.password = newPassword
-  return await user!.save()
+  const user = await User.findOne({
+    'resetToken.token': resetToken,
+  }).exec()
+  console.log('user: ', user)
+  if (!user) throw 'ResetTokenInvalid'
+
+  const now = Date.now()
+  const expired = now > user.resetToken.expirationDate
+  if (expired) throw 'ResetTokenInvalid'
+
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(newPassword, salt)
+
+  user.password = hashedPassword
+  user.resetToken = {
+    token: '',
+    expirationDate: 0,
+  }
+  return await user.save()
 }
 
 /*=============+
@@ -162,7 +196,10 @@ export const errorHandler = (
       return new BadRequestError('Incorrect Password')
     case 'UserNotFound':
       return new NotFoundError('No user found with this Id', err)
+    case 'ResetTokenInvalid':
+      return new BadRequestError('Reset token invalid or expired', err)
     default:
+      console.log(err)
       return new InternalServerError(err)
   }
 }

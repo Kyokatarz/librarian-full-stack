@@ -12,6 +12,7 @@ import UserInfo from './pages/UserInfo'
 import NotFound from './pages/NotFound'
 import ChangePassword from './pages/ChangePassword'
 import AllAuthor from './pages/AllAuthor'
+import ForgetPassword from './pages/ForgetPassword'
 
 const Routes = () => (
   <>
@@ -24,6 +25,7 @@ const Routes = () => (
       <Route exact path="/user/info" component={UserInfo} />
       <Route exact path="/user/books" component={BorrowedBooks} />
       <Route exact path="/user/changepassword" component={ChangePassword} />
+      <Route exact path="/forgetpassword" component={ForgetPassword} />
       <Route exact path="/author" component={AllAuthor} />
       <Route exact component={NotFound} />
     </Switch>

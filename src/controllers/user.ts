@@ -220,19 +220,18 @@ export const forgetPassword = async (
   const { email } = req.body.email
 
   try {
-    await service.forgetPassword(req.body.email)
+    if (!errors.isEmpty()) throw 'ValidationError'
+    const msg = await service.forgetPassword(req.body.email)
+    console.log(msg)
 
-    res.json({
-      msg:
-        'A recover email has been sent to your email address if you have an account associated with it. ',
-    })
+    res.json(msg)
   } catch (err) {
-    next(new InternalServerError(err))
+    next(service.errorHandler(err, errors))
   }
 }
 
 /************************************************
- * @ROUTE POST /v1/user/password/:hashedString   *
+ * @ROUTE POST /v1/user/password/:resetToken    *
  * @DESC Recover User Password                  *
  * @ACCESS Private                              *
  ************************************************/
@@ -243,12 +242,14 @@ export const recoverPassword = async (
   next: NextFunction
 ) => {
   const { password } = req.body
-  const userId = (req.user as PayloadType).id
+  const { resetToken } = req.params
   const errors = validationResult(req)
 
   try {
-    if (errors) throw 'ValidationError'
-    const user = service.recoverPassword(userId, password)
-    res.redirect('http://localhost:5000')
-  } catch (err) {}
+    if (!errors.isEmpty()) throw 'ValidationError'
+    await service.recoverPassword(resetToken, password)
+    res.status(200).json({ msg: 'Password changed successfully!' })
+  } catch (err) {
+    next(service.errorHandler(err, errors))
+  }
 }
