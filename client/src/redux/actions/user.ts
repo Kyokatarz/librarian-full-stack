@@ -14,6 +14,7 @@ import {
 } from '../../types/userTypes'
 import { Book } from '../../types/bookTypes'
 import { clearUI, setErrorMsg, setLoading } from './ui'
+import { url } from '../../App'
 
 export const logUserIn = (
   jwtToken: string,
@@ -82,7 +83,7 @@ export const getUserData = (token: string): any => {
         },
       }
       dispatch(setLoading())
-      const resp = await axios.get('/api/v1/user', config)
+      const resp = await axios.get(url + '/api/v1/user', config)
       if (resp.status === 200) {
         dispatch(logUserIn(token, resp.data.userInfo))
         dispatch(clearUI())
@@ -97,7 +98,7 @@ export const signUserUp = (userInfo: Partial<NewUser>) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading())
-      const resp = await axios.post('/api/v1/user/signUp', userInfo)
+      const resp = await axios.post(url + '/api/v1/user/signUp', userInfo)
       if (resp.status === 200) {
         localStorage.setItem('token', resp.data.token)
         dispatch(getUserData(resp.data.token))
@@ -113,7 +114,7 @@ export const sendLogInRequest = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading())
-      const resp = await axios.post('/api/v1/user/signIn', {
+      const resp = await axios.post(url + '/api/v1/user/signIn', {
         username: username,
         password,
       })
@@ -136,7 +137,7 @@ export const updateUserData = (token: string, newData: Partial<UserInfo>) => {
         },
       }
       dispatch(setLoading())
-      const resp = await axios.patch('/api/v1/user/', newData, config)
+      const resp = await axios.patch(url + '/api/v1/user/', newData, config)
       if (resp.status === 200) {
         dispatch(logUserIn(token, resp.data))
         dispatch(clearUI())
@@ -158,7 +159,7 @@ export const changeUserPassword = (token: string, passwordObj: object) => {
       }
       dispatch(setLoading())
       const resp = await axios.patch(
-        '/api/v1/user/password',
+        url + '/api/v1/user/password',
         passwordObj,
         config
       )

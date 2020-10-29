@@ -16,7 +16,7 @@ const ErrorWindow: React.FC<ErrorWindowProps> = ({ errMsg }) => {
     dispatch(clearUI())
   }
   return (
-    <Modal show={!!errMsg} onHide={closeHandler}>
+    <Modal show={!!errMsg} onHide={closeHandler} className="ErrorWindow">
       <Modal.Header>
         <Modal.Title className="text-danger">Something went wrong</Modal.Title>
       </Modal.Header>

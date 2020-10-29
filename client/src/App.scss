@@ -5,6 +5,11 @@
   background-color: $grey-block;
   color: white;
 
+  &:disabled,
+  &[readonly] {
+    background-color: $grey-block !important;
+  }
+
   &:focus {
     background-color: $grey-block;
     color: white;
@@ -18,4 +23,23 @@
 .card {
   background-color: $dark-block-content;
   border: 1px solid rgb(255, 255, 255);
+}
+
+.modal-content {
+  background-color: $dark-block-content;
+  border: 2px solid whitesmoke;
+}
+
+.modal-header {
+  color: $text-highlight;
+
+  & button {
+    color: white;
+    transition: transform 0.1s;
+  }
+}
+
+.close:hover {
+  transform: scale(1.1);
+  color: white;
 }

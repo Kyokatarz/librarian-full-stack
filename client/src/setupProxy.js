@@ -5,7 +5,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:3000',
+      target: 'https://integrify-librarian.herokuapp.com/',
       changeOrigin: true,
     })
   )

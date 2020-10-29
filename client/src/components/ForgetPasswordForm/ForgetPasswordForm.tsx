@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
+import { url } from '../../App'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
 import { clearUI, setErrorMsg, setLoading } from '../../redux/actions'
@@ -16,7 +17,7 @@ const ForgetPasswordForm = () => {
     try {
       event.preventDefault()
       dispatch(setLoading())
-      const resp = await axios.post('/api/v1/user/password', {
+      const resp = await axios.post(url + '/api/v1/user/password', {
         email: email,
       })
       if (resp.status === 200) {

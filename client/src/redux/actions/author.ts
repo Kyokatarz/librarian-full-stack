@@ -10,6 +10,7 @@ import {
   AuthorActions,
   DELETE_AUTHOR,
 } from '../../types/authorTypes'
+import { url } from '../../App'
 
 export const addAuthor = (authors: Author[]): AuthorActions => {
   return {
@@ -31,7 +32,7 @@ export const requestAllAuthors = () => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading())
-      const resp = await axios.get('/api/v1/author')
+      const resp = await axios.get(url + '/api/v1/author')
       if (resp.status === 200) {
         dispatch(addAuthor(resp.data))
         dispatch(clearUI())
@@ -53,7 +54,7 @@ export const requestNewAuthor = (token: string, authorName: string) => {
 
       dispatch(setLoading())
       const resp = await axios.post(
-        '/api/v1/author',
+        url + '/api/v1/author',
         { name: authorName },
         config
       )
@@ -77,7 +78,10 @@ export const requestDeleteAuthor = (token: string, authorId: string) => {
         },
       }
       dispatch(setLoading())
-      const resp = await axios.delete(`/api/v1/author/${authorId}`, config)
+      const resp = await axios.delete(
+        url + `/api/v1/author/${authorId}`,
+        config
+      )
       if (resp.status === 200) {
         dispatch(deleteAuthor(authorId))
         dispatch(clearUI())

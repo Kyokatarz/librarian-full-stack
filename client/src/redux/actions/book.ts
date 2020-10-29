@@ -12,6 +12,7 @@ import {
 import { addBookToUser, removeBookFromUser, updateBookInfoInUser } from './user'
 import { setLoading } from '.'
 import { clearUI, setErrorMsg } from './ui'
+import { url } from '../../App'
 
 export const setBooks = (books: Book[]): BookActions => {
   return {
@@ -42,13 +43,13 @@ export const getAllBooks = () => {
   return async (dispatch: Dispatch) => {
     try {
       dispatch(setLoading())
-      const resp = await axios.get('/api/v1/book')
+      const resp = await axios.get(url + '/api/v1/book')
       if (resp.status === 200) {
         dispatch(setBooks(resp.data))
         dispatch(clearUI())
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -63,7 +64,7 @@ export const requestCheckin = (token: string, bookId: string) => {
       }
       dispatch(setLoading())
       const resp = await axios.patch(
-        `/api/v1/book/${bookId}/checkin`,
+        url + `/api/v1/book/${bookId}/checkin`,
         undefined,
         config
       )
@@ -76,7 +77,7 @@ export const requestCheckin = (token: string, bookId: string) => {
         dispatch(getAllBooks() as any)
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -91,7 +92,7 @@ export const requestCheckout = (token: string, bookObj: Book) => {
       }
       dispatch(setLoading())
       const resp = await axios.patch(
-        `/api/v1/book/${bookObj._id}/checkout`,
+        url + `/api/v1/book/${bookObj._id}/checkout`,
         undefined,
         config
       )
@@ -101,7 +102,7 @@ export const requestCheckout = (token: string, bookObj: Book) => {
         toast.info('Book borrowed successfully!')
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -117,7 +118,11 @@ export const requestBookUpdate = (token: string, bookObj: Partial<Book>) => {
       const data = { ...bookObj, author: bookObj.author?.name }
       console.log('data:', data)
       dispatch(setLoading())
-      const resp = await axios.put(`/api/v1/book/${bookObj._id}`, data, config)
+      const resp = await axios.put(
+        url + `/api/v1/book/${bookObj._id}`,
+        data,
+        config
+      )
       if (resp.status === 200) {
         dispatch(updateBookInfoInAllBooks(bookObj))
         dispatch(updateBookInfoInUser(bookObj))
@@ -139,7 +144,7 @@ export const requestDeleteBook = (token: string, bookId: string) => {
         },
       }
       dispatch(setLoading())
-      const resp = await axios.delete(`/api/v1/book/${bookId}`, config)
+      const resp = await axios.delete(url + `/api/v1/book/${bookId}`, config)
       if (resp.status === 200) {
         dispatch(removeBookFromUser(bookId))
         dispatch(getAllBooks() as any)
@@ -147,7 +152,7 @@ export const requestDeleteBook = (token: string, bookId: string) => {
         toast.error('Book deleted successfully!')
       } else throw new Error()
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }
@@ -163,7 +168,7 @@ export const addNewBook = (token: string, bookObj: Partial<Book>) => {
 
       dispatch(setLoading())
       const resp = await axios.post(
-        '/api/v1/book',
+        url + '/api/v1/book',
         { ...bookObj, author: bookObj.author?.name },
         config
       )
@@ -172,7 +177,7 @@ export const addNewBook = (token: string, bookObj: Partial<Book>) => {
         toast.info('Book added successfully!')
       }
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data.message || 'Unknown Error'))
+      dispatch(setErrorMsg(err.response?.data?.message || 'Unknown Error'))
     }
   }
 }

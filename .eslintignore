@@ -10,5 +10,5 @@ coverage/*
 # custom definition files
 /src/types/
 /src/config/*
-/client/node_modules/*
-/client/src/setupProxy.js
+/client/*
+
