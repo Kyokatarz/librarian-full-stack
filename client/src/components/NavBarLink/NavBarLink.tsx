@@ -6,6 +6,7 @@ import languages from '../../languages/languages'
 import LangContext from '../../context/langContext'
 
 import './NavBarLink.scss'
+import LanguageButton from '../LanguageButton'
 
 const NavBarLink = () => {
   const { language } = useContext(LangContext)
@@ -28,6 +29,7 @@ const NavBarLink = () => {
       <Link to="/author">
         <Nav.Item className="text-white">Authors</Nav.Item>
       </Link>
+      <LanguageButton />
     </Nav>
   )
 }

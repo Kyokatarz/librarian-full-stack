@@ -3,6 +3,7 @@
   display: flex;
   list-style: none;
   justify-content: space-around;
+  align-items: center;
   transition: transform 0.25s ease-out;
   flex-direction: row;
   &--dark {
