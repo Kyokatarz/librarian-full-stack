@@ -1,10 +1,14 @@
-import './NavBarLink.scss'
-
-import React from 'react'
+import React, { useContext } from 'react'
 import { Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
+import languages from '../../languages/languages'
+import LangContext from '../../context/langContext'
+
+import './NavBarLink.scss'
+
 const NavBarLink = () => {
+  const { language } = useContext(LangContext)
   return (
     <Nav
       as="ul"
@@ -13,11 +17,13 @@ const NavBarLink = () => {
     >
       <Link to="/">
         <Nav.Item as="li" className="text-white">
-          Home
+          {languages[language].homePage}
         </Nav.Item>
       </Link>
       <Link to="/allbooks">
-        <Nav.Item className="text-white">All Books</Nav.Item>
+        <Nav.Item className="text-white">
+          {languages[language].library}
+        </Nav.Item>
       </Link>
       <Link to="/author">
         <Nav.Item className="text-white">Authors</Nav.Item>
