@@ -2,6 +2,8 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import { signUserUp } from '../../redux/actions/user'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
@@ -18,7 +20,7 @@ const SignUpForm = () => {
   const [passwordMatch, setPasswordMatch] = useState(true)
 
   const dispatch = useDispatch()
-
+  const { language } = React.useContext(LanguageContext)
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!passwordMatch) setPasswordMatch(true)
     setPassword(event.target.value)
@@ -51,12 +53,12 @@ const SignUpForm = () => {
       <Form as="form" onSubmit={(event) => handleSubmit(event)}>
         <FormInputGroup
           value={username}
-          label="Username"
+          label={languages[language].user.username}
           onChangeHandler={(event: ChangeEvent<any>) =>
             setUsername(event.target.value)
           }
           type="type"
-          placeholder="Enter your username..."
+          placeholder={languages[language].inputPlaceholder.username}
         />
         <FormInputGroup
           value={email}
@@ -65,53 +67,55 @@ const SignUpForm = () => {
             setEmail(event.target.value)
           }
           type="email"
-          placeholder="Enter your email..."
+          placeholder={languages[language].inputPlaceholder.email}
         />
         <div className="SignUpForm__Row">
           <FormInputGroup
             value={password}
-            label="Password"
+            label={languages[language].user.password}
             onChangeHandler={onPasswordChange}
             type="password"
-            placeholder="Enter your password..."
+            placeholder={languages[language].inputPlaceholder.password}
           />
           <FormInputGroup
             value={confirmPassword}
-            label="Confirm Password"
+            label={languages[language].user.confirmPassword}
             onChangeHandler={onConfirmPasswordChange}
             type="password"
-            placeholder="Confirm your password..."
+            placeholder={languages[language].inputPlaceholder.confirmPassword}
           />
         </div>
         {!passwordMatch && (
-          <Form.Text className="text-danger">Passwords don't match</Form.Text>
+          <Form.Text className="text-danger">
+            {languages[language].user.passwordNoMatch}
+          </Form.Text>
         )}
 
         <div className="SignUpForm__Row">
           <FormInputGroup
             value={firstName}
-            label="First Name"
+            label={languages[language].user.firstName}
             onChangeHandler={(event: ChangeEvent<any>) =>
               setFirstName(event.target.value)
             }
             type="text"
-            placeholder="Enter your First Name (optional)..."
+            placeholder={languages[language].inputPlaceholder.firstName}
           />
           <FormInputGroup
             value={lastName}
-            label="Last Name"
+            label={languages[language].user.lastName}
             onChangeHandler={(event: ChangeEvent<any>) =>
               setLastName(event.target.value)
             }
             type="text"
-            placeholder="Enter your Last Name (optional)..."
+            placeholder={languages[language].inputPlaceholder.lastName}
           />
         </div>
 
         <Form.Check
           type="checkbox"
           required
-          label="By signing up, you argee to sell us your soul."
+          label={languages[language].user.checkbox}
         />
 
         <FormSubmitButton text="Sign Up" />

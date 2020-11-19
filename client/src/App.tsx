@@ -8,7 +8,8 @@ import { getAllBooks } from './redux/actions/book'
 import UIOverlay from './components/UIOverlay'
 import { requestAllAuthors } from './redux/actions'
 import HamburgerOverlay from './components/HamburgerOverlay'
-import LanguageContext, {
+import {
+  LanguageContext,
   LangContextObj,
   Languages,
 } from './context/langContext'

@@ -1,7 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import { requestBookUpdate } from '../../redux/actions/book'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
@@ -19,6 +21,7 @@ const BookInfoForm = () => {
     (state) => state.user.userInfo.isAdmin
   )
   const token = useSelector<RootState, string>((state) => state.user.token)
+  const { language } = useContext(LanguageContext)
   const dispatch = useDispatch()
 
   const [title, setTitle] = useState(bookInModal.title)
@@ -60,12 +63,12 @@ const BookInfoForm = () => {
     <Form className="BookInfoForm">
       <FormInputGroup
         value={imageUrl!}
-        label="Image URL"
+        label={languages[language].inputLabels.imageUrl}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setImageUrl(event.target.value)
         }
         type="text"
-        placeholder="Enter book cover URL..."
+        placeholder={languages[language].inputPlaceholder.imageUrl}
         readOnly={!isAdmin}
       />
       <FormInputGroup
@@ -75,55 +78,55 @@ const BookInfoForm = () => {
           setIsbn(event.target.value)
         }
         type="text"
-        placeholder="Enter ISBN..."
+        placeholder={languages[language].inputPlaceholder.isbn}
         readOnly={!isAdmin}
       />
       <FormInputGroup
         value={title!}
-        label="Title"
+        label={languages[language].inputLabels.title}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setTitle(event.target.value)
         }
         type="text"
-        placeholder="Enter title..."
+        placeholder={languages[language].inputPlaceholder.title}
         readOnly={!isAdmin}
       />
       <FormInputGroup
         value={description!}
-        label="Description"
+        label={languages[language].inputLabels.description}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setDescription(event.target.value)
         }
         type="text"
-        placeholder="Enter description..."
+        placeholder={languages[language].inputPlaceholder.description}
         readOnly={!isAdmin}
         as="textarea"
       />
       <FormInputGroup
         value={publisher!}
-        label="Publisher"
+        label={languages[language].inputLabels.publisher}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setPublisher(event.target.value)
         }
         type="text"
-        placeholder="Enter publisher..."
+        placeholder={languages[language].inputPlaceholder.publisher}
         readOnly={!isAdmin}
       />
 
       <FormInputGroup
         value={authorName!}
-        label="Author"
+        label={languages[language].inputLabels.author}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setAuthorName(event.target.value)
         }
         type="text"
-        placeholder="Enter author name..."
+        placeholder={languages[language].inputPlaceholder.author}
         readOnly={!isAdmin}
       />
 
       {isAdmin && (
         <FormSubmitButton
-          text="Update Info"
+          text={languages[language].buttonsText.updateInfo}
           onClick={onUpdateClickHandler}
           disabled={disabled}
         />

@@ -2,6 +2,8 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import { sendLogInRequest } from '../../redux/actions/user'
 import FormInputGroup from '../FormInputGroup'
 import FormSubmitButton from '../FormSubmitButton'
@@ -10,6 +12,7 @@ import './SignInForm.scss'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
+  const { language } = React.useContext(LanguageContext)
   const [username, setUsername] = useState<string>('')
   const [password, setPassWord] = useState<string>('')
 
@@ -23,23 +26,23 @@ const LoginForm = () => {
       <Form onSubmit={submitHandler}>
         <FormInputGroup
           value={username}
-          label="Username"
+          label={languages[language].user.username}
           onChangeHandler={(event: ChangeEvent<any>) =>
             setUsername(event.target.value)
           }
           type="text"
-          placeholder="Enter your username..."
+          placeholder={languages[language].inputPlaceholder.username}
         />
         <FormInputGroup
           value={password}
-          label="Password"
+          label={languages[language].user.password}
           onChangeHandler={(event: ChangeEvent<any>) =>
             setPassWord(event.target.value)
           }
           type="password"
-          placeholder="Enter your password..."
+          placeholder={languages[language].inputPlaceholder.password}
         />
-        <FormSubmitButton text="Sign In" />
+        <FormSubmitButton text={languages[language].user.signIn} />
         <br />
       </Form>
     </div>

@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import {
   changeBookStatus,
   requestCheckin,
@@ -42,6 +44,7 @@ const BookTile: React.FC<BookTileType> = ({
   const dispatch = useDispatch()
   const books = useSelector<RootState, Book[]>((state) => state.books)
   const user = useSelector<RootState, User>((state) => state.user)
+  const { language } = useContext(LanguageContext)
 
   const onClickHandler = () => {
     if (!user.isLoggedIn) return toast.error('You are not logged in')
@@ -57,19 +60,27 @@ const BookTile: React.FC<BookTileType> = ({
     case false:
       switch (status) {
         case 'available':
-          button = <Button onClick={onClickHandler}>Borrow</Button>
+          button = (
+            <Button onClick={onClickHandler}>
+              {languages[language].buttonsText.borrow}
+            </Button>
+          )
           break
         case 'borrowed':
           button = (
             <Button variant="danger" disabled>
-              Unavailable
+              {languages[language].buttonsText.unavailable}
             </Button>
           )
           break
       }
       break
     case true:
-      button = <Button onClick={onClickHandler}>Return Book</Button>
+      button = (
+        <Button onClick={onClickHandler}>
+          {languages[language].buttonsText.return}
+        </Button>
+      )
       break
     default:
       break
@@ -101,13 +112,13 @@ const BookTile: React.FC<BookTileType> = ({
             <span>ISBN:</span> {isbn}
           </Card.Text>
           <Card.Text>
-            <span>Description: </span>
+            <span>{languages[language].inputLabels.description}: </span>
             {description!.length > 100
               ? description?.slice(0, 100) + '...'
               : description}
           </Card.Text>
           <Card.Text>
-            <span>Publisher: </span>
+            <span>{languages[language].inputLabels.publisher}: </span>
             {publisher}
           </Card.Text>
         </Card.Body>

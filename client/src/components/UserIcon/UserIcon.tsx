@@ -1,5 +1,3 @@
-import './UserIcon.scss'
-
 import React from 'react'
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,11 +7,15 @@ import { clearStorageAndLogOut } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
 import UserImage from '../UserImage/UserImage'
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
+
+import './UserIcon.scss'
 
 const UserIcon = () => {
   const user = useSelector<RootState, User>((state) => state.user)
   const dispatch = useDispatch()
-
+  const { language } = React.useContext(LanguageContext)
   const { username } = user.userInfo
   const trimmedUsername =
     username.length >= 8 ? username.slice(0, 7) + '...' : username
@@ -29,25 +31,25 @@ const UserIcon = () => {
         alignRight={true}
       >
         <Dropdown.Item disabled as="li">
-          Signed in as {trimmedUsername}
+          {languages[language].user.signInAs} {trimmedUsername}
         </Dropdown.Item>
         <Dropdown.Item as="li">
           <Link to="/user/info">
             <Button block variant="info">
-              Account Info
+              {languages[language].user.info}
             </Button>
           </Link>
         </Dropdown.Item>
         <Dropdown.Item as="li">
           <Link to="/user/books">
             <Button block variant="info">
-              Your books
+              {languages[language].user.books}
             </Button>
           </Link>
         </Dropdown.Item>
         <Dropdown.Item as="li" onClick={signOutClickHandler}>
           <Button block variant="danger">
-            Sign Out
+            {languages[language].user.signOut}
           </Button>
         </Dropdown.Item>
       </DropdownButton>

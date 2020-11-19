@@ -43,13 +43,9 @@ const BookContainer: React.FC<BookContainerProps> = ({
   ))
 
   useEffect(() => {
-    console.log('books changed')
     if (content) setBooksToDisplay(bookChunks[page])
   }, [content])
 
-  useEffect(() => {
-    console.log('content:', content)
-  })
   return (
     <div className="BookContainer">
       <div className="BookDisplayContainer">{booksInPage}</div>

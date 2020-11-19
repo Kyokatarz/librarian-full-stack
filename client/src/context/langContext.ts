@@ -5,7 +5,7 @@ export type LangContextObj = {
   language: Languages
   switchLanguage: (lang: Languages) => void
 }
-export default React.createContext<LangContextObj>({
+export const LanguageContext = React.createContext<LangContextObj>({
   language: 'en',
   switchLanguage: () => {},
 })

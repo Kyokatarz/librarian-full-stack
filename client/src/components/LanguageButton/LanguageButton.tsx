@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import { GrGlobe } from 'react-icons/gr'
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import LangContext from '../../context/langContext'
+import { LanguageContext } from '../../context/langContext'
 
 const LanguageButton = () => {
-  const { language, switchLanguage } = useContext(LangContext)
+  const { language, switchLanguage } = useContext(LanguageContext)
 
   return (
     <Dropdown>

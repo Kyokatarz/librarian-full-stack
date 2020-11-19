@@ -2,14 +2,14 @@ import React, { useContext } from 'react'
 import { Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import languages from '../../languages/languages'
-import LangContext from '../../context/langContext'
+import { languages } from '../../languages/languages'
+import { LanguageContext } from '../../context/langContext'
 
 import './NavBarLink.scss'
 import LanguageButton from '../LanguageButton'
 
 const NavBarLink = () => {
-  const { language } = useContext(LangContext)
+  const { language } = useContext(LanguageContext)
   return (
     <Nav
       as="ul"
@@ -27,7 +27,7 @@ const NavBarLink = () => {
         </Nav.Item>
       </Link>
       <Link to="/author">
-        <Nav.Item className="text-white">Authors</Nav.Item>
+        <Nav.Item className="text-white">{languages[language].author}</Nav.Item>
       </Link>
       <LanguageButton />
     </Nav>
