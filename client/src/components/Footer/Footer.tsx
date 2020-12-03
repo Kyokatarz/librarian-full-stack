@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaGithubSquare } from 'react-icons/fa'
 
 import './Footer.scss'
 
@@ -6,17 +7,16 @@ const Footer = () => {
   return (
     <div className="Footer">
       <p>Librarian &#169; 2020</p>
-      <p>
-        Designed and Developed by
-        <a
-          href="https://github.com/Kyokatarz/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {' '}
-          Kyo Tran
-        </a>
-      </p>
+
+      <a
+        href="https://github.com/Kyokatarz/librarian-full-stack"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div>
+          <FaGithubSquare fontSize={32} /> Github
+        </div>
+      </a>
     </div>
   )
 }
