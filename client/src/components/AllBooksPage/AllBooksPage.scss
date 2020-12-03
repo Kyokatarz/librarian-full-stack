@@ -1,0 +1,14 @@
+@import '../../style/global.scss';
+
+.AllBooksPage {
+  height: auto;
+  min-height: 100vh;
+  background-color: $dark-bg-color;
+  padding: 5px;
+
+  &__FunctionalityButton {
+    * {
+      margin: 3px;
+    }
+  }
+}

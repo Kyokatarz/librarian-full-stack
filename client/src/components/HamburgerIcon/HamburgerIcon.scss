@@ -1,0 +1,44 @@
+@mixin hamburger-line {
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  margin-bottom: 5px;
+  transition: all 0.25s ease;
+}
+
+.Hamburger {
+  display: none;
+  position: absolute;
+  right: 3%;
+  top: 55%;
+  transform: translate(5%, -50%);
+  margin-right: 20px;
+  z-index: 9999;
+  cursor: pointer;
+  &__Line-1 {
+    @include hamburger-line();
+    &.active {
+      transform-origin: top;
+      transform: rotate(45deg) translate(0px, 10px);
+    }
+  }
+  &__Line-2 {
+    @include hamburger-line();
+    &.active {
+      opacity: 0;
+    }
+  }
+  &__Line-3 {
+    @include hamburger-line();
+    &.active {
+      transform-origin: bottom;
+      transform: rotate(-45deg) translate(0px, -10px);
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .Hamburger {
+    display: block;
+  }
+}

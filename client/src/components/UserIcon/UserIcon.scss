@@ -1,0 +1,35 @@
+.UserIcon {
+  position: absolute;
+  right: 10%;
+  border: 1px solid white;
+  border-radius: 3px;
+  & .dropdown-toggle {
+    padding: 0px;
+    &::after {
+      content: none;
+    }
+  }
+  z-index: 100;
+  & ul {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.NavDropDown {
+  & .dropdown-menu {
+    transform: translateX(-100%);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .UserIcon {
+    right: 15%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .UserIcon {
+    right: 20%;
+  }
+}

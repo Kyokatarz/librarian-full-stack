@@ -1,0 +1,17 @@
+.HamburgerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 101;
+  transition: opacity ease 0.55s;
+  &.active {
+    pointer-events: all;
+    opacity: 1;
+    cursor: pointer;
+  }
+}

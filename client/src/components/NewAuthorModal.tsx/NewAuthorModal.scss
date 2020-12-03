@@ -1,0 +1,16 @@
+@import '../../style/global.scss';
+
+.NewAuthorModal {
+  & .modal-content {
+    background-color: $dark-block-content;
+    border: 2px solid whitesmoke;
+
+    & .modal-header {
+      color: $text-highlight;
+
+      & button {
+        color: white;
+      }
+    }
+  }
+}

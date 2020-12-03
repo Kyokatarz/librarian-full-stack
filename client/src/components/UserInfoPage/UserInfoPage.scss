@@ -1,0 +1,48 @@
+@import '../../style/global.scss';
+
+.UserInfoPage {
+  height: auto;
+  min-height: 100vh;
+  background-color: $dark-bg-color;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__Content {
+    width: 35%;
+    height: auto;
+    padding: 30px;
+    border: 1px solid white;
+    border-radius: $border-radius;
+  }
+
+  &__Bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .UserInfoPage {
+    &__Content {
+      width: 50%;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .UserInfoPage {
+    &__Content {
+      width: 65%;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .UserInfoPage {
+    &__Content {
+      width: 90%;
+    }
+  }
+}

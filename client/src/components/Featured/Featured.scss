@@ -1,0 +1,49 @@
+@import '../../style/global.scss';
+
+.Featured {
+  height: 100vh;
+  min-height: 100vh;
+  background-color: $dark-bg-color;
+  position: relative;
+  &__Content {
+    width: 70%;
+    height: 70%;
+    background-color: $dark-block-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transform: translate(-50%, -50%);
+  }
+
+  & h1 {
+    display: none;
+  }
+
+  & h2 {
+    font-size: calc(3vw + 5px);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Featured {
+    &__Content {
+      width: 90%;
+      height: 80%;
+    }
+
+    & h2 {
+      font-size: 5vw;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .Featured {
+    & h2 {
+      font-size: 7vw;
+    }
+  }
+}

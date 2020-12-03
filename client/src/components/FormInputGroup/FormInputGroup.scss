@@ -1,0 +1,7 @@
+@import '../../style/global.scss';
+
+.FormInputGroup {
+  &__Label {
+    color: $text-highlight;
+  }
+}

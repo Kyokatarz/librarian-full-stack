@@ -1,0 +1,74 @@
+.Introduction {
+  height: 100vh;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid black;
+  margin-bottom: 5px;
+  &__Bg-img {
+    height: 100vh;
+    width: 100%;
+    background-image: url('../../assets/book-background.jpg');
+    filter: blur(5px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &__Content {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    & h2 {
+      font-size: calc(3vw + 5px);
+    }
+
+    & p {
+      font-size: 16px;
+      color: #c4c4c4;
+      font-style: italic;
+    }
+  }
+
+  &__Button {
+    align-self: flex-end;
+    margin-right: 30px;
+  }
+
+  & h1 {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Introduction {
+    &__Content {
+      width: 90%;
+      height: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+
+      & h2 {
+        font-size: 5vw;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  h2 {
+    font-size: 7vw;
+    text-align: center;
+  }
+}

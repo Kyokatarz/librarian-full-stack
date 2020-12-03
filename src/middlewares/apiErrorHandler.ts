@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express'
-
-import ApiError from '../helpers/apiError'
+import { NextFunction, Request, Response } from 'express'
 import logger from '../util/logger'
 
-export default function(
+import ApiError from '../helpers/apiError'
+
+export default function (
   error: ApiError,
   req: Request,
   res: Response,

@@ -1,0 +1,62 @@
+.Navbar {
+  justify-content: space-between !important;
+  position: fixed !important;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #011627;
+  border-bottom: 2px solid #5a799c;
+
+  &__Start {
+    width: 20%;
+    display: flex;
+    align-items: center;
+  }
+  &__End {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__Buttons {
+    display: flex;
+    flex-direction: row;
+    & * {
+      margin: 1px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Navbar {
+    &__Start {
+      width: 30%;
+    }
+
+    &__End {
+      width: 70%;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .Navbar {
+    &__Icon {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .Navbar {
+    &__Icon {
+      display: none;
+    }
+    &__End {
+      width: 100%;
+    }
+  }
+}

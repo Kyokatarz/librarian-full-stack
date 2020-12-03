@@ -2,9 +2,13 @@
 # build artefacts
 dist/*
 coverage/*
+/client/build/*
 # data definition files
 **/*.d.ts
 # 3rd party libs
 /src/public/
 # custom definition files
 /src/types/
+/src/config/*
+/client/*
+

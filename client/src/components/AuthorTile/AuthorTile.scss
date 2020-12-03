@@ -1,0 +1,20 @@
+@import '../../style/global.scss';
+
+.AuthorTile {
+  width: 90%;
+  height: 60px;
+  padding: 10px;
+  background-color: $dark-block-content;
+  margin: 5px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 7px;
+  border: 1px solid white;
+
+  &__Icon {
+    cursor: pointer;
+  }
+}
