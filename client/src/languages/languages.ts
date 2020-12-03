@@ -16,6 +16,7 @@ export const languages = {
     actions: {
       addAuthor: 'Tạo tác giả mới',
       addBook: 'Tạo sách mới',
+      changePassword: 'Đổi mật khẩu',
     },
     inputLabels: {
       imageUrl: 'Đường dẫn hình ảnh',
@@ -23,10 +24,14 @@ export const languages = {
       description: 'Mô tả (tiếng Anh)',
       publisher: 'Nhà xuất bản',
       author: 'Tác giả',
+      firstName: 'Tên',
+      lastName: 'Họ',
+      oldPassword: 'Mật khẩu hiện tại',
+      newPassword: 'Mật khẩu mới',
+      confirmPassword: 'Xác nhận mật khẩu',
     },
     inputPlaceholder: {
       username: 'Nhập tên người dùng...',
-      password: 'Nhập mật khẩu...',
       imageUrl: 'Nhập đường dẫn hình ảnh...',
       firstName: 'Nhập tên... (không bắt buộc)',
       lastName: 'Nhập họ... (không bắt buộc)',
@@ -36,10 +41,15 @@ export const languages = {
       publisher: 'Nhập nhà xuất bản...',
       author: 'Nhập tác giả...',
       email: 'Nhập email... ',
+      oldPassword: 'Nhập mật khẩu hiện tại...',
+      newPassword: 'Nhập mật khẩu mới...',
+      search: 'Tìm kiếm...',
+      password: 'Nhập mật khẩu...',
       confirmPassword: 'Nhập lại mật khẩu...',
+      confirmNewPassword: 'Nhập lại mật khẩu mới...',
     },
     buttonsText: {
-      updateInfo: 'Cập nhật thông tin sách',
+      updateInfo: 'Cập nhật thông tin',
       borrow: 'Đặt sách',
       return: 'Trả sách',
       unavailable: 'Sách đã có người đặt',
@@ -64,6 +74,16 @@ export const languages = {
       forgetPassword: 'Quên mật khẩu?',
       passwordNoMatch: 'Xác nhận mật khẩu không giống nhau',
     },
+    emptyPage: {
+      nothingToDisplay: 'Không có gì để hiển thị',
+      checkoutSomeBooks: 'Đến trang mượn sách',
+      nothingFound: 'Không có kết quả...',
+    },
+
+    misc: {
+      cannotChangeGooglePassword:
+        'Không thể đổi mật khẩu khi đăng nhập bằng Google.',
+    },
   },
 
   en: {
@@ -82,6 +102,7 @@ export const languages = {
     actions: {
       addAuthor: 'Add New Author',
       addBook: 'Add New Book',
+      changePassword: 'Change Password',
     },
 
     inputLabels: {
@@ -90,6 +111,11 @@ export const languages = {
       description: 'Description',
       publisher: 'Publisher',
       author: 'Author',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      oldPassword: 'Old password',
+      newPassword: 'New password',
+      confirmPassword: 'Confirm password',
     },
     inputPlaceholder: {
       username: 'Enter username...',
@@ -104,6 +130,10 @@ export const languages = {
       author: 'Enter author...',
       email: 'Enter your email...',
       confirmPassword: 'Enter Password again...',
+      oldPassword: 'Enter old password...',
+      newPassword: 'Enter new password...',
+      search: 'Search something...',
+      confirmNewPassword: 'Confirm new password...',
     },
     buttonsText: {
       updateInfo: 'Update Info',
@@ -131,7 +161,14 @@ export const languages = {
       forgetPassword: 'Forget Password?',
       passwordNoMatch: "Passwords don't match",
     },
-
-    signInSignUp: {},
+    emptyPage: {
+      nothingToDisplay: 'Nothing to display here',
+      checkoutSomeBooks: 'Check out some books here',
+      nothingFound: 'Nothing found...',
+    },
+    misc: {
+      cannotChangeGooglePassword:
+        "Your account is logged in with Google, hence we can't change your password.",
+    },
   },
 }

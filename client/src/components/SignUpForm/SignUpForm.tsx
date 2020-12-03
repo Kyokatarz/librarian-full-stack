@@ -21,6 +21,7 @@ const SignUpForm = () => {
 
   const dispatch = useDispatch()
   const { language } = React.useContext(LanguageContext)
+
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!passwordMatch) setPasswordMatch(true)
     setPassword(event.target.value)
@@ -118,7 +119,7 @@ const SignUpForm = () => {
           label={languages[language].user.checkbox}
         />
 
-        <FormSubmitButton text="Sign Up" />
+        <FormSubmitButton text={languages[language].user.signUp} />
       </Form>
     </div>
   )

@@ -1,7 +1,15 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import { updateUserData } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
@@ -17,6 +25,8 @@ const UserInfoForm = () => {
   const [inputLN, setInputLN] = useState(lastName)
   const [inputEmail, setInputEmail] = useState(email)
   const [newChanges, setNewChanges] = useState(false)
+
+  const { language } = useContext(LanguageContext)
 
   const submitHandler = (event: FormEvent) => {
     event.preventDefault()
@@ -47,21 +57,21 @@ const UserInfoForm = () => {
     <Form onSubmit={submitHandler}>
       <FormInputGroup
         value={inputFN}
-        label="First Name"
+        label={languages[language].inputLabels.firstName}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setInputFN(event.target.value)
         }
         type="text"
-        placeholder="Enter your First Name..."
+        placeholder={languages[language].inputPlaceholder.firstName}
       />
       <FormInputGroup
         value={inputLN}
-        label="Last Name"
+        label={languages[language].inputLabels.lastName}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setInputLN(event.target.value)
         }
         type="text"
-        placeholder="Enter your Last Name..."
+        placeholder={languages[language].inputPlaceholder.lastName}
       />
       <FormInputGroup
         value={inputEmail}
@@ -70,9 +80,12 @@ const UserInfoForm = () => {
           setInputEmail(event.target.value)
         }
         type="text"
-        placeholder="Enter your Email..."
+        placeholder={languages[language].inputPlaceholder.email}
       />
-      <FormSubmitButton text="Update Info" disabled={!newChanges} />
+      <FormSubmitButton
+        text={languages[language].buttonsText.updateInfo}
+        disabled={!newChanges}
+      />
     </Form>
   )
 }

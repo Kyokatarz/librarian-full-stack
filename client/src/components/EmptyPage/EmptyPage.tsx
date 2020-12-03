@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import './EmptyPage.scss'
 
 const EmptyPage = () => {
+  const { language } = useContext(LanguageContext)
+
   return (
     <div className="EmptyPage">
       <div className="EmptyPage__Top">
-        <h2>Nothing to display here</h2>
-        <Link to="/allbooks">Check out some books here</Link>
-        <Link to="/">Home Page</Link>
+        <h2>{languages[language].emptyPage.nothingToDisplay}</h2>
+        <Link to="/allbooks">
+          {languages[language].emptyPage.checkoutSomeBooks}
+        </Link>
+        <Link to="/">{languages[language].homePage}</Link>
       </div>
       <svg
         version="1.1"

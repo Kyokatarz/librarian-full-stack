@@ -1,7 +1,9 @@
-import './SearchBar.scss'
-
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useContext } from 'react'
 import { Form } from 'react-bootstrap'
+
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
+import './SearchBar.scss'
 
 type SearchBarProps = {
   search: string
@@ -19,7 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const submitHandler = (event: FormEvent<HTMLInputElement>) => {
     event.preventDefault()
   }
-
+  const { language } = useContext(LanguageContext)
   return (
     <div className="SearchBarContainer">
       <Form className="SearchBar" onSubmit={submitHandler}>
@@ -27,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           <Form.Control
             className="SearchBar__Control"
             type="text"
-            placeholder="Search something..."
+            placeholder={languages[language].inputPlaceholder.search}
             value={search}
             onChange={onSearchChangeHandler}
           ></Form.Control>
@@ -42,9 +44,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
             onChange={onSelectChangeHandler}
             className="SearchBar__Control"
           >
-            <option value="title">Title</option>
+            <option value="title">
+              {languages[language].inputLabels.title}
+            </option>
             <option value="isbn">ISBN</option>
-            <option value="author">Author</option>
+            <option value="author">
+              {languages[language].inputLabels.author}
+            </option>
           </Form.Control>
         </Form.Group>
       </Form>

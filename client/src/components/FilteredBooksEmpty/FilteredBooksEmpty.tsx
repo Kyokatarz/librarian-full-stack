@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 
 import './FilteredBooksEmpty.scss'
 
 const FilteredBooksEmpty = () => {
+  const { language } = useContext(LanguageContext)
+
   return (
     <div className="FilteredBooksEmpty">
       <svg
@@ -18,7 +23,7 @@ const FilteredBooksEmpty = () => {
         </g>
       </svg>
       <div className="FilteredBooksEmpty__Bottom">
-        <h2>Nothing found</h2>
+        <h2>{languages[language].emptyPage.nothingFound}</h2>
       </div>
     </div>
   )

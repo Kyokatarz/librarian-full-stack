@@ -7,7 +7,7 @@ const LibraryHomePage: React.FC = () => {
   return (
     <>
       <Introduction />
-      <Featured />
+      {/* <Featured /> */}
     </>
   )
 }
