@@ -2,7 +2,7 @@
 
 This is an multi-language application built from MERN stack as a training project in Integrify.
 
-## **[DEMO](https://integrify-librarian.netlify.app/)**
+## **[CLICK HERE FOR DEMO](https://integrify-librarian.netlify.app/)**
 
 At the end of the project, I was able to learn:
 
