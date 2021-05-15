@@ -16,7 +16,9 @@ export const languages = {
     actions: {
       addAuthor: 'Tạo tác giả mới',
       addBook: 'Tạo sách mới',
+      deleteBook: 'Xóa sách',
       changePassword: 'Đổi mật khẩu',
+      confirm: 'Xác nhận',
     },
     inputLabels: {
       imageUrl: 'Đường dẫn hình ảnh',
@@ -102,7 +104,9 @@ export const languages = {
     actions: {
       addAuthor: 'Add New Author',
       addBook: 'Add New Book',
+      deleteBook: 'Delete Book',
       changePassword: 'Change Password',
+      confirm: 'Confirm',
     },
 
     inputLabels: {

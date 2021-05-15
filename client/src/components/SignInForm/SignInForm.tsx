@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
 import { LanguageContext } from '../../context/langContext'
 import { languages } from '../../languages/languages'
 import { sendLogInRequest } from '../../redux/actions/user'
+import CustomButton from '../CustomButton'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 
 import './SignInForm.scss'
 
@@ -42,7 +42,7 @@ const LoginForm = () => {
           type="password"
           placeholder={languages[language].inputPlaceholder.password}
         />
-        <FormSubmitButton text={languages[language].user.signIn} />
+        <CustomButton label={languages[language].user.signIn} type="submit" />
         <br />
       </Form>
     </div>

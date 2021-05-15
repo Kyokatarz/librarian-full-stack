@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { LanguageContext } from '../../context/langContext'
 import { languages } from '../../languages/languages'
-import { requestBookUpdate } from '../../redux/actions/book'
+import { requestBookUpdate, requestDeleteBook } from '../../redux/actions/book'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
-import DeleteBookButton from '../DeleteBookButton'
+import CustomButton from '../CustomButton/'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 
 import './BookInfoForm.scss'
+import { closeModal } from '../../redux/actions/bookModal'
 
 const BookInfoForm = () => {
   const bookInModal = useSelector<RootState, Partial<Book>>(
@@ -24,6 +24,7 @@ const BookInfoForm = () => {
   const { language } = useContext(LanguageContext)
   const dispatch = useDispatch()
 
+  const _id = bookInModal._id
   const [title, setTitle] = useState(bookInModal.title)
   const [isbn, setIsbn] = useState(bookInModal.isbn)
   const [description, setDescription] = useState(bookInModal.description)
@@ -44,6 +45,11 @@ const BookInfoForm = () => {
         author: { name: authorName },
       })
     )
+  }
+
+  const onDeleteClickHandler = () => {
+    dispatch(requestDeleteBook(token, _id!))
+    dispatch(closeModal())
   }
 
   useEffect(() => {
@@ -125,13 +131,23 @@ const BookInfoForm = () => {
       />
 
       {isAdmin && (
-        <FormSubmitButton
-          text={languages[language].buttonsText.updateInfo}
+        <CustomButton
+          label={languages[language].buttonsText.updateInfo}
           onClick={onUpdateClickHandler}
           disabled={disabled}
+          type="submit"
+          customClassName="SubmitButton"
+          block
         />
       )}
-      {isAdmin && <DeleteBookButton bookId={bookInModal._id!} />}
+      {isAdmin && (
+        <CustomButton
+          block
+          onClick={onDeleteClickHandler}
+          label={languages[language].actions.deleteBook}
+          variant="danger"
+        />
+      )}
     </Form>
   )
 }

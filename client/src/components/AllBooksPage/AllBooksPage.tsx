@@ -1,13 +1,20 @@
 import './AllBooksPage.scss'
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { useSelector } from 'react-redux'
 import _ from 'lodash'
 
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
-import AddNewAuthorButton from '../AddNewAuthorButton'
-import AddNewBookButton from '../AddNewBookButton'
+import CustomButton from '../CustomButton'
 import BookContainer from '../BookContainer'
 import BookInfoModal from '../BookInfoModal'
 import FilteredBooksEmpty from '../FilteredBooksEmpty'
@@ -16,6 +23,8 @@ import NewBookModal from '../NewBookModal'
 import SearchBar from '../SearchBar'
 
 const AllBooksPage = () => {
+  const { language } = useContext(LanguageContext)
+
   const isAdmin = useSelector<RootState, boolean>(
     (state) => state.user.userInfo.isAdmin
   )
@@ -62,10 +71,16 @@ const AllBooksPage = () => {
 
       <div className="AllBooksPage__FunctionalityButton">
         {isAdmin && (
-          <AddNewBookButton onClick={() => setShowNewBookModal(true)} />
+          <CustomButton
+            label={'+ ' + languages[language].actions.addBook}
+            onClick={() => setShowNewBookModal(true)}
+          />
         )}
         {isAdmin && (
-          <AddNewAuthorButton onClick={() => setShowNewAuthorModal(true)} />
+          <CustomButton
+            onClick={() => setShowNewAuthorModal(true)}
+            label={'+ ' + languages[language].actions.addAuthor}
+          />
         )}
       </div>
       {filteredBooks.length === 0 ? (

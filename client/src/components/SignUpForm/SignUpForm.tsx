@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
 import { LanguageContext } from '../../context/langContext'
 import { languages } from '../../languages/languages'
 import { signUserUp } from '../../redux/actions/user'
+import CustomButton from '../CustomButton'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 
 import './SignUpForm.scss'
 
@@ -119,7 +119,7 @@ const SignUpForm = () => {
           label={languages[language].user.checkbox}
         />
 
-        <FormSubmitButton text={languages[language].user.signUp} />
+        <CustomButton label={languages[language].user.signUp} type="submit" />
       </Form>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
@@ -6,10 +6,13 @@ import { toast } from 'react-toastify'
 
 import { url } from '../../App'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 import { clearUI, setErrorMsg, setLoading } from '../../redux/actions'
+import CustomButton from '../CustomButton'
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 
 const ForgetPasswordForm = () => {
+  const { language } = useContext(LanguageContext)
   const [email, setEmail] = useState('')
   const dispatch = useDispatch()
 
@@ -38,9 +41,12 @@ const ForgetPasswordForm = () => {
           setEmail(event.target.value)
         }
         type="text"
-        placeholder="Enter your account email..."
+        placeholder={languages[language].inputPlaceholder.email}
       />
-      <FormSubmitButton text="Confirm" onClick={submitHandler} />
+      <CustomButton
+        label={languages[language].actions.confirm}
+        onClick={submitHandler}
+      />
     </Form>
   )
 }

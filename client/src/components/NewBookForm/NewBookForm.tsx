@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { addNewBook } from '../../redux/actions/book'
 import { RootState } from '../../types/rootState'
+import CustomButton from '../CustomButton'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 
 const NewBookForm = () => {
   const token = useSelector<RootState, string>((state) => state.user.token)
@@ -90,7 +90,7 @@ const NewBookForm = () => {
         }
         placeholder="Leave blank if don't know"
       />
-      <FormSubmitButton text="Add book" onClick={onSubmitHandler} />
+      <CustomButton label="Add book" onClick={onSubmitHandler} />
     </Form>
   )
 }

@@ -13,8 +13,8 @@ import { languages } from '../../languages/languages'
 import { updateUserData } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
+import CustomButton from '../CustomButton'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 
 const UserInfoForm = () => {
   const user = useSelector<RootState, User>((state) => state.user)
@@ -82,8 +82,8 @@ const UserInfoForm = () => {
         type="text"
         placeholder={languages[language].inputPlaceholder.email}
       />
-      <FormSubmitButton
-        text={languages[language].buttonsText.updateInfo}
+      <CustomButton
+        label={languages[language].buttonsText.updateInfo}
         disabled={!newChanges}
       />
     </Form>

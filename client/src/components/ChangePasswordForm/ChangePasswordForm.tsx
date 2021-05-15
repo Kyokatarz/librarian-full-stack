@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeUserPassword } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 import { languages } from '../../languages/languages'
 import { LanguageContext } from '../../context/langContext'
+import CustomButton from '../CustomButton'
 
 const ChangePasswordForm = () => {
   const dispatch = useDispatch()
@@ -70,9 +70,9 @@ const ChangePasswordForm = () => {
         onChangeHandler={onConfirmPasswordChange}
         readOnly={disabled}
       />
-      <FormSubmitButton
+      <CustomButton
         disabled={disabled}
-        text={languages[language].actions.changePassword}
+        label={languages[language].actions.changePassword}
         onClick={handleSubmit}
       />
       {disabled && (

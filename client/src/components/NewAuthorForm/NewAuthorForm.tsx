@@ -1,13 +1,16 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { LanguageContext } from '../../context/langContext'
+import { languages } from '../../languages/languages'
 
 import { requestNewAuthor } from '../../redux/actions'
 import { RootState } from '../../types/rootState'
+import CustomButton from '../CustomButton'
 import FormInputGroup from '../FormInputGroup'
-import FormSubmitButton from '../FormSubmitButton'
 
 const NewAuthorForm = () => {
+  const { language } = useContext(LanguageContext)
   const [authorName, setAuthorName] = useState('')
   const token = useSelector<RootState, string>((state) => state.user.token)
   const dispatch = useDispatch()
@@ -18,17 +21,17 @@ const NewAuthorForm = () => {
   return (
     <Form onSubmit={submitHandler}>
       <FormInputGroup
-        label="Author Name"
+        label={languages[language].inputLabels.author}
         value={authorName}
         onChangeHandler={(event: ChangeEvent<any>) =>
           setAuthorName(event.target.value)
         }
         type="text"
-        placeholder="Enter author name..."
+        placeholder={languages[language].inputPlaceholder.author}
         required
       />
 
-      <FormSubmitButton text="Add author" />
+      <CustomButton label="Add author" type="submit" onClick={() => {}} />
     </Form>
   )
 }
