@@ -1,18 +1,18 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import BorrowedBooks from './pages/BorrowedBooks'
+import AllAuthor from './pages/AllAuthor/'
+import AllBooks from './pages/AllBooks/'
+import BorrowedBooks from './pages/BorrowedBooks/'
+import ChangePassword from './pages/ChangePassword/'
 import Footer from './components/Footer'
+import ForgetPassword from './pages/ForgetPassword/'
+import Home from './pages/Home/'
 import NavBar from './components/NavBar'
-import AllBooks from './pages/AllBooks'
-import Home from './pages/Home'
-import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
-import UserInfo from './pages/UserInfo'
-import NotFound from './pages/NotFound'
-import ChangePassword from './pages/ChangePassword'
-import AllAuthor from './pages/AllAuthor'
-import ForgetPassword from './pages/ForgetPassword'
+import NotFound from './pages/NotFound/'
+import SignIn from './pages/SignIn/'
+import SignUp from './pages/SignUp/'
+import UserInfo from './pages/UserInfo/'
 
 const Routes = () => (
   <>
