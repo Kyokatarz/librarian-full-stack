@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { clearStorageAndLogOut } from '../../redux/actions/user'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
-import UserImage from '../UserImage/UserImage'
 import { LanguageContext } from '../../context/langContext'
 import { languages } from '../../languages/languages'
 
@@ -27,7 +26,11 @@ const UserIcon = () => {
   return (
     <div className="UserIcon">
       <DropdownButton
-        title={<UserImage imageUrl={user.userInfo.imageUrl} />}
+        title={
+          <div className="UserIcon__UserImage">
+            <img src={user.userInfo.imageUrl} alt="User" />
+          </div>
+        }
         alignRight={true}
       >
         <Dropdown.Item disabled as="li">

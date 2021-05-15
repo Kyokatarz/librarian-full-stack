@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Button, Card } from 'react-bootstrap'
+import { FcInfo } from 'react-icons/fc'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
@@ -10,11 +11,11 @@ import {
   requestCheckin,
   requestCheckout,
 } from '../../redux/actions/book'
+import { showModal } from '../../redux/actions/bookModal'
 import { Author } from '../../types/authorTypes'
 import { Book } from '../../types/bookTypes'
 import { RootState } from '../../types/rootState'
 import { User } from '../../types/userTypes'
-import InfoIcon from '../InfoIcon'
 
 import './BookTile.scss'
 
@@ -53,6 +54,12 @@ const BookTile: React.FC<BookTileType> = ({
     if (book.status === 'available') dispatch(requestCheckout(user.token, book))
     if (book.status === 'borrowed') dispatch(requestCheckin(user.token, _id))
     dispatch(changeBookStatus(_id))
+  }
+
+  const showInfoModal = () => {
+    const book = books.find((bookObj) => bookObj._id === _id)
+    if (!book) return
+    dispatch(showModal(book))
   }
 
   let button
@@ -101,7 +108,7 @@ const BookTile: React.FC<BookTileType> = ({
         <Card.Title className="BookTile__Title">
           {title}{' '}
           <span className="BookTile__Title__Icon">
-            <InfoIcon _id={_id} />
+            <FcInfo onClick={showInfoModal} />
           </span>
         </Card.Title>
         <Card.Subtitle className="BookTile__Subtitle">

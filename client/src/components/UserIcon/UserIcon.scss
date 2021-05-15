@@ -14,6 +14,13 @@
     padding: 0;
     margin: 0;
   }
+
+  &__UserImage {
+    & img {
+      width: 40px;
+      height: 40px;
+    }
+  }
 }
 
 .NavDropDown {

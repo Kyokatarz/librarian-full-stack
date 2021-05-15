@@ -1,0 +1,62 @@
+@import '../../style/global.scss';
+
+.SignUpPage {
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $dark-bg-color;
+  color: white;
+}
+
+.SignUpSection {
+  height: auto;
+  width: 50%;
+  padding: 30px;
+  border: 1px solid grey;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  background-color: $dark-block-content;
+}
+
+.SignUpForm {
+  &__Row {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+
+    & div {
+      width: 50%;
+      margin: 5px;
+    }
+  }
+  & Button {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .SignUpForm {
+    &__Row {
+      flex-direction: column;
+    }
+
+    & div {
+      width: 100%;
+      margin: 0px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .SignUpSection {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .SignUpSection {
+    width: 90%;
+  }
+}

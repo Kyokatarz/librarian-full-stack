@@ -1,0 +1,31 @@
+@import '../../style/global.scss';
+
+.NotFoundPage {
+  min-height: 100vh;
+  background-color: $dark-bg-color;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  & h1 {
+    color: $complimentary-color;
+    text-align: center;
+  }
+  & span {
+    color: text-secondary;
+  }
+  &__Svg {
+    width: 400px;
+    height: 350px;
+    fill: $text-highlight;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .NotFoundPage {
+    &__Svg {
+      transform: scale(0.6);
+    }
+  }
+}
