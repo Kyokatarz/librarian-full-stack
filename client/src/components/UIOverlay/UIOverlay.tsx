@@ -3,18 +3,22 @@ import { useSelector } from 'react-redux'
 
 import { RootState } from '../../types/rootState'
 import { UI } from '../../types/uiTypes'
-import UIInnerWindow from '../UIInnerWindow'
+import ErrorWindow from './components/ErrorWindow'
+import LoadingIcon from './components/LoadingIcon'
 
 import './UIOverlay.scss'
 
 const UIOverlay: React.FC = () => {
   const uiState = useSelector<RootState, UI>((state) => state.ui)
-  const { isLoading } = uiState
+  const { isLoading, errMsg } = uiState
   const classList = isLoading ? 'UIOverlay active' : 'UIOverlay'
 
   return (
     <div className={classList}>
-      <UIInnerWindow isLoading={uiState.isLoading} errMsg={uiState.errMsg} />
+      <div className="UIInnerWindow">
+        {isLoading && <LoadingIcon />}
+        {errMsg && <ErrorWindow errMsg={errMsg} />}
+      </div>
     </div>
   )
 }

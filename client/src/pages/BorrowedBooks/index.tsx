@@ -10,7 +10,7 @@ import './BorrowedBooksPage.scss'
 import { LanguageContext } from '../../context/langContext'
 import { closeModal } from '../../redux/actions/bookModal'
 import { Modal } from 'react-bootstrap'
-import BookInfoForm from '../../components/BookInfoForm'
+import BookInfoForm from '../../components/BookInfoModal/components/BookInfoForm'
 import { languages } from '../../languages/languages'
 
 const BorrowedBooksPage: React.FC = () => {

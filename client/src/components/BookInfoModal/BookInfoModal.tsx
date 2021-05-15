@@ -6,7 +6,7 @@ import { LanguageContext } from '../../context/langContext'
 import { languages } from '../../languages/languages'
 import { closeModal } from '../../redux/actions/bookModal'
 import { RootState } from '../../types/rootState'
-import BookInfoForm from '../BookInfoForm'
+import BookInfoForm from './components/BookInfoForm'
 
 import './BookInfoModal.scss'
 
